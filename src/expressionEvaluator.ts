@@ -9,7 +9,12 @@ const operatorPrecedence = [
   ['<=>'],
 ];
 
-const evaluateExpression = (expression: string): string => {
+/**
+ * Splits a string up into its parentheses parts. The higher the order in the array the earlier it needs to be
+ * evaluated
+ * @param expression Expression to evalute.
+ */
+const evaluateExpression = (expression: string): string[] => {
   let cleanedExpression = expression.replaceAll(/\s/g, '');
 
   const openParentheses = [...cleanedExpression].filter((val) => val === '(');
@@ -19,7 +24,7 @@ const evaluateExpression = (expression: string): string => {
   if (openParentheses.length !== closedParentheses.length) throw Error();
 
   // No parentheses
-  if (openParentheses.length === 0) return cleanedExpression;
+  if (openParentheses.length === 0) return [cleanedExpression];
 
   // We have some work to do.. :(
   const openParenthesesPosition: number[] = [];
@@ -49,7 +54,7 @@ const evaluateExpression = (expression: string): string => {
 
   outputBuffer.push(cleanedExpression);
   console.log(outputBuffer);
-  return 'kek';
+  return [];
 };
 
 export default evaluateExpression;
