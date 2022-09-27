@@ -54,7 +54,7 @@ const splitByParentheses = (expression: string): string[] => {
 
   outputBuffer.push(cleanedExpression);
   console.log(outputBuffer);
-  return [];
+  return outputBuffer;
 };
 
 export default splitByParentheses;
