@@ -46,7 +46,7 @@ const splitByParentheses = (expression: string): string[] => {
         skippableParentheses.push(position + subIndex + 1);
         openParenthesesPosition.pop();
         outputBuffer.push(cleanedExpression.substring(position, position + subIndex + 1));
-        cleanedExpression = cleanedExpression.replaceAll(cleanedExpression.substring(position, position + subIndex + 1), '**REPLACED EXPRESSION**');
+        cleanedExpression = cleanedExpression.replaceAll(cleanedExpression.substring(position, position + subIndex + 1), `[${cleanedExpression.substring(position, position + subIndex + 1)}]`);
         break;
       }
     }
