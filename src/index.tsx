@@ -7,6 +7,7 @@ import {
 import Truthtable from './truthtable';
 import Layout from './Layout';
 import Landingpage from './Landingpage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createHashRouter([
   {

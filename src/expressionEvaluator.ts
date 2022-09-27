@@ -8,13 +8,23 @@ const operatorPrecedence = [
   ['=>', '<='],
   ['<=>'],
 ];
+export type TruthtableEvaluation = {
+  variables: string[],
+  steps: string[]
+};
+
+/**
+ * Gets all parameters in a expression
+ * @param expression
+ */
+export const getAllVariables = (expression: string): string[] => [...expression.matchAll(/\w/g)].flat();
 
 /**
  * Splits a string up into its parentheses parts. The higher the order in the array the earlier it needs to be
  * evaluated
  * @param expression Expression to evalute.
  */
-const splitByParentheses = (expression: string): string[] => {
+export const splitByParentheses = (expression: string): string[] => {
   let cleanedExpression = expression.replaceAll(/\s/g, '');
 
   const openParentheses = [...cleanedExpression].filter((val) => val === '(');
@@ -55,6 +65,21 @@ const splitByParentheses = (expression: string): string[] => {
   outputBuffer.push(cleanedExpression);
   console.log(outputBuffer);
   return outputBuffer;
+};
+
+export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
+  let uppercaseExpression = expression.toUpperCase();
+
+  // Replace all with correct characters
+  uppercaseExpression = uppercaseExpression.replaceAll(/&&/g, '∧');
+  uppercaseExpression = uppercaseExpression.replaceAll(/\|\|/g, '∨');
+  uppercaseExpression = uppercaseExpression.replaceAll(/!/g, '¬');
+  // todo not all are working
+  uppercaseExpression = uppercaseExpression.replaceAll(/<=!=>/g, '↮');
+  uppercaseExpression = uppercaseExpression.replaceAll(/<==>/g, '⇔');
+  uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
+
+  return { variables: getAllVariables(uppercaseExpression), steps: splitByParentheses(uppercaseExpression) };
 };
 
 export default splitByParentheses;

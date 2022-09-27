@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import {
   Alert, AlertTitle, Button, TextField,
 } from '@mui/material';
-import evaluateExpression from '../expressionEvaluator';
+import { Table } from 'react-bootstrap';
+import {
+  evaluateTruthtable,
+  TruthtableEvaluation,
+} from '../expressionEvaluator';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
-  const [evaluatedExpression, setEvaluatedExpression] = useState<string[]>();
+  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
 
   const getEvaluation = () => {
-    setEvaluatedExpression(evaluateExpression(expression));
+    setEvaluatedExpression(evaluateTruthtable(expression));
   };
 
   return (
@@ -24,8 +28,11 @@ function Truthtable() {
       <br />
       <br />
 
+      Variables:
+      {' '}
+      {evaluatedExpression?.variables}
       <ul>
-        { evaluatedExpression?.map((val, index) => (
+        { evaluatedExpression?.steps.map((val, index) => (
           <li key={val}>
             Step
             {' '}
@@ -36,7 +43,34 @@ function Truthtable() {
           </li>
         )) }
       </ul>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            {evaluatedExpression?.variables.map((variable) => (
+              <th style={{ width: '20px' }} key={variable}>
+                {' '}
+                {variable}
+                {' '}
+              </th>
+            ))}
+            {evaluatedExpression?.steps.map((step) => (
+              <th>
+                {' '}
+                {step}
+                {' '}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 0 </td>
+          </tr>
+        </tbody>
+      </Table>
     </>
+
   );
 }
 
