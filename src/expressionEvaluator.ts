@@ -14,7 +14,7 @@ const operatorPrecedence = [
  * evaluated
  * @param expression Expression to evalute.
  */
-const evaluateExpression = (expression: string): string[] => {
+const splitByParentheses = (expression: string): string[] => {
   let cleanedExpression = expression.replaceAll(/\s/g, '');
 
   const openParentheses = [...cleanedExpression].filter((val) => val === '(');
@@ -57,4 +57,4 @@ const evaluateExpression = (expression: string): string[] => {
   return [];
 };
 
-export default evaluateExpression;
+export default splitByParentheses;
