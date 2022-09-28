@@ -60,7 +60,7 @@ export const splitByParentheses = (expression: string): string[] => {
         outputBuffer.push(mutableExpression.substring(position, position + subIndex + 1));
         // mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*start*${mutableExpression.substring(position, position + subIndex + 1)}*ende*`);
         previousReplaced = mutableExpression.substring(position, position + subIndex + 1);
-        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), 'ficken');
+        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), '*previous step*');
 
         console.log('previously replaced', previousReplaced);
         console.log('now current', mutableExpression);
