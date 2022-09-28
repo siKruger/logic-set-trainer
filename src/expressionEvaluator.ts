@@ -46,6 +46,7 @@ export const splitByParentheses = (expression: string): string[] => {
   const outputBuffer: string[] = [];
   let previousReplaced = '';
 
+  // todo re-do to allow previous expression
   for (let x = openParenthesesPosition.length - 1; x >= 0; x -= 1) {
     const position = openParenthesesPosition[x];
     const parenthesesPart = mutableExpression.slice(position);
