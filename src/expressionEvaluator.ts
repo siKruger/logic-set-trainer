@@ -61,10 +61,8 @@ export const splitByParentheses = (expression: string): string[] => {
         outputBuffer.push(mutableExpression.substring(position, position + subIndex + 1));
         // mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*start*${mutableExpression.substring(position, position + subIndex + 1)}*ende*`);
         previousReplaced = mutableExpression.substring(position, position + subIndex + 1);
-        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), '*previous step*');
+        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*previous step ${x}*`);
 
-        console.log('previously replaced', previousReplaced);
-        console.log('now current', mutableExpression);
         break;
       }
     }
@@ -137,6 +135,11 @@ const setOptionalParanthesis = (expression: string) => {
       x += 1;
       // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
     }
+  }
+
+  for (let x = 0; x < mutableExpression.length; x += 1) {
+    const char = mutableExpression.charAt(x);
+    console.log(char);
   }
 
   return mutableExpression;
