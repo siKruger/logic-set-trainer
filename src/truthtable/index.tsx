@@ -11,20 +11,10 @@ import {
 function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
-  const [binaryCartesian, setCartesianBinary] = useState([]);
-
-  // todo ts ignore is bad
-  // @ts-ignore
-  const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
 
   const getEvaluation = () => {
     const evaluated = evaluateTruthtable(expression);
     setEvaluatedExpression(evaluated);
-
-    const binaryOptions = evaluated?.variables.map(() => [0, 1]);
-
-    setCartesianBinary(cartesian(binaryOptions));
-    console.log(binaryCartesian);
   };
 
   return (
@@ -76,7 +66,7 @@ function Truthtable() {
         </thead>
         <tbody>
           {
-          binaryCartesian.map((binaryRow: number[]) => (
+          evaluatedExpression?.binaryOptions.map((binaryRow) => (
             <tr>
               {' '}
               {binaryRow.map((binaryValue) => (

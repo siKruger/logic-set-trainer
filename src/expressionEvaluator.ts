@@ -10,7 +10,8 @@ const operatorPrecedence = [
 ];
 export type TruthtableEvaluation = {
   variables: string[],
-  steps: string[]
+  steps: string[],
+  binaryOptions: number[][]
 };
 
 /**
@@ -67,6 +68,10 @@ export const splitByParentheses = (expression: string): string[] => {
   return outputBuffer;
 };
 
+// todo ts ignore is bad
+// @ts-ignore
+const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
+
 export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
   let uppercaseExpression = expression.toUpperCase();
 
@@ -78,7 +83,10 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   uppercaseExpression = uppercaseExpression.replaceAll(/<==>/g, '⇔');
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
 
-  return { variables: getAllVariables(uppercaseExpression), steps: splitByParentheses(uppercaseExpression) };
+  const variables = getAllVariables(uppercaseExpression);
+  const binaries = variables.map(() => [0, 1]);
+
+  return { variables, steps: splitByParentheses(uppercaseExpression), binaryOptions: cartesian(binaries) };
 };
 
 export default splitByParentheses;
