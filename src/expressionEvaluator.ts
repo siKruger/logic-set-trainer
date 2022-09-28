@@ -71,11 +71,10 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   let uppercaseExpression = expression.toUpperCase();
 
   // Replace all with correct characters
+  uppercaseExpression = uppercaseExpression.replaceAll(/<=!=>/g, '↮');
   uppercaseExpression = uppercaseExpression.replaceAll(/&&/g, '∧');
   uppercaseExpression = uppercaseExpression.replaceAll(/\|\|/g, '∨');
   uppercaseExpression = uppercaseExpression.replaceAll(/!/g, '¬');
-  // todo not all are working
-  uppercaseExpression = uppercaseExpression.replaceAll(/<=!=>/g, '↮');
   uppercaseExpression = uppercaseExpression.replaceAll(/<==>/g, '⇔');
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
 
