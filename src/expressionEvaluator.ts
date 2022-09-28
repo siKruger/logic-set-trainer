@@ -44,6 +44,7 @@ export const splitByParentheses = (expression: string): string[] => {
   });
 
   const outputBuffer: string[] = [];
+  let previousReplaced = '';
 
   for (let x = openParenthesesPosition.length - 1; x >= 0; x -= 1) {
     const position = openParenthesesPosition[x];
@@ -57,7 +58,12 @@ export const splitByParentheses = (expression: string): string[] => {
         skippableParentheses.push(position + subIndex + 1);
         openParenthesesPosition.pop();
         outputBuffer.push(mutableExpression.substring(position, position + subIndex + 1));
-        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `[${mutableExpression.substring(position, position + subIndex + 1)}]`);
+        // mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*start*${mutableExpression.substring(position, position + subIndex + 1)}*ende*`);
+        previousReplaced = mutableExpression.substring(position, position + subIndex + 1);
+        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), 'ficken');
+
+        console.log('previously replaced', previousReplaced);
+        console.log('now current', mutableExpression);
         break;
       }
     }
@@ -82,10 +88,53 @@ const setOptionalParanthesis = (expression: string) => {
 
     // For negations
     if (char === '¬' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      console.log(x);
-      console.log(mutableExpression);
-
       mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, x + 2)})${mutableExpression.slice(x + 2)}`;
+    }
+  }
+
+  for (let x = 0; x < mutableExpression.length; x += 1) {
+    const char = mutableExpression.charAt(x);
+
+    if (char === '∧' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
+      let rightParanthesesPosition = -1;
+      let leftParanthesesPosition = -1;
+
+      // find first letter to the right
+      for (let letterRight = x; letterRight < mutableExpression.length; letterRight += 1) {
+        if (mutableExpression.charAt(letterRight)
+          .match(/\w/)) {
+          rightParanthesesPosition = letterRight;
+          break;
+        }
+      }
+
+      // find first letter to the left
+      let openBrackets = 0;
+      for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
+        if (mutableExpression.charAt(letterLeft) === ')') {
+          openBrackets += 1;
+        }
+
+        if (mutableExpression.charAt(letterLeft) === '(') {
+          openBrackets -= 1;
+        }
+
+        if (openBrackets !== 0) continue;
+
+        if (letterLeft === 0 || mutableExpression.charAt(letterLeft)
+          .match(/\w/)) {
+          if (mutableExpression.charAt(letterLeft - 1) === '¬') {
+            leftParanthesesPosition = letterLeft - 1;
+          } else {
+            leftParanthesesPosition = letterLeft;
+          }
+          break;
+        }
+      }
+
+      mutableExpression = `${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`;
+      x += 1;
+      // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
     }
   }
 
@@ -108,6 +157,7 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
 
   uppercaseExpression = setOptionalParanthesis(uppercaseExpression);
+  // console.log(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
   const steps = splitByParentheses(uppercaseExpression);
