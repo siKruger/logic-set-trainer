@@ -139,7 +139,69 @@ const setOptionalParanthesis = (expression: string) => {
 
   for (let x = 0; x < mutableExpression.length; x += 1) {
     const char = mutableExpression.charAt(x);
-    console.log(char);
+
+    if (char === '∨' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
+      let rightParanthesesPosition = -1;
+      let leftParanthesesPosition = -1;
+
+      // find first letter to the right CRASHES IF && TO THE RIGHT
+      {
+        let openBrackets = 0;
+        for (let letterRight = x; letterRight < mutableExpression.length; letterRight += 1) {
+          if (mutableExpression.charAt(letterRight) === '(') {
+            openBrackets += 1;
+          }
+
+          if (mutableExpression.charAt(letterRight) === ')') {
+            openBrackets -= 1;
+          }
+
+          if (openBrackets !== 0) continue;
+
+          if (letterRight + 1 === mutableExpression.length || mutableExpression.charAt(letterRight)
+            .match(/\w/)) {
+            rightParanthesesPosition = letterRight;
+            break;
+          }
+        }
+      }
+
+      console.log('++++++++++');
+      // find first letter to the left
+      let openBrackets = 0;
+      for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
+        if (mutableExpression.charAt(letterLeft) === ')') {
+          openBrackets += 1;
+        }
+
+        if (mutableExpression.charAt(letterLeft) === '(') {
+          openBrackets -= 1;
+        }
+
+        if (openBrackets < 0) openBrackets = 0;
+
+        console.log(mutableExpression.charAt(letterLeft));
+        console.log('brataN', openBrackets);
+
+        if (openBrackets !== 0) continue;
+
+        if (letterLeft === 0 || mutableExpression.charAt(letterLeft)
+          .match(/\w/)) {
+          console.log('place', letterLeft);
+
+          if (mutableExpression.charAt(letterLeft - 1) === '¬') {
+            leftParanthesesPosition = letterLeft - 1;
+          } else {
+            leftParanthesesPosition = letterLeft;
+          }
+          break;
+        }
+      }
+
+      mutableExpression = `${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`;
+      x += 2;
+      // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
+    }
   }
 
   return mutableExpression;
@@ -161,7 +223,7 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
 
   uppercaseExpression = setOptionalParanthesis(uppercaseExpression);
-  // console.log(uppercaseExpression);
+  console.log(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
   const steps = splitByParentheses(uppercaseExpression);
