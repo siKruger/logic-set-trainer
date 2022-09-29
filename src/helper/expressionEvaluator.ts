@@ -79,7 +79,7 @@ const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e]
 /**
  * Operators have their precedence. We want to set all paranthesis in order to evaluate right
  */
-const setOptionalParanthesis = (expression: string) => {
+export const setOptionalParanthesis = (expression: string) => {
   let mutableExpression = expression;
 
   for (let x = 0; x < mutableExpression.length; x += 1) {
@@ -267,11 +267,7 @@ const setOptionalParanthesis = (expression: string) => {
   return mutableExpression;
 };
 
-/**
- * Evaluates a truthtable
- * @param expression to evaluate
- */
-export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
+export const prepareForEvaluation = (expression: string): string => {
   let uppercaseExpression = expression.toUpperCase().replaceAll(/\s/g, '');
 
   // Replace all with correct characters
@@ -282,6 +278,15 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   uppercaseExpression = uppercaseExpression.replaceAll(/<==>/g, '⇔');
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
 
+  return uppercaseExpression;
+};
+
+/**
+ * Evaluates a truthtable
+ * @param expression to evaluate
+ */
+export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
+  let uppercaseExpression = prepareForEvaluation(expression);
   uppercaseExpression = setOptionalParanthesis(uppercaseExpression);
   console.log(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
