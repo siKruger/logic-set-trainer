@@ -156,6 +156,8 @@ const setOptionalParanthesis = (expression: string) => {
             openBrackets -= 1;
           }
 
+          if (openBrackets < 0) openBrackets = 0;
+
           if (openBrackets !== 0) continue;
 
           if (letterRight + 1 === mutableExpression.length || mutableExpression.charAt(letterRight)
@@ -166,7 +168,6 @@ const setOptionalParanthesis = (expression: string) => {
         }
       }
 
-      console.log('++++++++++');
       // find first letter to the left
       let openBrackets = 0;
       for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
@@ -180,15 +181,10 @@ const setOptionalParanthesis = (expression: string) => {
 
         if (openBrackets < 0) openBrackets = 0;
 
-        console.log(mutableExpression.charAt(letterLeft));
-        console.log('brataN', openBrackets);
-
         if (openBrackets !== 0) continue;
 
         if (letterLeft === 0 || mutableExpression.charAt(letterLeft)
           .match(/\w/)) {
-          console.log('place', letterLeft);
-
           if (mutableExpression.charAt(letterLeft - 1) === '¬') {
             leftParanthesesPosition = letterLeft - 1;
           } else {
