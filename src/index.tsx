@@ -5,8 +5,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import Truthtable from './truthtable';
-import Layout from './Layout';
-import Landingpage from './Landingpage';
+import Layout from './webapp/Layout';
+import Landingpage from './webapp/Landingpage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createHashRouter([

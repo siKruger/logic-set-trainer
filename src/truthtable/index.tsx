@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 import {
   evaluateTruthtable,
   TruthtableEvaluation,
-} from '../../helper/expressionEvaluator';
+} from '../helper/expressionEvaluator';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
