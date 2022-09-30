@@ -151,6 +151,10 @@ export const setOptionalParenthesis = (expression: string) => {
 
   mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '∧');
   mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '↮');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '∨');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇔');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇒');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇐');
 
   return mutableExpression;
 };
@@ -165,6 +169,7 @@ export const prepareForEvaluation = (expression: string): string => {
   uppercaseExpression = uppercaseExpression.replaceAll(/!/g, '¬');
   uppercaseExpression = uppercaseExpression.replaceAll(/<==>/g, '⇔');
   uppercaseExpression = uppercaseExpression.replaceAll(/=>/g, '⇒');
+  uppercaseExpression = uppercaseExpression.replaceAll(/<=/g, '⇐');
 
   return uppercaseExpression;
 };
