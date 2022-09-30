@@ -130,7 +130,7 @@ const setOptionalParenthesisForOperator = (expression: string, operator: string)
 };
 
 /**
- * Operators have their precedence. We want to set all paranthesis in order to evaluate right
+ * Operators have their precedence. We want to set all parentheses in order to evaluate correct
  */
 export const setOptionalParenthesis = (expression: string) => {
   let mutableExpression = expression;
