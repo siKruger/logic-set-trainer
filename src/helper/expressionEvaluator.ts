@@ -76,27 +76,13 @@ export const splitByParentheses = (expression: string): string[] => {
 // @ts-ignore
 const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
 
-/**
- * Operators have their precedence. We want to set all paranthesis in order to evaluate right
- */
-export const setOptionalParanthesis = (expression: string) => {
+const setOptionalParanthesesForOperator = (expression: string, operator: string) => {
   let mutableExpression = expression;
-
-  for (let x = 0; x < mutableExpression.length; x += 1) {
-    const char = mutableExpression.charAt(x);
-
-    // For negations
-    if (char === '¬' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, x + 2)})${mutableExpression.slice(x + 2)}`;
-    }
-  }
-
-  // for AND operation
   for (let x = 0; x < mutableExpression.length; x += 1) {
     const currentChar = mutableExpression.charAt(x);
 
     // Work to do
-    if (currentChar === '∧') {
+    if (currentChar === operator) {
       let placeLeft = -1;
       let placeRight = -1;
 
@@ -133,9 +119,27 @@ export const setOptionalParanthesis = (expression: string) => {
       mutableExpression = `${mutableExpression.substring(0, placeLeft)}(${mutableExpression.substring(placeLeft, placeRight)})${mutableExpression.substring(placeRight, mutableExpression.length)}`;
       x += 1;
     }
-
-    console.log('run ', x, ':', mutableExpression);
   }
+  return mutableExpression;
+};
+
+/**
+ * Operators have their precedence. We want to set all paranthesis in order to evaluate right
+ */
+export const setOptionalParanthesis = (expression: string) => {
+  let mutableExpression = expression;
+
+  for (let x = 0; x < mutableExpression.length; x += 1) {
+    const char = mutableExpression.charAt(x);
+
+    // For negations
+    if (char === '¬' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
+      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, x + 2)})${mutableExpression.slice(x + 2)}`;
+    }
+  }
+
+  mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '∧');
+  mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '↮');
 
   return mutableExpression;
 };

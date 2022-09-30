@@ -12,3 +12,10 @@ test('&& Operations', () => {
   expect(setOptionalParanthesis(prepareForEvaluation('a&&(b&&c)'))).toBe('(A∧((B∧C)))');
   expect(setOptionalParanthesis(prepareForEvaluation('(a&&b)&&c'))).toBe('(((A∧B))∧C)');
 });
+
+test('<=!=> Operations', () => {
+  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>b'))).toBe('(A↮B)');
+  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>b<=!=>c'))).toBe('((A↮B)↮C)');
+  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>(b<=!=>c)'))).toBe('(A↮((B↮C)))');
+  expect(setOptionalParanthesis(prepareForEvaluation('(a<=!=>b)<=!=>c'))).toBe('(((A↮B))↮C)');
+});
