@@ -29,6 +29,8 @@ function Truthtable() {
       <br />
       <br />
 
+      {evaluatedExpression?.parentheses}
+      <br />
       Variables:
       {' '}
       {evaluatedExpression?.variables}

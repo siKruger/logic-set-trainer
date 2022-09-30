@@ -4,14 +4,15 @@ const operatorPrecedence = [
   ['&&'],
   ['<=!=>'],
   ['||'],
-  ['<===>'],
+  ['<==>'],
   ['=>', '<='],
   ['<=>'],
 ];
 export type TruthtableEvaluation = {
   variables: string[],
   steps: string[],
-  binaryOptions: number[][]
+  binaryOptions: number[][],
+  parentheses: string
 };
 
 /**
@@ -186,5 +187,7 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   const binaries = variables.map(() => [0, 1]);
   const steps = splitByParentheses(uppercaseExpression);
 
-  return { variables, steps, binaryOptions: cartesian(binaries) };
+  return {
+    variables, steps, binaryOptions: cartesian(binaries), parentheses: uppercaseExpression,
+  };
 };
