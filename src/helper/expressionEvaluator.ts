@@ -116,7 +116,7 @@ const setOptionalParanthesesForOperator = (expression: string, operator: string)
       }
 
       // Now modify the string accordingly
-      mutableExpression = `${mutableExpression.substring(0, placeLeft)}(${mutableExpression.substring(placeLeft, placeRight)})${mutableExpression.substring(placeRight, mutableExpression.length)}`;
+      mutableExpression = `${mutableExpression.substring(0, placeLeft)}(${mutableExpression.substring(placeLeft, placeRight)})${mutableExpression.substring(placeRight)}`;
       x += 1;
     }
   }
@@ -133,11 +133,29 @@ export const setOptionalParanthesis = (expression: string) => {
     const char = mutableExpression.charAt(x);
 
     // For negations
-    if (char === '¬' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, x + 2)})${mutableExpression.slice(x + 2)}`;
+    if (char === '¬') {
+      // Search the right side
+      // Right Search
+      let openBracketCount = 0;
+      let placeRight = -1;
+      for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
+        const rightSideLetter = mutableExpression.charAt(letterRight);
+
+        if (rightSideLetter === '(') openBracketCount += 1;
+        if (rightSideLetter === ')') openBracketCount -= 1;
+
+        if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
+          placeRight = letterRight + 1;
+          break;
+        }
+      }
+
+      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
+      x += 1;
     }
   }
 
+  // mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '¬');
   mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '∧');
   mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '↮');
 

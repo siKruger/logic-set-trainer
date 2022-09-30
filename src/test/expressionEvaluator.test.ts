@@ -3,7 +3,9 @@ import { prepareForEvaluation, setOptionalParanthesis } from '../helper/expressi
 
 test('¬ Operations', () => {
   expect(setOptionalParanthesis(prepareForEvaluation('!a'))).toBe('(¬A)');
-  expect(setOptionalParanthesis(prepareForEvaluation('(!a)'))).toBe('(¬A)');
+  expect(setOptionalParanthesis(prepareForEvaluation('(!a)'))).toBe('((¬A))');
+  expect(setOptionalParanthesis(prepareForEvaluation('!a && b'))).toBe('((¬A)∧B)');
+  expect(setOptionalParanthesis(prepareForEvaluation('!(a && b)'))).toBe('(¬((A∧B)))');
 });
 
 test('&& Operations', () => {
