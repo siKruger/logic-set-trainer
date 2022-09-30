@@ -91,177 +91,50 @@ export const setOptionalParanthesis = (expression: string) => {
     }
   }
 
+  // for AND operation
   for (let x = 0; x < mutableExpression.length; x += 1) {
-    const char = mutableExpression.charAt(x);
+    const currentChar = mutableExpression.charAt(x);
 
-    if (char === '∧' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      let rightParanthesesPosition = -1;
-      let leftParanthesesPosition = -1;
+    // Work to do
+    if (currentChar === '∧') {
+      let placeLeft = -1;
+      let placeRight = -1;
 
-      // find first letter to the right
-      for (let letterRight = x; letterRight < mutableExpression.length; letterRight += 1) {
-        if (mutableExpression.charAt(letterRight)
-          .match(/\w/)) {
-          rightParanthesesPosition = letterRight;
+      // Left Search
+      let openBracketCount = 0;
+      for (let letterLeft = x - 1; letterLeft >= 0; letterLeft -= 1) {
+        const leftSideLetter = mutableExpression.charAt(letterLeft);
+
+        if (leftSideLetter === ')') openBracketCount += 1;
+        if (leftSideLetter === '(') openBracketCount -= 1;
+
+        // Save to place
+        if (openBracketCount === 0 && leftSideLetter.match(/\w/)) {
+          placeLeft = letterLeft;
           break;
         }
       }
 
-      // find first letter to the left
-      let openBrackets = 0;
-      for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
-        if (mutableExpression.charAt(letterLeft) === ')') {
-          openBrackets += 1;
-        }
+      // Right Search
+      openBracketCount = 0;
+      for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
+        const rightSideLetter = mutableExpression.charAt(letterRight);
 
-        if (mutableExpression.charAt(letterLeft) === '(') {
-          openBrackets -= 1;
-        }
+        if (rightSideLetter === '(') openBracketCount += 1;
+        if (rightSideLetter === ')') openBracketCount -= 1;
 
-        if (openBrackets !== 0) continue;
-
-        if (letterLeft === 0 || mutableExpression.charAt(letterLeft) === '(') {
-          if (mutableExpression.charAt(letterLeft - 1) === '¬') {
-            leftParanthesesPosition = letterLeft - 1;
-          } else {
-            leftParanthesesPosition = letterLeft;
-          }
+        if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
+          placeRight = letterRight + 1;
           break;
         }
       }
 
-      mutableExpression = `${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`;
+      // Now modify the string accordingly
+      mutableExpression = `${mutableExpression.substring(0, placeLeft)}(${mutableExpression.substring(placeLeft, placeRight)})${mutableExpression.substring(placeRight, mutableExpression.length)}`;
       x += 1;
-      // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
     }
-  }
 
-  console.log('after ∧ ', mutableExpression);
-
-  for (let x = 0; x < mutableExpression.length; x += 1) {
-    const char = mutableExpression.charAt(x);
-
-    if (char === '↮' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      let rightParanthesesPosition = -1;
-      let leftParanthesesPosition = -1;
-
-      // find first letter to the right CRASHES IF && TO THE RIGHT
-      {
-        let openBrackets = 0;
-        for (let letterRight = x; letterRight < mutableExpression.length; letterRight += 1) {
-          if (mutableExpression.charAt(letterRight) === '(') {
-            openBrackets += 1;
-          }
-
-          if (mutableExpression.charAt(letterRight) === ')') {
-            openBrackets -= 1;
-          }
-
-          if (openBrackets < 0) openBrackets = 0;
-
-          if (openBrackets !== 0) continue;
-
-          if (letterRight + 1 === mutableExpression.length || mutableExpression.charAt(letterRight) === ')') {
-            rightParanthesesPosition = letterRight;
-            break;
-          }
-        }
-      }
-
-      // find first letter to the left
-      let openBrackets = 0;
-
-      for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
-        if (mutableExpression.charAt(letterLeft) === ')') {
-          openBrackets += 1;
-        }
-
-        if (mutableExpression.charAt(letterLeft) === '(') {
-          openBrackets -= 1;
-        }
-
-        if (openBrackets < 0) openBrackets = 0;
-
-        if (openBrackets !== 0) continue;
-
-        if (letterLeft === 0 || mutableExpression.charAt(letterLeft) === '(' || mutableExpression.charAt(letterLeft)
-          .match(/\w/)) {
-          if (mutableExpression.charAt(letterLeft - 1) === '¬') {
-            leftParanthesesPosition = letterLeft - 1;
-          } else {
-            leftParanthesesPosition = letterLeft;
-          }
-          break;
-        }
-      }
-
-      mutableExpression = `${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`;
-      x += 2;
-      // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
-    }
-  }
-
-  console.log('after ↮ ', mutableExpression);
-
-  for (let x = 0; x < mutableExpression.length; x += 1) {
-    const char = mutableExpression.charAt(x);
-
-    if (char === '∨' && (mutableExpression.charAt(x - 1) !== '(' && mutableExpression.charAt(x + 1) !== ')')) {
-      let rightParanthesesPosition = -1;
-      let leftParanthesesPosition = -1;
-
-      // find first letter to the right CRASHES IF && TO THE RIGHT
-      {
-        let openBrackets = 0;
-        for (let letterRight = x; letterRight < mutableExpression.length; letterRight += 1) {
-          if (mutableExpression.charAt(letterRight) === '(') {
-            openBrackets += 1;
-          }
-
-          if (mutableExpression.charAt(letterRight) === ')') {
-            openBrackets -= 1;
-          }
-
-          if (openBrackets < 0) openBrackets = 0;
-
-          if (openBrackets !== 0) continue;
-
-          if (letterRight + 1 === mutableExpression.length || mutableExpression.charAt(letterRight) === ')') {
-            rightParanthesesPosition = letterRight;
-            break;
-          }
-        }
-      }
-
-      // find first letter to the left
-      let openBrackets = 0;
-      for (let letterLeft = x; letterLeft >= 0; letterLeft -= 1) {
-        if (mutableExpression.charAt(letterLeft) === ')') {
-          openBrackets += 1;
-        }
-
-        if (mutableExpression.charAt(letterLeft) === '(') {
-          openBrackets -= 1;
-        }
-
-        if (openBrackets < 0) openBrackets = 0;
-
-        if (openBrackets !== 0) continue;
-
-        if (letterLeft === 0 || mutableExpression.charAt(letterLeft) === '(') {
-          if (mutableExpression.charAt(letterLeft - 1) === '¬') {
-            leftParanthesesPosition = letterLeft - 1;
-          } else {
-            leftParanthesesPosition = letterLeft;
-          }
-          break;
-        }
-      }
-
-      mutableExpression = `${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`;
-      x += 2;
-      // console.log(`${mutableExpression.slice(0, leftParanthesesPosition)}(${mutableExpression.slice(leftParanthesesPosition, rightParanthesesPosition + 1)})${mutableExpression.slice(rightParanthesesPosition + 1)}`);
-    }
+    console.log('run ', x, ':', mutableExpression);
   }
 
   return mutableExpression;
