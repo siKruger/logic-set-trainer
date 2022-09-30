@@ -1,23 +1,27 @@
-import { expect, jest, test } from '@jest/globals';
-import { prepareForEvaluation, setOptionalParanthesis } from '../helper/expressionEvaluator';
+import {
+  describe, expect, jest, test,
+} from '@jest/globals';
+import { prepareForEvaluation, setOptionalParenthesis } from '../helper/expressionEvaluator';
 
-test('¬ Operations', () => {
-  expect(setOptionalParanthesis(prepareForEvaluation('!a'))).toBe('(¬A)');
-  expect(setOptionalParanthesis(prepareForEvaluation('(!a)'))).toBe('((¬A))');
-  expect(setOptionalParanthesis(prepareForEvaluation('!a && b'))).toBe('((¬A)∧B)');
-  expect(setOptionalParanthesis(prepareForEvaluation('!(a && b)'))).toBe('(¬((A∧B)))');
-});
+describe('optional parentheses', () => {
+  test('¬ Operations', () => {
+    expect(setOptionalParenthesis(prepareForEvaluation('!a'))).toBe('(¬A)');
+    expect(setOptionalParenthesis(prepareForEvaluation('(!a)'))).toBe('((¬A))');
+    expect(setOptionalParenthesis(prepareForEvaluation('!a && b'))).toBe('((¬A)∧B)');
+    expect(setOptionalParenthesis(prepareForEvaluation('!(a && b)'))).toBe('(¬((A∧B)))');
+  });
 
-test('&& Operations', () => {
-  expect(setOptionalParanthesis(prepareForEvaluation('a&&b'))).toBe('(A∧B)');
-  expect(setOptionalParanthesis(prepareForEvaluation('a&&b&&c'))).toBe('((A∧B)∧C)');
-  expect(setOptionalParanthesis(prepareForEvaluation('a&&(b&&c)'))).toBe('(A∧((B∧C)))');
-  expect(setOptionalParanthesis(prepareForEvaluation('(a&&b)&&c'))).toBe('(((A∧B))∧C)');
-});
+  test('&& Operations', () => {
+    expect(setOptionalParenthesis(prepareForEvaluation('a&&b'))).toBe('(A∧B)');
+    expect(setOptionalParenthesis(prepareForEvaluation('a&&b&&c'))).toBe('((A∧B)∧C)');
+    expect(setOptionalParenthesis(prepareForEvaluation('a&&(b&&c)'))).toBe('(A∧((B∧C)))');
+    expect(setOptionalParenthesis(prepareForEvaluation('(a&&b)&&c'))).toBe('(((A∧B))∧C)');
+  });
 
-test('<=!=> Operations', () => {
-  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>b'))).toBe('(A↮B)');
-  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>b<=!=>c'))).toBe('((A↮B)↮C)');
-  expect(setOptionalParanthesis(prepareForEvaluation('a<=!=>(b<=!=>c)'))).toBe('(A↮((B↮C)))');
-  expect(setOptionalParanthesis(prepareForEvaluation('(a<=!=>b)<=!=>c'))).toBe('(((A↮B))↮C)');
+  test('<=!=> Operations', () => {
+    expect(setOptionalParenthesis(prepareForEvaluation('a<=!=>b'))).toBe('(A↮B)');
+    expect(setOptionalParenthesis(prepareForEvaluation('a<=!=>b<=!=>c'))).toBe('((A↮B)↮C)');
+    expect(setOptionalParenthesis(prepareForEvaluation('a<=!=>(b<=!=>c)'))).toBe('(A↮((B↮C)))');
+    expect(setOptionalParenthesis(prepareForEvaluation('(a<=!=>b)<=!=>c'))).toBe('(((A↮B))↮C)');
+  });
 });

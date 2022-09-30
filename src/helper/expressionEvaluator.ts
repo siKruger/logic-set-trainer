@@ -76,44 +76,50 @@ export const splitByParentheses = (expression: string): string[] => {
 // @ts-ignore
 const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
 
-const setOptionalParanthesesForOperator = (expression: string, operator: string) => {
+function findRightPlacement(x: number, mutableExpression: string) {
+  let openBracketCount = 0;
+  let placeRight = -1;
+  for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
+    const rightSideLetter = mutableExpression.charAt(letterRight);
+
+    if (rightSideLetter === '(') openBracketCount += 1;
+    if (rightSideLetter === ')') openBracketCount -= 1;
+
+    if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
+      placeRight = letterRight + 1;
+      break;
+    }
+  }
+  return placeRight;
+}
+
+function findLeftPlacement(x: number, mutableExpression: string) {
+  let openBracketCount = 0;
+  let placeLeft = -1;
+  for (let letterLeft = x - 1; letterLeft >= 0; letterLeft -= 1) {
+    const leftSideLetter = mutableExpression.charAt(letterLeft);
+
+    if (leftSideLetter === ')') openBracketCount += 1;
+    if (leftSideLetter === '(') openBracketCount -= 1;
+
+    // Save to place
+    if (openBracketCount === 0 && leftSideLetter.match(/\w/)) {
+      placeLeft = letterLeft;
+      break;
+    }
+  }
+  return placeLeft;
+}
+
+const setOptionalParenthesisForOperator = (expression: string, operator: string) => {
   let mutableExpression = expression;
   for (let x = 0; x < mutableExpression.length; x += 1) {
     const currentChar = mutableExpression.charAt(x);
 
     // Work to do
     if (currentChar === operator) {
-      let placeLeft = -1;
-      let placeRight = -1;
-
-      // Left Search
-      let openBracketCount = 0;
-      for (let letterLeft = x - 1; letterLeft >= 0; letterLeft -= 1) {
-        const leftSideLetter = mutableExpression.charAt(letterLeft);
-
-        if (leftSideLetter === ')') openBracketCount += 1;
-        if (leftSideLetter === '(') openBracketCount -= 1;
-
-        // Save to place
-        if (openBracketCount === 0 && leftSideLetter.match(/\w/)) {
-          placeLeft = letterLeft;
-          break;
-        }
-      }
-
-      // Right Search
-      openBracketCount = 0;
-      for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
-        const rightSideLetter = mutableExpression.charAt(letterRight);
-
-        if (rightSideLetter === '(') openBracketCount += 1;
-        if (rightSideLetter === ')') openBracketCount -= 1;
-
-        if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
-          placeRight = letterRight + 1;
-          break;
-        }
-      }
+      const placeLeft = findLeftPlacement(x, mutableExpression);
+      const placeRight = findRightPlacement(x, mutableExpression);
 
       // Now modify the string accordingly
       mutableExpression = `${mutableExpression.substring(0, placeLeft)}(${mutableExpression.substring(placeLeft, placeRight)})${mutableExpression.substring(placeRight)}`;
@@ -126,7 +132,7 @@ const setOptionalParanthesesForOperator = (expression: string, operator: string)
 /**
  * Operators have their precedence. We want to set all paranthesis in order to evaluate right
  */
-export const setOptionalParanthesis = (expression: string) => {
+export const setOptionalParenthesis = (expression: string) => {
   let mutableExpression = expression;
 
   for (let x = 0; x < mutableExpression.length; x += 1) {
@@ -136,28 +142,15 @@ export const setOptionalParanthesis = (expression: string) => {
     if (char === '¬') {
       // Search the right side
       // Right Search
-      let openBracketCount = 0;
-      let placeRight = -1;
-      for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
-        const rightSideLetter = mutableExpression.charAt(letterRight);
-
-        if (rightSideLetter === '(') openBracketCount += 1;
-        if (rightSideLetter === ')') openBracketCount -= 1;
-
-        if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
-          placeRight = letterRight + 1;
-          break;
-        }
-      }
+      const placeRight = findRightPlacement(x, mutableExpression);
 
       mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
       x += 1;
     }
   }
 
-  // mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '¬');
-  mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '∧');
-  mutableExpression = setOptionalParanthesesForOperator(mutableExpression, '↮');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '∧');
+  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '↮');
 
   return mutableExpression;
 };
@@ -182,7 +175,7 @@ export const prepareForEvaluation = (expression: string): string => {
  */
 export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
   let uppercaseExpression = prepareForEvaluation(expression);
-  uppercaseExpression = setOptionalParanthesis(uppercaseExpression);
+  uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
   console.log(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
@@ -190,5 +183,3 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
 
   return { variables, steps, binaryOptions: cartesian(binaries) };
 };
-
-export default splitByParentheses;
