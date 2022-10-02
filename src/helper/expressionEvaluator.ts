@@ -200,9 +200,10 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
+  const binaryOptions = cartesian(binaries);
   const steps = splitByParentheses(uppercaseExpression);
 
   return {
-    variables, steps, binaryOptions: cartesian(binaries), parentheses: uppercaseExpression,
+    variables, steps, binaryOptions, parentheses: uppercaseExpression,
   };
 };
