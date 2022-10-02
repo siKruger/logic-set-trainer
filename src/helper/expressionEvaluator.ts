@@ -86,11 +86,18 @@ function findRightPlacement(x: number, mutableExpression: string) {
     if (rightSideLetter === '(') openBracketCount += 1;
     if (rightSideLetter === ')') openBracketCount -= 1;
 
+    console.log(openBracketCount);
+    console.log(letterRight);
+    console.log(rightSideLetter);
+
     if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
+      console.log('place');
       placeRight = letterRight + 1;
       break;
     }
   }
+
+  console.log('+++++++++++');
   return placeRight;
 }
 
@@ -112,7 +119,7 @@ function findLeftPlacement(x: number, mutableExpression: string) {
   return placeLeft;
 }
 
-const setOptionalParenthesisForOperator = (expression: string, operator: string) => {
+const setOptionalParenthesesForOperator = (expression: string, operator: string) => {
   let mutableExpression = expression;
   for (let x = 0; x < mutableExpression.length; x += 1) {
     const currentChar = mutableExpression.charAt(x);
@@ -150,12 +157,12 @@ export const setOptionalParenthesis = (expression: string) => {
     }
   }
 
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '∧');
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '↮');
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '∨');
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇔');
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇒');
-  mutableExpression = setOptionalParenthesisForOperator(mutableExpression, '⇐');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '∧');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '↮');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '∨');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '⇔');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '⇒');
+  mutableExpression = setOptionalParenthesesForOperator(mutableExpression, '⇐');
 
   return mutableExpression;
 };
