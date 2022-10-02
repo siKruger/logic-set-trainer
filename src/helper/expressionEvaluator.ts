@@ -28,9 +28,8 @@ export const getAllVariables = (expression: string): string[] => [...new Set([..
  * @param expression Expression to evalute.
  */
 
-// todo not correct anymore.. :(
 export const splitByParentheses = (expression: string): string[] => {
-  let mutableExpression = expression;
+  const mutableExpression = expression;
 
   const openParentheses = [...mutableExpression].filter((val) => val === '(');
   const closedParentheses = [...mutableExpression].filter((val) => val === ')');
@@ -42,37 +41,35 @@ export const splitByParentheses = (expression: string): string[] => {
   if (openParentheses.length === 0) return [mutableExpression];
 
   // We have some work to do.. :(
+  const outputBuffer: string[] = [];
+
   const openParenthesesPosition: number[] = [];
   [...mutableExpression].forEach((char, index) => {
     if (char === '(') openParenthesesPosition.push(index);
   });
+  openParenthesesPosition.reverse();
 
-  const outputBuffer: string[] = [];
-  let previousReplaced = '';
+  openParenthesesPosition.forEach((position) => {
+    const openSubstring = mutableExpression.substring(position);
 
-  // todo re-do to allow previous expression
-  for (let x = openParenthesesPosition.length - 1; x >= 0; x -= 1) {
-    const position = openParenthesesPosition[x];
-    const parenthesesPart = mutableExpression.slice(position);
+    let openBracket = 0;
+    let closingPosition = -1;
 
-    for (let subIndex = 0; subIndex < parenthesesPart.length; subIndex += 1) {
-      const skippableParentheses: number[] = [];
+    for (let x = 0; x < openSubstring.length; x += 1) {
+      const char = openSubstring.charAt(x);
 
-      const subPart = parenthesesPart[subIndex];
-      if (subPart === ')' && !skippableParentheses.includes(position + subIndex + 1)) {
-        skippableParentheses.push(position + subIndex + 1);
-        openParenthesesPosition.pop();
-        outputBuffer.push(mutableExpression.substring(position, position + subIndex + 1));
-        // mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*start*${mutableExpression.substring(position, position + subIndex + 1)}*ende*`);
-        previousReplaced = mutableExpression.substring(position, position + subIndex + 1);
-        mutableExpression = mutableExpression.replaceAll(mutableExpression.substring(position, position + subIndex + 1), `*previous step ${x}*`);
+      if (char === '(') openBracket += 1;
+      if (char === ')') openBracket -= 1;
 
+      if (openBracket === 0) {
+        closingPosition = x + 1;
         break;
       }
     }
-  }
 
-  outputBuffer.push(mutableExpression);
+    outputBuffer.push(openSubstring.substring(0, closingPosition));
+  });
+
   return outputBuffer;
 };
 
