@@ -14,8 +14,6 @@ function Truthtable() {
 
   const getEvaluation = () => {
     const evaluated = evaluateTruthtable(expression);
-    console.log(evaluated.binaryOptions);
-    console.log(evaluated.variables);
     setEvaluatedExpression(evaluated);
   };
 
