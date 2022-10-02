@@ -60,5 +60,6 @@ describe('optional parentheses', () => {
     expect(setOptionalParenthesis(prepareForEvaluation('a || !(b && c)'))).toBe('(A∨(¬((B∧C))))');
     expect(setOptionalParenthesis(prepareForEvaluation('a && !(b || c)'))).toBe('(A∧(¬((B∨C))))');
     expect(setOptionalParenthesis(prepareForEvaluation('a && (b && c) && d && e'))).toBe('(((A∧((B∧C)))∧D)∧E)');
+    expect(setOptionalParenthesis(prepareForEvaluation('(a || b) && (!c  | | d) => (a <=!=> !d && (!a <==> d) | | c <=  !a) <= !b && !a'))).toBe('(((((A∨B))∧(((¬C)∨D)))⇒((((A↮((¬D)∧(((¬A)⇔D))))∨C)⇐(¬A))))⇐((¬B)∧(¬A)))');
   });
 });
