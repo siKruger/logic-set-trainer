@@ -86,18 +86,22 @@ function findRightPlacement(x: number, mutableExpression: string) {
     if (rightSideLetter === '(') openBracketCount += 1;
     if (rightSideLetter === ')') openBracketCount -= 1;
 
-    console.log(openBracketCount);
-    console.log(letterRight);
-    console.log(rightSideLetter);
-
-    if (letterRight === mutableExpression.length - 1 || (openBracketCount === 0 && rightSideLetter.match(/\w/))) {
-      console.log('place');
-      placeRight = letterRight + 1;
-      break;
+    if (letterRight === mutableExpression.length - 1 || openBracketCount === 0) {
+      if (openBracketCount === 0) {
+        if (rightSideLetter.match(/\w/)) {
+          placeRight = letterRight + 1;
+          break;
+        } else {
+          placeRight = letterRight;
+          break;
+        }
+      } else {
+        placeRight = letterRight + 1;
+        break;
+      }
     }
   }
 
-  console.log('+++++++++++');
   return placeRight;
 }
 

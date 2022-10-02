@@ -59,6 +59,6 @@ describe('optional parentheses', () => {
     expect(setOptionalParenthesis(prepareForEvaluation('!a || (b && c)'))).toBe('((¬A)∨((B∧C)))');
     expect(setOptionalParenthesis(prepareForEvaluation('a || !(b && c)'))).toBe('(A∨(¬((B∧C))))');
     expect(setOptionalParenthesis(prepareForEvaluation('a && !(b || c)'))).toBe('(A∧(¬((B∨C))))');
-    expect(setOptionalParenthesis(prepareForEvaluation('a && (b && c) && d && e'))).toBe('(((A ∧((B∧C)))∧D)∧E)');
+    expect(setOptionalParenthesis(prepareForEvaluation('a && (b && c) && d && e'))).toBe('(((A∧((B∧C)))∧D)∧E)');
   });
 });
