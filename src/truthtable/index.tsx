@@ -14,6 +14,8 @@ function Truthtable() {
 
   const getEvaluation = () => {
     const evaluated = evaluateTruthtable(expression);
+    console.log(evaluated.binaryOptions);
+    console.log(evaluated.variables);
     setEvaluatedExpression(evaluated);
   };
 
@@ -68,24 +70,41 @@ function Truthtable() {
         </thead>
         <tbody>
           {
-          evaluatedExpression?.binaryOptions.map((binaryRow) => (
-            <tr>
-              {' '}
-              {binaryRow.map((binaryValue) => (
-                <td>
+            evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
+              ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
+                <tr>
                   {' '}
-                  {binaryValue}
+                  <td>
+                    {' '}
+                    {binaryValue}
+                  </td>
+                  {evaluatedExpression?.steps.map(() => (
+                    <td>
+                      ** PLACEHOLDER **
+                    </td>
+                  ))}
+                </tr>
+              ))
+              : evaluatedExpression?.binaryOptions.map((binaryRow) => (
+                <tr>
                   {' '}
-                </td>
-              ))}
+                  {
+                binaryRow.map((binaryValue) => (
+                  <td>
+                    {' '}
+                    {binaryValue}
+                    {' '}
+                  </td>
+                ))
+}
 
-              {evaluatedExpression?.steps.map(() => (
-                <td>
-                  ** PLACEHOLDER **
-                </td>
-              ))}
-            </tr>
-          ))
+                  {evaluatedExpression?.steps.map(() => (
+                    <td>
+                      ** PLACEHOLDER **
+                    </td>
+                  ))}
+                </tr>
+              ))
         }
         </tbody>
       </Table>

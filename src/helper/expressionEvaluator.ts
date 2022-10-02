@@ -20,8 +20,7 @@ export type TruthtableEvaluation = {
  * @param expression
  */
 
-// todo distinct
-export const getAllVariables = (expression: string): string[] => [...expression.matchAll(/\w/g)].flat();
+export const getAllVariables = (expression: string): string[] => [...new Set([...expression.matchAll(/\w/g)].flat())];
 
 /**
  * Splits a string up into its parentheses parts. The higher the order in the array the earlier it needs to be
@@ -113,24 +112,18 @@ function findLeftPlacement(x: number, mutableExpression: string) {
   let openBracketCount = 0;
   let placeLeft = -1;
   for (let letterLeft = x - 1; letterLeft >= 0; letterLeft -= 1) {
-    console.log(' +++ new search +++ ');
     const leftSideLetter = mutableExpression.charAt(letterLeft);
 
     if (leftSideLetter === ')') openBracketCount += 1;
     if (leftSideLetter === '(') openBracketCount -= 1;
 
     // Save to place
-    console.log(leftSideLetter);
-    console.log('open bracket', openBracketCount);
     if (openBracketCount === 0) {
-      console.log('found a char: ', leftSideLetter);
-
       if (leftSideLetter.match(/\w/)) {
         placeLeft = letterLeft;
         break;
       } else {
         placeLeft = letterLeft + 1;
-        console.log('hmmmmm... nothing to do here');
         break;
       }
     }
@@ -145,7 +138,6 @@ const setOptionalParenthesesForOperator = (expression: string, operator: string)
 
     // Work to do
     if (currentChar === operator) {
-      console.log('**********', operator, '*************');
       const placeLeft = findLeftPlacement(x, mutableExpression);
       const placeRight = findRightPlacement(x, mutableExpression);
 
@@ -209,7 +201,6 @@ export const prepareForEvaluation = (expression: string): string => {
 export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
   let uppercaseExpression = prepareForEvaluation(expression);
   uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
-  console.log(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
   const steps = splitByParentheses(uppercaseExpression);
