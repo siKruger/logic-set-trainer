@@ -17,11 +17,41 @@ function Truthtable() {
     setEvaluatedExpression(evaluated);
   };
 
+  const generateCell = () => (
+    <td>
+      ** PLACEHOLDER **
+    </td>
+  );
+
   return (
     <>
       <Alert severity="info">
         <AlertTitle>Info</AlertTitle>
         Please enter your expression and press evaluate
+        <br />
+        Allowed characters are (ordered in their precedence):
+        <br />
+        ()
+        {' '}
+        <br />
+        !
+        {' '}
+        <br />
+        &&
+        {' '}
+        <br />
+        {'<=!=>'}
+        {' '}
+        <br />
+        ||
+        {' '}
+        <br />
+        ==
+        {' '}
+        <br />
+        {'=>,<='}
+        {' '}
+        <br />
       </Alert>
       <br />
       <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
@@ -95,7 +125,6 @@ function Truthtable() {
                   </td>
                 ))
 }
-
                   {evaluatedExpression?.steps.map(() => (
                     <td>
                       ** PLACEHOLDER **
