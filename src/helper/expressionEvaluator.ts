@@ -19,6 +19,8 @@ export type TruthtableEvaluation = {
  * Gets all parameters in a expression
  * @param expression
  */
+
+// todo distinct
 export const getAllVariables = (expression: string): string[] => [...expression.matchAll(/\w/g)].flat();
 
 /**
@@ -26,6 +28,8 @@ export const getAllVariables = (expression: string): string[] => [...expression.
  * evaluated
  * @param expression Expression to evalute.
  */
+
+// todo not correct anymore.. :(
 export const splitByParentheses = (expression: string): string[] => {
   let mutableExpression = expression;
 
@@ -109,15 +113,26 @@ function findLeftPlacement(x: number, mutableExpression: string) {
   let openBracketCount = 0;
   let placeLeft = -1;
   for (let letterLeft = x - 1; letterLeft >= 0; letterLeft -= 1) {
+    console.log(' +++ new search +++ ');
     const leftSideLetter = mutableExpression.charAt(letterLeft);
 
     if (leftSideLetter === ')') openBracketCount += 1;
     if (leftSideLetter === '(') openBracketCount -= 1;
 
     // Save to place
-    if (openBracketCount === 0 && leftSideLetter.match(/\w/)) {
-      placeLeft = letterLeft;
-      break;
+    console.log(leftSideLetter);
+    console.log('open bracket', openBracketCount);
+    if (openBracketCount === 0) {
+      console.log('found a char: ', leftSideLetter);
+
+      if (leftSideLetter.match(/\w/)) {
+        placeLeft = letterLeft;
+        break;
+      } else {
+        placeLeft = letterLeft + 1;
+        console.log('hmmmmm... nothing to do here');
+        break;
+      }
     }
   }
   return placeLeft;
@@ -130,6 +145,7 @@ const setOptionalParenthesesForOperator = (expression: string, operator: string)
 
     // Work to do
     if (currentChar === operator) {
+      console.log('**********', operator, '*************');
       const placeLeft = findLeftPlacement(x, mutableExpression);
       const placeRight = findRightPlacement(x, mutableExpression);
 
