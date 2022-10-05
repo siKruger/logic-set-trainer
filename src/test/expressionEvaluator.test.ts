@@ -6,7 +6,7 @@ import { prepareForEvaluation, setOptionalParenthesis } from '../helper/expressi
 describe('optional parentheses', () => {
   test('¬ Operations', () => {
     expect(setOptionalParenthesis(prepareForEvaluation('!a'))).toBe('(¬A)');
-    expect(setOptionalParenthesis(prepareForEvaluation('(!a)'))).toBe('((¬A))');
+    expect(setOptionalParenthesis(prepareForEvaluation('(!a)'))).toBe('(¬A)');
     expect(setOptionalParenthesis(prepareForEvaluation('!a && b'))).toBe('((¬A)∧B)');
     expect(setOptionalParenthesis(prepareForEvaluation('!(a && b)'))).toBe('(¬((A∧B)))');
   });
