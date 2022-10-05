@@ -1,7 +1,19 @@
+const findOperator = (expression: string) => {
+
+  for (const op of operators) {
+    if (expression.includes(op)) {
+      //console.log(op)
+      return op;
+    }
+  }
+  console.log("No Operator found in " + expression + ", default is ∧");
+  return '∧';
+};
+
 const evaluateSymbol = (expression: string) => {
   console.log(expression);
 
-  const operator = expression.charAt(expression.length / 2);
+  const operator = findOperator(expression);
   const boolTest = evaluateOperator(operator, expression.charAt(expression.length / 2 - 1), expression.charAt(expression.length / 2 + 1));
 
   return boolTest ? '1' : '0';
