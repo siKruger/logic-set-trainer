@@ -12,9 +12,16 @@ const findOperator = (expression: string) => {
 
 const evaluateSymbol = (expression: string) => {
   console.log(expression);
-
+  var boolTest = false;
   const operator = findOperator(expression);
-  const boolTest = evaluateOperator(operator, expression.charAt(expression.length / 2 - 1), expression.charAt(expression.length / 2 + 1));
+
+  //special treatment for expression with negations because no left side
+  if (operator == '¬') {
+    boolTest = evaluateOperator(operator, "blankBecauseNoLeftSide", expression.charAt(expression.indexOf('¬') + 1));
+  }
+  else {
+    boolTest = evaluateOperator(operator, expression.charAt(expression.length / 2 - 1), expression.charAt(expression.length / 2 + 1));
+  }
 
   return boolTest ? '1' : '0';
 };
@@ -32,10 +39,12 @@ const evaluateOperator = (operator: string, leftSide: string, rightSide: string)
       return leftOperatorBoolean === rightOperatorBoolean;
     case '↮':
       return leftOperatorBoolean !== rightOperatorBoolean;
+    case '¬':
+      return !rightOperatorBoolean;
   }
 
   return false;
 };
 
-const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐'];
+const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐', '¬'];
 export default evaluateSymbol;
