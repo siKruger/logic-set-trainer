@@ -48,12 +48,12 @@ function Truthtable() {
       if (index === -1) continue;
       let replacedValue = getReplacedValue(values, index);
 
-
-
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
     }
 
+    console.log(mutableExpression + " before evaluating");
     mutableExpression = evaluateSymbol(mutableExpression);
+    console.log(mutableExpression + " after evaluating");
 
     console.log(mutableExpression + " mutableExpression in generateCell");
 
@@ -133,7 +133,7 @@ function Truthtable() {
               </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
-              <th key={step}>
+              <th>
                 {' '}
                 {step}
                 {' '}
@@ -142,49 +142,33 @@ function Truthtable() {
           </tr>
         </thead>
         <tbody>
-          {/* todo better keys  */}
           {
             evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary`}>
+              ? evaluatedExpression?.binaryOptions.map((binaryValue, index) => (
+                <tr>
                   {' '}
                   <td>
                     {' '}
                     {binaryValue}
                   </td>
-                  {evaluatedExpression?.steps.map((step, lowerIndex) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + upperIndex + lowerIndex}>
-                      {' '}
-                      {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
-                      {' '}
-                    </td>
-                  ))}
+                  {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
                 </tr>
               ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary1`}>
+              : evaluatedExpression?.binaryOptions.map((binaryRow, index) => (
+                <tr>
                   {' '}
                   {
-                    binaryRow.map((binaryValue, lowerIndex) => (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <td key={`${upperIndex}lowerBinary1${lowerIndex}`}>
+                    binaryRow.map((binaryValue) => (
+                      <td>
                         {' '}
                         {binaryValue}
                         {' '}
                       </td>
                     ))
                   }
-                  {evaluatedExpression?.steps.map((step) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + binaryRow + upperIndex}>
-                      {' '}
-                      {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
-                      {' '}
-                    </td>
-                  ))}
+
+                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+
                 </tr>
               ))
           }
