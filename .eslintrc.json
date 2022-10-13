@@ -22,6 +22,7 @@
         "react",
         "@typescript-eslint"
     ],
+    "ignorePatterns": ["**/build/*"],
     "rules": {
         "linebreak-style": [
             "error",

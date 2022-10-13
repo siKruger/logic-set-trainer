@@ -3,49 +3,29 @@ import {
   Alert, AlertTitle, Button, TextField,
 } from '@mui/material';
 import { Table } from 'react-bootstrap';
-import {
-  evaluateTruthtable,
-  TruthtableEvaluation,
-} from '../helper/expressionEvaluator';
-import evaluateSymbol from '../helper/logicConverter';
+import { toast } from 'react-toastify';
+import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
+import { checkCorrectSyntax } from '../helper/expressionValidator';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
 
   const getEvaluation = () => {
-    const evaluated = evaluateTruthtable(expression);
-    setEvaluatedExpression(evaluated);
-  };
-
-  //console.log("evalutedExpression:");
-  //console.log(evaluatedExpression?.binaryOptions);
-  //console.log(evaluatedExpression?.parentheses);
-  //console.log(evaluatedExpression?.steps);
-  //console.log(evaluatedExpression?.variables);
-  //console.log("/evaluatedExpression");
-
-  const getReplacedValue = (values: number[], index: number) => {
-    if (typeof (values) !== "number") {
-      return values[index];
+    if (!checkCorrectSyntax(expression)) {
+      toast.error('Der eingegebene Ausdruck enthält einen Fehler und kann nicht ausgewertet werden!', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     } else {
-      return Number(values);
-    }
-  }
-
-  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
-    let mutableExpression = singleStep;
-    for (let x = 0; x < mutableExpression.length; x += 1) {
-      const currentChar = mutableExpression.charAt(x);
-
-      const index = variables.indexOf(currentChar);
-
-      if (index === -1) continue;
-      let replacedValue = getReplacedValue(values, index);
-
-
-
-      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+      const evaluated = evaluateTruthtable(expression);
+      setEvaluatedExpression(evaluated);
     }
 
     mutableExpression = evaluateSymbol(mutableExpression);
@@ -126,7 +106,7 @@ function Truthtable() {
               </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
-              <th>
+              <th key={step}>
                 {' '}
                 {step}
                 {' '}
@@ -135,34 +115,49 @@ function Truthtable() {
           </tr>
         </thead>
         <tbody>
+          {/* todo better keys  */}
           {
             evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue, index) => (
-                <tr>
+              ? evaluatedExpression?.binaryOptions.map((binaryValue, upperIndex) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <tr key={`${upperIndex}upperBinary`}>
                   {' '}
                   <td>
                     {' '}
                     {binaryValue}
                   </td>
-                  {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
-
+                  {evaluatedExpression?.steps.map((step, lowerIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <td key={step + upperIndex + lowerIndex}>
+                      {' '}
+                      **PLACEHOLDER**
+                      {' '}
+                    </td>
+                  ))}
                 </tr>
               ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow, index) => (
-                <tr>
+              : evaluatedExpression?.binaryOptions.map((binaryRow, upperIndex) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <tr key={`${upperIndex}upperBinary1`}>
                   {' '}
                   {
-                    binaryRow.map((binaryValue) => (
-                      <td>
+                    binaryRow.map((binaryValue, lowerIndex) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <td key={`${upperIndex}lowerBinary1${lowerIndex}`}>
                         {' '}
                         {binaryValue}
                         {' '}
                       </td>
                     ))
                   }
-
-                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
-
+                  {evaluatedExpression?.steps.map((step) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <td key={step + binaryRow + upperIndex}>
+                      {' '}
+                      **PLACEHOLDER**
+                      {' '}
+                    </td>
+                  ))}
                 </tr>
               ))
           }

@@ -59,6 +59,7 @@ export const splitByParentheses = (expression: string): string[] => {
 };
 
 // todo ts ignore is bad
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
 
