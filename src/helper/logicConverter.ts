@@ -6,13 +6,13 @@ const findOperator = (expression: string) => {
       return op;
     }
   }
-  console.log("No Operator found in " + expression + ", default is ∧");
-  return '∧';
+  console.log("No Operator found in " + expression + ", returning empty");
+  return ' ';
 };
 
 const evaluateSymbol = (expression: string) => {
   console.log(expression);
-  var boolTest = false;
+  let boolTest = false;
   const operator = findOperator(expression);
 
   //special treatment for expression with negations because no left side

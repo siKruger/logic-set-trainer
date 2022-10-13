@@ -18,26 +18,42 @@ function Truthtable() {
     setEvaluatedExpression(evaluated);
   };
 
+  //console.log("evalutedExpression:");
+  //console.log(evaluatedExpression?.binaryOptions);
+  //console.log(evaluatedExpression?.parentheses);
+  //console.log(evaluatedExpression?.steps);
+  //console.log(evaluatedExpression?.variables);
+  //console.log("/evaluatedExpression");
+
+  const getReplacedValue = (values: number[], index: number) => {
+    if (typeof (values) !== "number") {
+      return values[index];
+    } else {
+      return Number(values);
+    }
+  }
+
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
     for (let x = 0; x < mutableExpression.length; x += 1) {
       const currentChar = mutableExpression.charAt(x);
 
       const index = variables.indexOf(currentChar);
-      if (index === -1) continue;
 
-      const replacedValue = values[index];
+      if (index === -1) continue;
+      let replacedValue = getReplacedValue(values, index);
+
+
+
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
     }
 
     mutableExpression = evaluateSymbol(mutableExpression);
+
     return (
       <td>
         {' '}
         {mutableExpression}
-        {singleStep}
-        {values}
-        {variables}
         {' '}
       </td>
     );
@@ -87,7 +103,7 @@ function Truthtable() {
       {' '}
       {evaluatedExpression?.variables}
       <ul>
-        { evaluatedExpression?.steps.map((val, index) => (
+        {evaluatedExpression?.steps.map((val, index) => (
           <li key={val}>
             Step
             {' '}
@@ -96,7 +112,7 @@ function Truthtable() {
             {' '}
             {val}
           </li>
-        )) }
+        ))}
       </ul>
 
       <Table striped bordered hover>
@@ -128,7 +144,6 @@ function Truthtable() {
                     {' '}
                     {binaryValue}
                   </td>
-
                   {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
 
                 </tr>
@@ -137,20 +152,20 @@ function Truthtable() {
                 <tr>
                   {' '}
                   {
-                binaryRow.map((binaryValue) => (
-                  <td>
-                    {' '}
-                    {binaryValue}
-                    {' '}
-                  </td>
-                ))
-              }
+                    binaryRow.map((binaryValue) => (
+                      <td>
+                        {' '}
+                        {binaryValue}
+                        {' '}
+                      </td>
+                    ))
+                  }
 
                   {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
-        }
+          }
         </tbody>
       </Table>
     </>
