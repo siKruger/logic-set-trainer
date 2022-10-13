@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
+import evaluateSymbol from "../helper/logicConverter";
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -27,8 +28,34 @@ function Truthtable() {
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
+  };
+
+  const getReplacedValue = (values: number[], index: number) => {
+    if (typeof (values) !== "number") {
+      return values[index];
+    } else {
+      return Number(values);
+    }
+  }
+
+  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
+    let mutableExpression = singleStep;
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const currentChar = mutableExpression.charAt(x);
+
+      const index = variables.indexOf(currentChar);
+
+      if (index === -1) continue;
+      let replacedValue = getReplacedValue(values, index);
+
+
+
+      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+    }
 
     mutableExpression = evaluateSymbol(mutableExpression);
+
+    console.log(mutableExpression + " mutableExpression in generateCell");
 
     return (
       <td>
@@ -130,7 +157,7 @@ function Truthtable() {
                     // eslint-disable-next-line react/no-array-index-key
                     <td key={step + upperIndex + lowerIndex}>
                       {' '}
-                      **PLACEHOLDER**
+                      {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
                       {' '}
                     </td>
                   ))}
@@ -154,7 +181,7 @@ function Truthtable() {
                     // eslint-disable-next-line react/no-array-index-key
                     <td key={step + binaryRow + upperIndex}>
                       {' '}
-                      **PLACEHOLDER**
+                      {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
                       {' '}
                     </td>
                   ))}
