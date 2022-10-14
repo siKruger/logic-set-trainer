@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
-import evaluateSymbol from "../helper/logicConverter";
+import { evaluateWholeExpression } from "../helper/logicConverter";
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -51,11 +51,7 @@ function Truthtable() {
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
     }
 
-    console.log(mutableExpression + " before evaluating");
-    mutableExpression = evaluateSymbol(mutableExpression);
-    console.log(mutableExpression + " after evaluating");
-
-    console.log(mutableExpression + " mutableExpression in generateCell");
+    mutableExpression = evaluateWholeExpression(mutableExpression);
 
     return (
       <td>
@@ -91,7 +87,7 @@ function Truthtable() {
         ||
         {' '}
         <br />
-        ==
+        {'<==>'}
         {' '}
         <br />
         {'=>,<='}
