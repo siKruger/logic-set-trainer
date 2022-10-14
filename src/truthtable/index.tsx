@@ -90,7 +90,7 @@ function Truthtable() {
         {'<==>'}
         {' '}
         <br />
-        {'=>,<='}
+        {'=>'}
         {' '}
         <br />
       </Alert>
