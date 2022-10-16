@@ -22,6 +22,7 @@
         "react",
         "@typescript-eslint"
     ],
+    "ignorePatterns": ["**/build/*"],
     "rules": {
         "linebreak-style": [
             "error",
@@ -37,6 +38,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "max-len": "off"
     }
 }
