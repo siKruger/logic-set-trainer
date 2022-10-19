@@ -30,7 +30,7 @@ function Truthtable() {
     }
   };
 
-  const getReplacedValue = (values: number[], index: number) => {
+  const getReplacedValue = (values: number[] | number, index: number) => {
     if (typeof (values) !== 'number') {
       return values[index];
     }
