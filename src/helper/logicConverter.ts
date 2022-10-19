@@ -1,29 +1,12 @@
-const findOperator = (expression: string) => {
+const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐', '¬'];
 
-  for (const op of operators) {
-    if (expression.includes(op)) {
-      //console.log(op)
-      return op;
+const findOperator = (expression: string) => {
+  for (let i = 0; i < operators.length; i += 1) {
+    if (expression.includes(operators[i])) {
+      return operators[i];
     }
   }
-  //console.log("No Operator found in " + expression + ", returning empty");
   return ' ';
-};
-
-const evaluateSymbol = (expression: string) => {
-  //console.log(expression);
-  let boolTest = false;
-  const operator = findOperator(expression);
-
-  //special treatment for expression with negations because no left side
-  if (operator == '¬') {
-    boolTest = evaluateOperator(operator, "blankBecauseNoLeftSide", expression.charAt(expression.indexOf('¬') + 1));
-  }
-  else {
-    boolTest = evaluateOperator(operator, expression.charAt(expression.length / 2 - 1), expression.charAt(expression.length / 2 + 1));
-  }
-
-  return boolTest ? '1' : '0';
 };
 
 const evaluateOperator = (operator: string, leftSide: string, rightSide: string): boolean => {
@@ -43,17 +26,31 @@ const evaluateOperator = (operator: string, leftSide: string, rightSide: string)
       return !rightOperatorBoolean;
     case '⇒':
       return (!leftOperatorBoolean || rightOperatorBoolean);
+    default:
+      return rightOperatorBoolean;
+  }
+};
+
+const evaluateSymbol = (expression: string) => {
+  let boolTest;
+  const operator = findOperator(expression);
+
+  // special treatment for expression with negations because no left side
+  if (operator === '¬') {
+    boolTest = evaluateOperator(operator, 'blankBecauseNoLeftSide', expression.charAt(expression.indexOf('¬') + 1));
+  } else {
+    boolTest = evaluateOperator(operator, expression.charAt(expression.length / 2 - 1), expression.charAt(expression.length / 2 + 1));
   }
 
-  return false;
+  return boolTest ? '1' : '0';
 };
 
 const evaluateWholeExpression = (expression: string): string => {
-  //console.log("In new function");
-  //finding most inner parantheses
+  // finding most inner parentheses
+  let returnedExpression = ' ';
   let pos1 = -1;
   let pos2 = -1;
-  for (let i = 0; i < expression.length; i++) {
+  for (let i = 0; i < expression.length; i += 1) {
     if (expression.charAt(i) === '(') {
       pos1 = i;
     } else if (expression.charAt(i) === ')') {
@@ -63,29 +60,18 @@ const evaluateWholeExpression = (expression: string): string => {
   }
 
   if (pos1 !== -1 && pos2 !== -1) {
-    //console.log(" ");
-    //console.log("Whole Expression: " + expression);
     const selectedPart = expression.substring(pos1 + 1, pos2);
-    //console.log("Selected Substring: " + selectedPart);
-    const selectedPartWithKlammern = "(" + selectedPart + ")";
-    //console.log("Selected Part with Klammern: " + selectedPartWithKlammern);
-    expression = expression.replace(selectedPartWithKlammern, evaluateSymbol(expression.substring(pos1 + 1, pos2)));
-    //console.log("New Expression: " + expression);
-    //console.log(" ");
-
+    const selectedPartWithParentheses = `(${selectedPart})`;
+    returnedExpression = expression.replace(selectedPartWithParentheses, evaluateSymbol(expression.substring(pos1 + 1, pos2)));
   }
 
   const op = findOperator(expression);
   if (op !== ' ') {
-    //console.log("Next Step -->>>");
-    expression = evaluateWholeExpression(expression);
+    returnedExpression = evaluateWholeExpression(expression);
+  } else {
+    return returnedExpression;
   }
-  else {
-    //console.log("---> End, resulting Expression: " + expression);
-    return expression;
-  }
-  return expression;
+  return returnedExpression;
 };
 
-const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐', '¬'];
 export { evaluateSymbol, evaluateWholeExpression };

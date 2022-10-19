@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
-import { evaluateWholeExpression } from "../helper/logicConverter";
+import { evaluateWholeExpression } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -31,12 +31,11 @@ function Truthtable() {
   };
 
   const getReplacedValue = (values: number[], index: number) => {
-    if (typeof (values) !== "number") {
+    if (typeof (values) !== 'number') {
       return values[index];
-    } else {
-      return Number(values);
     }
-  }
+    return Number(values);
+  };
 
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
@@ -45,8 +44,11 @@ function Truthtable() {
 
       const index = variables.indexOf(currentChar);
 
-      if (index === -1) continue;
-      let replacedValue = getReplacedValue(values, index);
+      if (index === -1) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      const replacedValue = getReplacedValue(values, index);
 
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
     }
@@ -129,6 +131,7 @@ function Truthtable() {
               </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
+              // eslint-disable-next-line react/jsx-key
               <th>
                 {' '}
                 {step}
@@ -140,7 +143,8 @@ function Truthtable() {
         <tbody>
           {
             evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue, index) => (
+              ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
+                // eslint-disable-next-line react/jsx-key
                 <tr>
                   {' '}
                   <td>
@@ -150,11 +154,13 @@ function Truthtable() {
                   {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
                 </tr>
               ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow, index) => (
+              : evaluatedExpression?.binaryOptions.map((binaryRow) => (
+                // eslint-disable-next-line react/jsx-key
                 <tr>
                   {' '}
                   {
                     binaryRow.map((binaryValue) => (
+                      // eslint-disable-next-line react/jsx-key
                       <td>
                         {' '}
                         {binaryValue}
