@@ -65,9 +65,9 @@ const evaluateWholeExpression = (expression: string): string => {
     returnedExpression = expression.replace(selectedPartWithParentheses, evaluateSymbol(expression.substring(pos1 + 1, pos2)));
   }
 
-  const op = findOperator(expression);
+  const op = findOperator(returnedExpression);
   if (op !== ' ') {
-    returnedExpression = evaluateWholeExpression(expression);
+    returnedExpression = evaluateWholeExpression(returnedExpression);
   } else {
     return returnedExpression;
   }
