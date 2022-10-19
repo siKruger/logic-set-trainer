@@ -44,10 +44,8 @@ function Truthtable() {
 
       const index = variables.indexOf(currentChar);
 
-      if (index === -1) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
+      // eslint-disable-next-line no-continue
+      if (index === -1) continue;
       const replacedValue = getReplacedValue(values, index);
 
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);

@@ -1,6 +1,7 @@
 const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐', '¬'];
 
 const findOperator = (expression: string) => {
+  // todo maybe a revisit with .map and .reduce
   for (let i = 0; i < operators.length; i += 1) {
     if (expression.includes(operators[i])) {
       return operators[i];
