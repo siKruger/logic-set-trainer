@@ -1,0 +1,20 @@
+a {
+    text-decoration: none;
+}
+.input_field {
+    /*background-color: #bfa;*/
+    margin-top: 5vh;
+    height: 13vh;
+}
+.table {
+    /*background-color: #58c;*/
+    margin-top: 3vh;
+}
+.diagram {
+    /*background-color: orange;*/
+    margin-top: 3vh;
+}
+.top {
+    /*background-color: red;*/
+
+}

@@ -1,0 +1,109 @@
+#input_text_field {
+    /*height: 60%;*/
+    color: #783EEF;
+    padding-left: 10vw !important;
+    /*padding-top: 2vh !important;*/
+    background-color: #DCD6FF;
+    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
+    border-radius: 2vh;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: .05em;
+}
+
+#text_field_control {
+    width: 100%;
+    display: flex;
+}
+
+#evaluate_button {
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+#property_container {
+    display: none;
+}
+#error_container {
+    display: none;
+}
+#table_container {
+    /*display: none;*/
+}
+
+#property {
+    margin: 2vh 0 !important;
+    background-color: #DCD6FF;
+    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
+    border-radius: 2vh;
+}
+#error {
+    margin: 2vh 0 !important;
+    background-color: #F9CACA;
+    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
+    border-radius: 2vh;
+}
+#table {
+    margin: 2vh 0 !important;
+    background-color: #DCD6FF;
+    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
+    border-radius: 2vh;
+}
+
+th,tr,td {
+    text-align: center;
+}
+
+
+#property_text {
+    background-color: #C3B6FE;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    /*height: 5vh;*/
+    width: 5rem;
+    border-radius: 2vh 0 1vh 0;
+    color: #783EEF;
+    letter-spacing: .03em;
+}
+#error_text {
+    background-color: #F5A5A5;
+    padding: 0 14px;
+    /*height: 5vh;*/
+    width: 5rem;
+    border-radius: 2vh 0 1vh 0;
+    color: #D22524;
+    letter-spacing: .03em;
+}
+#table_text {
+    background-color: #C3B6FE;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    /*height: 5vh;*/
+    width: 6.5rem;
+    border-radius: 2vh 0 1vh 0;
+    color: #783EEF;
+    letter-spacing: .03em;
+    font-weight: 400;
+}
+
+#property_content {
+    padding: 1vh 10vw;
+    color: #783EEF;
+}
+#error_content {
+    padding: 1vh 10vw;
+    color: #D22524;
+}
+#table_content {
+    overflow: auto;
+    padding-left: 2vw;
+    margin-right: 2vw;
+    max-height: 100vh;
+    min-height: 10vh;
+}
+#table_instead_content {
+    height: 10vh;
+    display: none;
+}
+
+
