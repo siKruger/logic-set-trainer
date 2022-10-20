@@ -32,6 +32,7 @@ const Main = () => {
     const tableContainer = document.getElementById("table_container");
     const tableContent = document.getElementById("table_content");
     const tableInsteadContent = document.getElementById("table_instead_content");
+    const footerContainer = document.getElementById("footer_container");
     getEvaluation();
     if (!checkCorrectSyntax(expression)) {
       // @ts-ignore
@@ -56,6 +57,8 @@ const Main = () => {
       tableContent.style.display = "block";
       // @ts-ignore
       tableInsteadContent.style.display = "none";
+      // // @ts-ignore
+      // footerContainer.style.removeProperty("position");
     }
   }
   return (

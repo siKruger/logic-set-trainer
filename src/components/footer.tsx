@@ -1,15 +1,29 @@
 import React, {useState} from "react";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import "./top.css"
-import {Col, Collapse, Container, Row} from "react-bootstrap";
-import {Alert, AlertTitle, IconButton, Menu} from "@mui/material";
+import "./footer.css"
+import {Container} from "react-bootstrap";
+
 
 const Footer = () => {
-  const [open, setOpen] = useState(false);
+
+
+
+  const setFooter = () => {
+    const footerContainer = document.getElementById("footer_container");
+    if (window.outerHeight-document.body.clientHeight>100) {
+      let footerPosition = window.outerHeight-document.body.clientHeight-200;
+      // alert(footerPosition)
+      // @ts-ignore
+      footerContainer.style.marginTop = footerPosition.toString() + "px";
+      // footerContainer.style.marginTop = "100px";
+    }
+    // @ts-ignore
+    else footerContainer.style.marginTop = 0;
+  }
+
   return (
-      <Container>
+      <Container id="footer_container">
         <div id="footer_text">
+          ©Copyright 2022 <br/>
           designed by Krüger, Simon; May,Moritz; Geisler, Moritz; Ghalandari, Mohammad; Reichmuth, Julian; Bohlens, Tristan; Li, Kehao; Moffo Kamta, Diane
         </div>
       </Container>

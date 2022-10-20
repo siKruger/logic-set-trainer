@@ -42,6 +42,8 @@ function Layout() {
 
         {/*main field*/}
         <Main></Main>
+
+        {/* foot */}
         <Footer></Footer>
       </div>
   );
