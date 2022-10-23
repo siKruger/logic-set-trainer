@@ -203,38 +203,43 @@ const Main = () => {
       )}
       {/* for venn-diagram  */}
       <Container>
-        <div id="diagram_content">
+        <div id="diagram_content ">
           {showVennDiagram && evaluatedExpression && (
 
-            <Button onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
+            <Button className="my-3" onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
 
           )
           }
+          {' '}
           {!showVennDiagram && evaluatedExpression && (
 
-            <Button onClick={() => setShowVennDiagram(true)} variant="contained">Show Venn-diagram</Button>
+            <Button className="my-3" onClick={() => setShowVennDiagram(true)} variant="contained" >Show Venn-diagram</Button>
           )}
+          {' '}
           {/* for euler-diagram  */}
           {showEulerDiagram && evaluatedExpression && (
 
-            <Button onClick={() => setShowEulerDiagram(false)} variant="contained">Hide Euler-diagram</Button>
+            <Button className="my-3" onClick={() => setShowEulerDiagram(false)} variant="contained" >Hide Euler-diagram</Button>
 
           )
           }
+          {' '}
           {!showEulerDiagram && evaluatedExpression && (
 
-            <Button onClick={() => setShowEulerDiagram(true)} variant="contained">Show Euler-diagram</Button>
+            <Button className="my-3" onClick={() => setShowEulerDiagram(true)} variant="contained" >Show Euler-diagram</Button>
           )}
+          {' '}
           {/* for note  */}
           {showNote && evaluatedExpression && (
 
-            <Button onClick={() => setShowNote(false)} variant="contained">Hide note</Button>
+            <Button className="my-3" onClick={() => setShowNote(false)} variant="contained" >Hide note</Button>
 
           )
           }
+          {' '}
           {!showNote && evaluatedExpression && (
 
-            <Button onClick={() => setShowNote(true)} variant="contained">Show note</Button>
+            <Button className="my-3" onClick={() => setShowNote(true)} variant="contained" >Show note</Button>
           )}
         </div>
       </Container>
@@ -245,7 +250,7 @@ const Main = () => {
             src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
             className='img-thumbnail'
             alt='...'
-          />
+          /><br/>
         </Container>
       }
       {showEulerDiagram &&
@@ -254,7 +259,7 @@ const Main = () => {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/EulerDiagram.svg/800px-EulerDiagram.svg.png"
             className='img-thumbnail'
             alt='...'
-          />
+          /><br/>
         </Container>
       }
       {showNote &&
@@ -262,7 +267,7 @@ const Main = () => {
           <div id="form">
             <Form onSubmit={submitHandler}>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
-                <Form.Label>Make a note</Form.Label>
+                <Form.Label className="lead">Make a note</Form.Label>
                 <Form.Control as="textarea" rows={5} />
               </Form.Group>
               <Button variant="contained" type="submit">
