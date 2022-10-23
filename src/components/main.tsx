@@ -5,12 +5,13 @@ import { checkCorrectSyntax } from "../helper/expressionValidator";
 import { toast } from "react-toastify";
 import "./main.css";
 import { Container, Row, Table } from "react-bootstrap";
-import Image from 'react-bootstrap/Image'
+import Form from 'react-bootstrap/Form';
 
 
 const Main = () => {
   const [showVennDiagram, setShowVennDiagram] = useState(false); // for Venn-diagram
   const [showEulerDiagram, setShowEulerDiagram] = useState(false); // for Euler-diagram
+  const [showNote, setShowNote] = useState(false); // for note
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
   const getEvaluation = () => {
@@ -64,6 +65,10 @@ const Main = () => {
       // // @ts-ignore
       // footerContainer.style.removeProperty("position");
     }
+  }
+
+  const submitHandler = () => {
+
   }
   return (
     <>
@@ -198,27 +203,40 @@ const Main = () => {
       )}
       {/* for venn-diagram  */}
       <Container>
-        {showVennDiagram && evaluatedExpression && (
+        <div id="diagram_content">
+          {showVennDiagram && evaluatedExpression && (
 
-          <Button onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
+            <Button onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
 
-        )
-        }
-        {!showVennDiagram && evaluatedExpression && (
+          )
+          }
+          {!showVennDiagram && evaluatedExpression && (
 
-          <Button onClick={() => setShowVennDiagram(true)} variant="contained">Show Venn-diagram</Button>
-        )}
-        {/* for euler-diagram  */}
-        {showEulerDiagram && evaluatedExpression && (
+            <Button onClick={() => setShowVennDiagram(true)} variant="contained">Show Venn-diagram</Button>
+          )}
+          {/* for euler-diagram  */}
+          {showEulerDiagram && evaluatedExpression && (
 
-          <Button onClick={() => setShowEulerDiagram(false)} variant="contained">Hide Euler-diagram</Button>
+            <Button onClick={() => setShowEulerDiagram(false)} variant="contained">Hide Euler-diagram</Button>
 
-        )
-        }
-        {!showEulerDiagram && evaluatedExpression && (
+          )
+          }
+          {!showEulerDiagram && evaluatedExpression && (
 
-          <Button onClick={() => setShowEulerDiagram(true)} variant="contained">Show Euler-diagram</Button>
-        )}
+            <Button onClick={() => setShowEulerDiagram(true)} variant="contained">Show Euler-diagram</Button>
+          )}
+          {/* for note  */}
+          {showNote && evaluatedExpression && (
+
+            <Button onClick={() => setShowNote(false)} variant="contained">Hide note</Button>
+
+          )
+          }
+          {!showNote && evaluatedExpression && (
+
+            <Button onClick={() => setShowNote(true)} variant="contained">Show note</Button>
+          )}
+        </div>
       </Container>
 
       {showVennDiagram &&
@@ -231,13 +249,28 @@ const Main = () => {
         </Container>
       }
       {showEulerDiagram &&
-      <Container>
-        <img
+        <Container>
+          <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/EulerDiagram.svg/800px-EulerDiagram.svg.png"
             className='img-thumbnail'
             alt='...'
           />
-      </Container>
+        </Container>
+      }
+      {showNote &&
+        <Container>
+          <div id="form">
+            <Form onSubmit={submitHandler}>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
+                <Form.Label>Make a note</Form.Label>
+                <Form.Control as="textarea" rows={5} />
+              </Form.Group>
+              <Button variant="contained" type="submit">
+                save
+              </Button>
+            </Form>
+          </div>
+        </Container>
       }
 
     </>
