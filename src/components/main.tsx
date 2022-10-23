@@ -113,6 +113,8 @@ const Main = () => {
           </div>
         </div>
       </Container>
+      {/*erst wenn ein Parameter eingegeben wird, wird dann angezeigt. */}          
+      { evaluatedExpression && (       
       <Container id="table_container">
         <div id="table">
           <div id="table_text">
@@ -192,16 +194,17 @@ const Main = () => {
         </div>
 
       </Container>
+)}
       {/* for venn-diagram  */}
       <Container>
         {showVennDiagram && evaluatedExpression &&(
 
-          <Button onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagramm</Button>
+          <Button onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
         )
         }
         {!showVennDiagram && evaluatedExpression &&(
 
-          <Button onClick={() => setShowVennDiagram(true)} variant="contained">Show Venn-diagramm</Button>
+          <Button onClick={() => setShowVennDiagram(true)} variant="contained">Show Venn-diagram</Button>
         )}
       </Container>
 
