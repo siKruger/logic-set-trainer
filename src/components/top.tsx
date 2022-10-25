@@ -7,10 +7,16 @@ import {Alert, AlertTitle, IconButton, Menu} from "@mui/material";
 
 const Top = () => {
   const [open, setOpen] = useState(false);
+
+  
+  
+
   return (
       <Container>
         <Row className="header">
-          <Col className="logo" xs={8}>logic set trainer</Col>
+          <Col className="logo" xs={8}>
+          
+          </Col>
           <Col className="toolbar">
             <button onClick={() => setOpen(!open)}
                     aria-controls="info-collapse-text"

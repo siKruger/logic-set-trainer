@@ -6,12 +6,17 @@ import { toast } from "react-toastify";
 import "./main.css";
 import { Container, Row, Table } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-
+import Top from './top';
 
 const Main = () => {
   const [showVennDiagram, setShowVennDiagram] = useState(false); // for Venn-diagram
   const [showEulerDiagram, setShowEulerDiagram] = useState(false); // for Euler-diagram
   const [showNote, setShowNote] = useState(false); // for note
+  
+  const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
+  const [checkedEulerDiagram, setCheckedEulerDiagram] = useState(true);
+  const [checkedNote, setCheckedNote] = useState(true);
+
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
   const getEvaluation = () => {
@@ -67,11 +72,37 @@ const Main = () => {
     }
   }
 
-  const submitHandler = () => {
+  const downloadFile = () => {
 
   }
+
   return (
     <>
+    <Container>
+    <label>
+            <input type="checkbox"
+              defaultChecked={!checkedVennDiagramm}
+              onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
+            />
+            Venn-Diagramm
+          </label> <br/>
+          
+          <label>
+            <input type="checkbox"
+              defaultChecked={!checkedEulerDiagram}
+              onChange={() => setCheckedEulerDiagram(!checkedEulerDiagram)}
+            />
+            Euler-Diagramm
+          </label> <br/>
+
+          <label>
+            <input type="checkbox"
+              defaultChecked={!checkedNote}
+              onChange={() => setCheckedNote(!checkedNote)}
+            />
+            Note
+          </label>
+    </Container>
       <Container className="cover">
         <div id="text_field_control">
           <TextField id="input_text_field" fullWidth
@@ -199,77 +230,48 @@ const Main = () => {
             <div id="table_instead_content"></div>
           </div>
 
+          
+
         </Container>
       )}
-      {/* for venn-diagram  */}
-      <Container>
-        <div id="diagram_content ">
-          {showVennDiagram && evaluatedExpression && (
+ 
 
-            <Button className="my-3" onClick={() => setShowVennDiagram(false)} variant="contained">Hide Venn-diagram</Button>
+       
 
-          )
-          }
-          {' '}
-          {!showVennDiagram && evaluatedExpression && (
-
-            <Button className="my-3" onClick={() => setShowVennDiagram(true)} variant="contained" >Show Venn-diagram</Button>
-          )}
-          {' '}
-          {/* for euler-diagram  */}
-          {showEulerDiagram && evaluatedExpression && (
-
-            <Button className="my-3" onClick={() => setShowEulerDiagram(false)} variant="contained" >Hide Euler-diagram</Button>
-
-          )
-          }
-          {' '}
-          {!showEulerDiagram && evaluatedExpression && (
-
-            <Button className="my-3" onClick={() => setShowEulerDiagram(true)} variant="contained" >Show Euler-diagram</Button>
-          )}
-          {' '}
-          {/* for note  */}
-          {showNote && evaluatedExpression && (
-
-            <Button className="my-3" onClick={() => setShowNote(false)} variant="contained" >Hide note</Button>
-
-          )
-          }
-          {' '}
-          {!showNote && evaluatedExpression && (
-
-            <Button className="my-3" onClick={() => setShowNote(true)} variant="contained" >Show note</Button>
-          )}
-        </div>
-      </Container>
-
-      {showVennDiagram &&
+      {!checkedVennDiagramm && evaluatedExpression && (
         <Container>
           <img
             src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
             className='img-thumbnail'
             alt='...'
-          /><br/>
+          /><br />
         </Container>
+      )
       }
-      {showEulerDiagram &&
+      {!checkedEulerDiagram && evaluatedExpression &&
         <Container>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/EulerDiagram.svg/800px-EulerDiagram.svg.png"
             className='img-thumbnail'
             alt='...'
-          /><br/>
+          /><br />
         </Container>
       }
-      {showNote &&
+      {!checkedNote && evaluatedExpression &&
         <Container>
           <div id="form">
-            <Form onSubmit={submitHandler}>
+
+
+            <Form onSubmit={downloadFile}>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
                 <Form.Label className="lead">Make a note</Form.Label>
-                <Form.Control as="textarea" rows={5} />
+                <Form.Control id="text" as="textarea" rows={5} placeholder="Type your note here..." />
               </Form.Group>
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Control id="filename" as="input" placeholder="Specify a filename..." />
+              </Form.Group>
+
               <Button variant="contained" type="submit">
                 save
               </Button>
