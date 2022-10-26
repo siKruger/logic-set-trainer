@@ -101,7 +101,7 @@ const Main = () => {
               onChange={() => setCheckedNote(!checkedNote)}
             />
             Note
-          </label>
+          </label> 
     </Container>
       <Container className="cover">
         <div id="text_field_control">
