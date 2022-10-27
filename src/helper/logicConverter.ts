@@ -1,6 +1,11 @@
 const operators = ['∧', '↮', '∨', '⇔', '⇒', '⇐', '¬'];
 
-const findOperator = (expression: string) => {
+/**
+ * Searches for a operator in the expression
+ * @param expression: string
+ * @return string- empty if no operator found
+ */
+const findOperator = (expression: string): string => {
   // todo maybe a revisit with .map and .reduce
   for (let i = 0; i < operators.length; i += 1) {
     if (expression.includes(operators[i])) {
@@ -10,6 +15,12 @@ const findOperator = (expression: string) => {
   return ' ';
 };
 
+/**
+ * Evaluates two numbers (0,1) and a operator
+ * @param operator: string
+ * @param leftSide: string- left side boolean
+ * @param rightSide: string- right side boolean
+ */
 const evaluateOperator = (operator: string, leftSide: string, rightSide: string): boolean => {
   const leftOperatorBoolean = leftSide === '1';
   const rightOperatorBoolean = rightSide === '1';
@@ -32,7 +43,12 @@ const evaluateOperator = (operator: string, leftSide: string, rightSide: string)
   }
 };
 
-const evaluateSymbol = (expression: string) => {
+/**
+ * Determines wether the operator is a negation or else
+ * @param expression: string
+ * @return string
+ */
+const evaluateSymbol = (expression: string): string => {
   let boolTest;
   const operator = findOperator(expression);
 
@@ -46,6 +62,11 @@ const evaluateSymbol = (expression: string) => {
   return boolTest ? '1' : '0';
 };
 
+/**
+ * Evaluates a expression to a final 0 or 1
+ * @param expression: string
+ * @return string
+ */
 const evaluateWholeExpression = (expression: string): string => {
   // finding most inner parentheses
   let returnedExpression = ' ';
