@@ -83,4 +83,4 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
   return true;
 };
 
-export const checkCorrectSyntax = (expression: string) => checkCorrectSymbols(expression) && checkCorrectSubexpressions(expression) && checkCorrectSubexpressions(expression);
+export const checkCorrectSyntax = (expression: string) => checkCorrectSymbols(expression) && checkCorrectParenthesesAmount(expression) && checkCorrectSubexpressions(expression);
