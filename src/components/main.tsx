@@ -36,41 +36,6 @@ const Main = () => {
       setEvaluatedExpression(evaluated);
     }
   };
-  const evaluate = () => {
-    const propertyContainer = document.getElementById("property_container");
-    const errorContainer = document.getElementById("error_container");
-    const tableContainer = document.getElementById("table_container");
-    const tableContent = document.getElementById("table_content");
-    const tableInsteadContent = document.getElementById("table_instead_content");
-    const footerContainer = document.getElementById("footer_container");
-    getEvaluation();
-    if (!checkCorrectSyntax(expression)) {
-      // @ts-ignore
-      errorContainer.style.display = "block";
-      // @ts-ignore
-      propertyContainer.style.display = "none";
-      // @ts-ignore
-      tableContainer.style.display = "block";
-      // @ts-ignore
-      tableContent.style.display = "none";
-      // @ts-ignore
-      tableInsteadContent.style.display = "block";
-    }
-    else {
-      // @ts-ignore
-      errorContainer.style.display = "none";
-      // @ts-ignore
-      propertyContainer.style.display = "block";
-      // @ts-ignore
-      tableContainer.style.display = "block";
-      // @ts-ignore
-      tableContent.style.display = "block";
-      // @ts-ignore
-      tableInsteadContent.style.display = "none";
-      // // @ts-ignore
-      // footerContainer.style.removeProperty("position");
-    }
-  }
 
   const downloadFile = () => {
 
@@ -111,7 +76,8 @@ const Main = () => {
               return setExpression(e.target.value)
             }}
           />
-          <Button onClick={evaluate} variant="contained" id="evaluate_button">Evaluate</Button>
+          {/* hier ändere ich die Funktion evaluate zu getEvaluation */}
+          <Button onClick={getEvaluation} variant="contained" id="evaluate_button">Evaluate</Button> 
         </div>
       </Container>
       <Container id="property_container">
