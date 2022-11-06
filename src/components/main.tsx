@@ -7,12 +7,13 @@ import "./main.css";
 import { Container, Row, Table } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import Top from './top';
+import Tables from "./Table/Tables";
 
 const Main = () => {
   const [showVennDiagram, setShowVennDiagram] = useState(false); // for Venn-diagram
   const [showEulerDiagram, setShowEulerDiagram] = useState(false); // for Euler-diagram
   const [showNote, setShowNote] = useState(false); // for note
-  
+
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedEulerDiagram, setCheckedEulerDiagram] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
@@ -43,31 +44,36 @@ const Main = () => {
 
   return (
     <>
-    <Container>
-    <label>
-            <input type="checkbox"
-              defaultChecked={!checkedVennDiagramm}
-              onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
-            />
-            Venn-Diagramm
-          </label> <br/>
-          
-          <label>
-            <input type="checkbox"
-              defaultChecked={!checkedEulerDiagram}
-              onChange={() => setCheckedEulerDiagram(!checkedEulerDiagram)}
-            />
-            Euler-Diagramm
-          </label> <br/>
+      <Container>
+        <label>
+          <input type="checkbox"
+            defaultChecked={!checkedVennDiagramm}
+            onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
+          />
+          Venn-Diagramm
+        </label> <br />
 
-          <label>
-            <input type="checkbox"
-              defaultChecked={!checkedNote}
-              onChange={() => setCheckedNote(!checkedNote)}
-            />
-            Note
-          </label> 
-    </Container>
+        <label>
+          <input type="checkbox"
+            defaultChecked={!checkedEulerDiagram}
+            onChange={() => setCheckedEulerDiagram(!checkedEulerDiagram)}
+          />
+          Euler-Diagramm
+        </label> <br />
+
+        <label>
+          <input type="checkbox"
+            defaultChecked={!checkedNote}
+            onChange={() => setCheckedNote(!checkedNote)}
+          />
+          Note
+        </label>
+      </Container>
+
+      {/* Nutzen ein Komponente */}
+      {/* <Tables setExpression={setExpression} getEvaluation={getEvaluation} evaluatedExpression={evaluatedExpression}/> */}
+      
+      
       <Container className="cover">
         <div id="text_field_control">
           <TextField id="input_text_field" fullWidth
@@ -77,7 +83,7 @@ const Main = () => {
             }}
           />
           {/* hier ändere ich die Funktion evaluate zu getEvaluation */}
-          <Button onClick={getEvaluation} variant="contained" id="evaluate_button">Evaluate</Button> 
+          <Button onClick={getEvaluation} variant="contained" id="evaluate_button">Evaluate</Button>
         </div>
       </Container>
       <Container id="property_container">
@@ -196,13 +202,13 @@ const Main = () => {
             <div id="table_instead_content"></div>
           </div>
 
-          
+
 
         </Container>
       )}
- 
 
-       
+
+
 
       {!checkedVennDiagramm && evaluatedExpression && (
         <Container>
