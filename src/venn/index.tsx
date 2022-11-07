@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
-import { twoSetVenn } from '../helper/vennDiagrams';
 
 function VenDiagramPage() {
   const svgRef = React.useRef(null);
 
+  const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
+
   useEffect(() => {
     const venn = d3.select(svgRef.current);
 
-    twoSetVenn(venn);
+    // twoSetVenn(venn);
+    // threeSetVenn(venn);
   });
   return (
     <>
