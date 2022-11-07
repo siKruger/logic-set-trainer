@@ -4,20 +4,22 @@ import * as d3 from 'd3';
 function VenDiagramPage() {
   const svgRef = React.useRef(null);
 
+  const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
+
   useEffect(() => {
     const venn = d3.select(svgRef.current);
 
     venn.append('circle')
-      .attr('cx', 110)
-      .attr('cy', 110)
-      .attr('r', 110)
+      .attr('cx', circleProps.xOffset)
+      .attr('cy', circleProps.yOffset)
+      .attr('r', circleProps.radius)
       .style('fill', 'none')
       .style('stroke', 'black');
 
     venn.append('circle')
-      .attr('cx', 220)
-      .attr('cy', 110)
-      .attr('r', 110)
+      .attr('cx', circleProps.xOffset * 2)
+      .attr('cy', circleProps.yOffset)
+      .attr('r', circleProps.radius)
       .style('fill', 'none')
       .style('stroke', 'black');
 
