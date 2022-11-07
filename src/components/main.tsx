@@ -10,6 +10,7 @@ import Top from './top';
 import Feature from "./Feature";
 import TruthTable from "./TruthTable";
 import Property from "./Property";
+import Error from "./Error";
 
 const Main = () => {
 
@@ -17,10 +18,12 @@ const Main = () => {
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState('');
+  const [showError, setShowError] = useState(false);
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
+      setShowError(true);
       toast.error('The entered expression contains an error and cannot be evaluated! You can click on the "i" icon for instructions on how to use', {
         position: 'top-center',
         autoClose: 3000,
@@ -32,6 +35,7 @@ const Main = () => {
         theme: 'light',
       });
     } else {
+      setShowError(false);
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
@@ -82,16 +86,8 @@ const Main = () => {
       {/* für Property Feld */}
       {evaluatedExpression && (<Property evaluatedExpression={evaluatedExpression}/>)}
 
-      <Container id="error_container">
-        <div id="error">
-          <div id="error_text">
-            ERROR
-          </div>
-          <div id="error_content">
-            Your input is not valid
-          </div>
-        </div>
-      </Container>
+      {/* für Error Darstellung */}
+      {showError && <Error/>}
 
       {/*erst wenn ein Parameter eingegeben wird, wird dann angezeigt. */}
       {evaluatedExpression && (<TruthTable evaluatedExpression={evaluatedExpression}/>)}

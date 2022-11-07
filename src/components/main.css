@@ -25,7 +25,7 @@
     
 }
 #error_container {
-    display: none;
+    /* display: none; */
 }
 #table_container {
     /*display: none;*/
