@@ -22,7 +22,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.0.8",
-    "save-dev": "^0.0.1-security",
+    "save-dev": "^0.0.1-security"
   },
   "scripts": {
     "test": "jest",
