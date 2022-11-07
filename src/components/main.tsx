@@ -7,19 +7,17 @@ import "./main.css";
 import { Container, Row, Table } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import Top from './top';
-import Tables from "./Table/Tables";
+import Feature from "./Feature";
+
 
 const Main = () => {
-  const [showVennDiagram, setShowVennDiagram] = useState(false); // for Venn-diagram
-  const [showEulerDiagram, setShowEulerDiagram] = useState(false); // for Euler-diagram
-  const [showNote, setShowNote] = useState(false); // for note
+
 
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
-  const [checkedEulerDiagram, setCheckedEulerDiagram] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
-
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
       toast.error('The entered expression contains an error and cannot be evaluated! You can click on the "i" icon for instructions on how to use', {
@@ -53,13 +51,7 @@ const Main = () => {
           Venn-Diagramm
         </label> <br />
 
-        <label>
-          <input type="checkbox"
-            defaultChecked={!checkedEulerDiagram}
-            onChange={() => setCheckedEulerDiagram(!checkedEulerDiagram)}
-          />
-          Euler-Diagramm
-        </label> <br />
+
 
         <label>
           <input type="checkbox"
@@ -70,10 +62,8 @@ const Main = () => {
         </label>
       </Container>
 
-      {/* Nutzen ein Komponente */}
-      {/* <Tables setExpression={setExpression} getEvaluation={getEvaluation} evaluatedExpression={evaluatedExpression}/> */}
-      
-      
+
+
       <Container className="cover">
         <div id="text_field_control">
           <TextField id="input_text_field" fullWidth
@@ -86,6 +76,8 @@ const Main = () => {
           <Button onClick={getEvaluation} variant="contained" id="evaluate_button">Evaluate</Button>
         </div>
       </Container>
+
+      {evaluatedExpression && (
       <Container id="property_container">
         <div id="property">
           <div id="property_text">
@@ -112,6 +104,7 @@ const Main = () => {
           </div>
         </div>
       </Container>
+      )}
       <Container id="error_container">
         <div id="error">
           <div id="error_text">
@@ -122,6 +115,7 @@ const Main = () => {
           </div>
         </div>
       </Container>
+
       {/*erst wenn ein Parameter eingegeben wird, wird dann angezeigt. */}
       {evaluatedExpression && (
         <Container id="table_container">
@@ -207,53 +201,10 @@ const Main = () => {
         </Container>
       )}
 
-
-
-
-      {!checkedVennDiagramm && evaluatedExpression && (
-        <Container>
-          <img
-            src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
-            className='img-thumbnail'
-            alt='...'
-          /><br />
-        </Container>
-      )
-      }
-      {!checkedEulerDiagram && evaluatedExpression &&
-        <Container>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/EulerDiagram.svg/800px-EulerDiagram.svg.png"
-            className='img-thumbnail'
-            alt='...'
-          /><br />
-        </Container>
-      }
-      {!checkedNote && evaluatedExpression &&
-        <Container>
-          <div id="form">
-
-
-            <Form onSubmit={downloadFile}>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
-                <Form.Label className="lead">Make a note</Form.Label>
-                <Form.Control id="text" as="textarea" rows={5} placeholder="Type your note here..." />
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Control id="filename" as="input" placeholder="Specify a filename..." />
-              </Form.Group>
-
-              <Button variant="contained" type="submit">
-                save
-              </Button>
-            </Form>
-          </div>
-        </Container>
-      }
+      {/* Das ist für die Darstellung von Venn-Diagramm und Note */}
+      <Feature checkedVennDiagramm={checkedVennDiagramm} evaluatedExpression={evaluatedExpression} checkedNote={checkedNote} />
 
     </>
-
   )
 }
 export default Main;
