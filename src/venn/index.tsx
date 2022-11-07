@@ -1,24 +1,25 @@
-import React from 'react';
-import { layout } from '@upsetjs/venn.js';
+import React, { useEffect } from 'react';
+import * as d3 from 'd3';
 
 function VenDiagramPage() {
-  const sets = [
-    { sets: ['A'], size: 12 },
-    { sets: ['B'], size: 12 },
-    { sets: ['A', 'B'], size: 2 },
-  ];
+  const svgRef = React.useRef(null);
 
-  const data = layout(sets);
+  useEffect(() => {
+    const venn = d3.select(svgRef.current);
 
-  console.log(data);
-  console.log(data);
+    venn.append('circle').attr('cx', 150)
+      .attr('cy', 70)
+      .attr('r', 50);
+  });
+
   return (
     <>
 
       {' '}
       It Works
 
-      <div className="venn" id="venn" style={{ width: '500px', height: '500px' }} />
+      <svg ref={svgRef} width={200} height={200} />
+
     </>
   );
 }
