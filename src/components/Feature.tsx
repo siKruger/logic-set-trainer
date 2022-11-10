@@ -4,6 +4,14 @@ import { Button, Container, Form } from 'react-bootstrap'
 
 
 export default function Feature(props: { checkedVennDiagramm: any; evaluatedExpression: any; checkedNote: any }) {
+
+    
+
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+    }
+
     return (
         <>
 
@@ -23,7 +31,7 @@ export default function Feature(props: { checkedVennDiagramm: any; evaluatedExpr
                     <div id="form">
 
 
-                        <Form >
+                        {/* <Form >
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
                                 <Form.Label className="lead">Make a note</Form.Label>
                                 <Form.Control id="text" as="textarea" rows={5} placeholder="Type your note here..." />
@@ -36,8 +44,16 @@ export default function Feature(props: { checkedVennDiagramm: any; evaluatedExpr
                             <Button variant="contained" type="submit">
                                 save
                             </Button>
-                        </Form>
+                        </Form> */}
                     </div>
+                    <form onSubmit={handleSubmit}>
+                        <label >
+                            <span>Make a note</span>
+                            <br />
+                            <textarea  id="text" rows={5} cols={100} placeholder="Type your note here..."></textarea>
+                        </label><br />
+                        <button>Save</button>
+                    </form>
                 </Container>
             }
         </>
