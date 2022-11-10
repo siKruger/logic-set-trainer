@@ -1,0 +1,30 @@
+#property {
+    margin: 2vh 0 !important;
+    background-color: #DCD6FF;
+    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
+    border-radius: 2vh;
+}
+.dark #property {
+    background-color: #1F2937;
+    box-shadow: none;
+}
+#property_text {
+    background-color: #C3B6FE;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    width: 5rem;
+    border-radius: 2vh 0 1vh 0;
+    color: #783EEF;
+    letter-spacing: .03em;
+}
+.dark #property_text {
+    background-color: #121A29;
+    color: #E5E7EB;
+}
+#property_content {
+    padding: 1vh 10vw;
+    color: #783EEF;
+}
+.dark #property_content {
+    color: #E5E7EB;
+}

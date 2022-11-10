@@ -24,7 +24,6 @@ const Main = () => {
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
-
       setShowError(true);
       toast.error('The entered expression contains an error and cannot be evaluated! You can click on the "i" icon for instructions on how to use', {
         position: 'top-center',

@@ -1,6 +1,13 @@
 a {
     text-decoration: none;
 }
+.page {
+    min-height: 100vh;
+    background-color: #F5F3FF;
+}
+.dark .page{
+    background-color: #374151;
+}
 .input_field {
     /*background-color: #bfa;*/
     margin-top: 5vh;
@@ -16,5 +23,5 @@ a {
 }
 .top {
     /*background-color: red;*/
-
 }
+

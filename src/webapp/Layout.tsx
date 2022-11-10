@@ -16,7 +16,6 @@ function Layout() {
   const [open, setOpen] = useState(false);
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
-  document.body.style.backgroundColor = "#F5F3FF"
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
       toast.error('Der eingegebene Ausdruck enthält einen Fehler und kann nicht ausgewertet werden!', {

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
-
+import './feature.css'
 
 
 export default function Feature(props: { checkedVennDiagramm: any; checkedNote: any }) {
 
-    
+
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -48,7 +48,7 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                     </div>
                     <form onSubmit={handleSubmit}>
                         <label >
-                            <span>Make a note</span>
+                            <span id="make_a_note">Make a note</span>
                             <br />
                             <textarea  id="text" rows={5} cols={100} placeholder="Type your note here..."></textarea>
                         </label><br />
