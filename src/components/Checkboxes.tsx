@@ -24,16 +24,16 @@ export default function Checkboxes(props: { checkedVennDiagramm: any; setChecked
                 defaultChecked={!props.checkedVennDiagramm}
                 onChange={() => props.setCheckedVennDiagramm(!props.checkedVennDiagramm)}
                 />
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                    <label className="form-check-label checkbox_label" htmlFor="flexCheckDefault">
                     Venn-Diagramm
                     </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" 
+                <input className="form-check-input" type="checkbox"
                 defaultChecked={!props.checkedNote}
                 onChange={() => props.setCheckedNote(!props.checkedNote)}
                 />
-                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                    <label className="form-check-label checkbox_label" htmlFor="flexCheckChecked">
                     Note
                     </label>
             </div>

@@ -4,7 +4,6 @@
     font-weight: bold;
     grid-template-columns: 1em auto;
     gap: 0.9em;
-    
 }
 
 #checkbox-container{
@@ -15,4 +14,11 @@
 label{
     line-height: 3.1;
     margin-left: 10px;
+}
+
+.checkbox_label {
+    color: #783EEF;
+}
+.dark .checkbox_label {
+    color: #E5E7EB;
 }
