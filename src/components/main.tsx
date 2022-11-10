@@ -80,18 +80,16 @@ const Main = () => {
         </div>
       </Container>
 
-      
-      {/* für Property Feld */}
-      {evaluatedExpression && <Property evaluatedExpression={evaluatedExpression}/>}
-
       {/* für Error Darstellung */}
       {showError && <Error/>}
 
-      {/*erst wenn ein Parameter eingegeben wird, wird dann angezeigt. */}
-      {evaluatedExpression && <TruthTable evaluatedExpression={evaluatedExpression}/>}
-
-      {/* Das ist für die Darstellung von Venn-Diagramm und Note */}
-      <Feature checkedVennDiagramm={checkedVennDiagramm} evaluatedExpression={evaluatedExpression} checkedNote={checkedNote} />
+      {/* für Property und TruthTable und Feature(Venn-Diagramm und Note) Felder */}
+      {evaluatedExpression && ( <div>
+       <Property evaluatedExpression={evaluatedExpression}/>
+       <TruthTable evaluatedExpression={evaluatedExpression}/>
+       <Feature checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote} />
+       </div>
+       )}
 
     </>
   )
