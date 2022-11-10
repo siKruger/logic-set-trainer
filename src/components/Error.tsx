@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
+import './error.css'
 
 export default function Error() {
   return (

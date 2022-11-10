@@ -2,7 +2,7 @@
     color:#976BF3;
     text-align: center;
     margin:0 auto;
-    /*position: fixed;*/
-    /*bottom: 12vh;*/
-    /*left: 15vw;*/
+}
+.dark #footer_container {
+    color: #BABDC4;
 }

@@ -23,7 +23,6 @@ const Main = () => {
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
-
       setShowError(true);
       toast.error('The entered expression contains an error and cannot be evaluated! You can click on the "i" icon for instructions on how to use', {
         position: 'top-center',
@@ -49,7 +48,7 @@ const Main = () => {
   return (
     <>
       <Container>
-        <label>
+        <label id="venn_label">
           <input type="checkbox"
             defaultChecked={!checkedVennDiagramm}
             onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
@@ -57,7 +56,7 @@ const Main = () => {
           Venn-Diagramm
         </label> <br />
 
-        <label>
+        <label id="note_label">
           <input type="checkbox"
             defaultChecked={!checkedNote}
             onChange={() => setCheckedNote(!checkedNote)}
@@ -80,7 +79,7 @@ const Main = () => {
         </div>
       </Container>
 
-      
+
       {/* für Property Feld */}
       {evaluatedExpression && <Property evaluatedExpression={evaluatedExpression}/>}
 

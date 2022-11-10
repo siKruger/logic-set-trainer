@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Table } from 'react-bootstrap'
+import './truthTable.css'
 
 export default function TruthTable(props: { evaluatedExpression: { variables: any[]; steps: any[]; binaryOptions: any[] } | undefined }) {
   return (
