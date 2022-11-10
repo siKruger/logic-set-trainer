@@ -11,6 +11,7 @@ import Feature from "./Feature";
 import TruthTable from "./TruthTable";
 import Property from "./Property";
 import Error from "./Error";
+import Checkboxes from "./Checkboxes";
 
 const Main = () => {
 
@@ -48,22 +49,12 @@ const Main = () => {
 
   return (
     <>
+      {/* Checkbox Darstellung */}
       <Container>
-        <label>
-          <input type="checkbox"
-            defaultChecked={!checkedVennDiagramm}
-            onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
-          />
-          Venn-Diagramm
-        </label> <br />
-
-        <label>
-          <input type="checkbox"
-            defaultChecked={!checkedNote}
-            onChange={() => setCheckedNote(!checkedNote)}
-          />
-          Note
-        </label>
+        <Checkboxes checkedVennDiagramm={checkedVennDiagramm} 
+        setCheckedVennDiagramm={setCheckedVennDiagramm}
+        checkedNote={checkedNote}
+        setCheckedNote={setCheckedNote}/>
       </Container>
 
 
