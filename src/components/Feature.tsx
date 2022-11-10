@@ -3,19 +3,19 @@ import { Button, Container, Form } from 'react-bootstrap'
 
 
 
-export default function Feature(props: { checkedVennDiagramm: any; evaluatedExpression: any; checkedNote: any }) {
+export default function Feature(props: { checkedVennDiagramm: any; checkedNote: any }) {
 
     
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-
+        // hier kommt das Code für Download
     }
 
     return (
         <>
 
-            {!props.checkedVennDiagramm && props.evaluatedExpression && (
+            {!props.checkedVennDiagramm && (
                 <Container>
                     <img
                         src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
@@ -26,7 +26,7 @@ export default function Feature(props: { checkedVennDiagramm: any; evaluatedExpr
             )
             }
 
-            {!props.checkedNote && props.evaluatedExpression &&
+            {!props.checkedNote &&
                 <Container>
                     <div id="form">
 
