@@ -1,0 +1,18 @@
+[type="checkbox"] {
+    font-family: system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    grid-template-columns: 1em auto;
+    gap: 0.9em;
+    
+}
+
+#checkbox-container{
+    width: 200px;
+    height: 120px;
+    margin-left: 20px;
+}
+label{
+    line-height: 3.1;
+    margin-left: 10px;
+}
