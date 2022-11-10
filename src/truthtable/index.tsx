@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
+import { evaluateWholeExpression } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -29,129 +30,151 @@ function Truthtable() {
     }
   };
 
+  const getReplacedValue = (values: number[] | number, index: number) => {
+    if (typeof (values) !== 'number') {
+      return values[index];
+    }
+    return Number(values);
+  };
+
+  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
+    let mutableExpression = singleStep;
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const currentChar = mutableExpression.charAt(x);
+
+      const index = variables.indexOf(currentChar);
+
+      // eslint-disable-next-line no-continue
+      if (index === -1) continue;
+      const replacedValue = getReplacedValue(values, index);
+
+      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+    }
+
+    mutableExpression = evaluateWholeExpression(mutableExpression);
+
+    return (
+        <td>
+          {' '}
+          {mutableExpression}
+          {' '}
+        </td>
+    );
+  };
+
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
+
   return (
-    <>
-      <Alert severity="info">
-        <AlertTitle>Info</AlertTitle>
-        Please enter your expression and press evaluate
+      <>
+        <Alert severity="info">
+          <AlertTitle>Info</AlertTitle>
+          Please enter your expression and press evaluate
+          <br />
+          Allowed characters are (ordered in their precedence):
+          <br />
+          ()
+          {' '}
+          <br />
+          !
+          {' '}
+          <br />
+          &&
+          {' '}
+          <br />
+          {'<=!=>'}
+          {' '}
+          <br />
+          ||
+          {' '}
+          <br />
+          {'<==>'}
+          {' '}
+          <br />
+          {'=>'}
+          {' '}
+          <br />
+        </Alert>
         <br />
-        Allowed characters are (ordered in their precedence):
+        <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
+        <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
         <br />
-        ()
-        {' '}
         <br />
-        !
-        {' '}
-        <br />
-        &&
-        {' '}
-        <br />
-        {'<=!=>'}
-        {' '}
-        <br />
-        ||
-        {' '}
-        <br />
-        ==
-        {' '}
-        <br />
-        {'=>,<='}
-        {' '}
-        <br />
-      </Alert>
-      <br />
-      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
-      <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
-      <br />
-      <br />
 
-      {evaluatedExpression?.parentheses}
-      <br />
-      Variables:
-      {' '}
-      {evaluatedExpression?.variables}
-      <ul>
-        { evaluatedExpression?.steps.map((val, index) => (
-          <li key={val}>
-            Step
-            {' '}
-            {index}
-            :
-            {' '}
-            {val}
-          </li>
-        )) }
-      </ul>
+        {evaluatedExpression?.parentheses}
+        <br />
+        Variables:
+        {' '}
+        {evaluatedExpression?.variables}
+        <ul>
+          {evaluatedExpression?.steps.map((val, index) => (
+              <li key={val}>
+                Step
+                {' '}
+                {index}
+                :
+                {' '}
+                {val}
+              </li>
+          ))}
+        </ul>
 
-      <Table striped bordered hover>
-        <thead>
+        <Table striped bordered hover>
+          <thead>
           <tr>
             {evaluatedExpression?.variables.map((variable) => (
-              <th key={variable}>
-                {' '}
-                {variable}
-                {' '}
-              </th>
+                <th key={variable}>
+                  {' '}
+                  {variable}
+                  {' '}
+                </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
-              <th key={step}>
-                {' '}
-                {step}
-                {' '}
-              </th>
+                // eslint-disable-next-line react/jsx-key
+                <th>
+                  {' '}
+                  {step}
+                  {' '}
+                </th>
             ))}
           </tr>
-        </thead>
-        <tbody>
-          {/* todo better keys  */}
+          </thead>
+          <tbody>
           {
             evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary`}>
-                  {' '}
-                  <td>
-                    {' '}
-                    {binaryValue}
-                  </td>
-                  {evaluatedExpression?.steps.map((step, lowerIndex) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + upperIndex + lowerIndex}>
+                ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <tr>
                       {' '}
-                      **PLACEHOLDER**
-                      {' '}
-                    </td>
-                  ))}
-                </tr>
-              ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary1`}>
-                  {' '}
-                  {
-                binaryRow.map((binaryValue, lowerIndex) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <td key={`${upperIndex}lowerBinary1${lowerIndex}`}>
-                    {' '}
-                    {binaryValue}
-                    {' '}
-                  </td>
+                      <td>
+                        {' '}
+                        {binaryValue}
+                      </td>
+                      {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
+                    </tr>
                 ))
-              }
-                  {evaluatedExpression?.steps.map((step) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + binaryRow + upperIndex}>
+                : evaluatedExpression?.binaryOptions.map((binaryRow) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <tr>
                       {' '}
-                      **PLACEHOLDER**
-                      {' '}
-                    </td>
-                  ))}
-                </tr>
-              ))
-        }
-        </tbody>
-      </Table>
-    </>
+                      {
+                        binaryRow.map((binaryValue) => (
+                            // eslint-disable-next-line react/jsx-key
+                            <td>
+                              {' '}
+                              {binaryValue}
+                              {' '}
+                            </td>
+                        ))
+                      }
+
+                      {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+
+                    </tr>
+                ))
+          }
+          </tbody>
+        </Table>
+      </>
 
   );
 }
