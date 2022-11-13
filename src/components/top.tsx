@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import "./top.css"
 import {Col, Collapse, Container, Row} from "react-bootstrap";
 import {Alert, AlertTitle, IconButton, Menu} from "@mui/material";
@@ -45,8 +46,9 @@ const Top = () => {
                     id="info_button"
                     className="icon"
             >
+
               <IconButton color="inherit">
-                <DarkModeIcon/>
+                {darkMode?<DarkModeIcon/>:<LightModeIcon/>}
               </IconButton>
             </button>
           </Col>
