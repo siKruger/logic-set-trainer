@@ -1,7 +1,7 @@
 #footer_container {
     color:#976BF3;
     text-align: center;
-    margin:0 auto;
+    margin-bottom: 0;
 }
 .dark #footer_container {
     color: #BABDC4;

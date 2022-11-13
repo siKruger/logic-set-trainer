@@ -36,11 +36,13 @@ function Layout() {
 
   return (
       <div className="page">
-        {/*top: include instructions for use and task text*/}
-        <Top></Top>
+        <div>
+          {/*top: include instructions for use and task text*/}
+          <Top></Top>
 
-        {/*main field*/}
-        <Main></Main>
+          {/*main field*/}
+          <Main></Main>
+        </div>
 
         {/* foot */}
         <Footer></Footer>

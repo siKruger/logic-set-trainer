@@ -4,6 +4,9 @@ a {
 .page {
     min-height: 100vh;
     background-color: #F5F3FF;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 .dark .page{
     background-color: #374151;

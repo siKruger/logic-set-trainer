@@ -7,9 +7,9 @@
 }
 
 #checkbox-container{
-    width: 200px;
-    height: 120px;
-    margin-left: 20px;
+    margin: 2vh 0 !important;
+    display: flex;
+    justify-content: space-around;
 }
 label{
     line-height: 3.1;

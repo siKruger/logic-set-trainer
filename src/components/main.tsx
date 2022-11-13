@@ -48,15 +48,6 @@ const Main = () => {
 
   return (
     <>
-      {/* Checkbox Darstellung */}
-      <Container>
-        <Checkboxes checkedVennDiagramm={checkedVennDiagramm} 
-        setCheckedVennDiagramm={setCheckedVennDiagramm}
-        checkedNote={checkedNote}
-        setCheckedNote={setCheckedNote}/>
-      </Container>
-
-
       <Container className="cover">
         <div id="text_field_control">
           <TextField id="input_text_field" fullWidth
@@ -68,6 +59,14 @@ const Main = () => {
           {/* hier ändere ich die Funktion evaluate zu getEvaluation */}
           <Button onClick={getEvaluation} variant="contained" id="evaluate_button">Evaluate</Button>
         </div>
+      </Container>
+
+      {/* Checkbox Darstellung */}
+      <Container>
+        <Checkboxes checkedVennDiagramm={checkedVennDiagramm}
+                    setCheckedVennDiagramm={setCheckedVennDiagramm}
+                    checkedNote={checkedNote}
+                    setCheckedNote={setCheckedNote}/>
       </Container>
 
       {/* für Error Darstellung */}

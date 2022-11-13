@@ -16,18 +16,25 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
         <>
 
             {!props.checkedVennDiagramm && (
-                <Container>
-                    <img
-                        src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
-                        className='img-thumbnail'
-                        alt='...'
-                    /><br />
+                <Container id="venn_container">
+                    <div id="venn">
+                        <div id="venn_text">
+                            venn-diagram
+                        </div>
+                        <div id="venn_content">
+                            <img
+                                src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
+                                className='img-thumbnail'
+                                alt='...'
+                            /><br />
+                        </div>
+                    </div>
                 </Container>
             )
             }
 
             {!props.checkedNote &&
-                <Container>
+                <Container id="note_container">
                     <div id="form">
 
 
@@ -46,14 +53,17 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                             </Button>
                         </Form> */}
                     </div>
-                    <form onSubmit={handleSubmit}>
-                        <label >
-                            <span id="make_a_note">Make a note</span>
-                            <br />
-                            <textarea  id="text" rows={5} cols={100} placeholder="Type your note here..."></textarea>
-                        </label><br />
-                        <button>Save</button>
-                    </form>
+                    <div id="note">
+                        <div id="note_text">note</div>
+                        <div id="note_content">
+                            <form onSubmit={handleSubmit}>
+                                <label >
+                                    <textarea  id="note_form" rows={5} cols={100} placeholder="Type your note here..."></textarea>
+                                </label><br />
+                                <button>Save</button>
+                            </form>
+                        </div>
+                    </div>
                 </Container>
             }
         </>
