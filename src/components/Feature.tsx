@@ -35,10 +35,10 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
 
             {!props.checkedNote &&
                 <Container id="note_container">
-                    <div id="form">
+                    <div id="note">
 
 
-                        {/* <Form >
+                        <Form >
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
                                 <Form.Label className="lead">Make a note</Form.Label>
                                 <Form.Control id="text" as="textarea" rows={5} placeholder="Type your note here..." />
@@ -48,12 +48,13 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                                 <Form.Control id="filename" as="input" placeholder="Specify a filename..." />
                             </Form.Group>
 
-                            <Button variant="contained" type="submit">
+                            <Button variant="contained" type="submit" className="btn btn-success">
                                 save
                             </Button>
-                        </Form> */}
+                            
+                        </Form>
                     </div>
-                    <div id="note">
+                    {/* <div id="note">
                         <div id="note_text">note</div>
                         <div id="note_content">
                             <form onSubmit={handleSubmit}>
@@ -63,7 +64,7 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                                 <button>Save</button>
                             </form>
                         </div>
-                    </div>
+                    </div> */}
                 </Container>
             }
         </>
