@@ -249,9 +249,14 @@ export const setOptionalParenthesis = (expression: string): string => {
     if (char === '¬') {
       // Search the right side
       // Right Search
-      const placeRight = findRightPlacement(x, mutableExpression);
+      if (mutableExpression.charAt(x + 1) === '¬') {
+        const placeRight = findRightPlacement(x + 1, mutableExpression);
+        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
+      } else {
+        const placeRight = findRightPlacement(x, mutableExpression);
+        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
+      }
 
-      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
       x += 1;
     }
   }
