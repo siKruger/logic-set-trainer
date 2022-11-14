@@ -60,8 +60,7 @@ const Top = () => {
               <AlertTitle>Info</AlertTitle>
               Please enter your expression and press evaluate.
               Allowed characters are (ordered in their precedence):
-              (){' '}, !{' '}, &&{' '}, {'<=!=>'}
-              {' '}, ||{' '}, =={' '}, {'=>,<='}{' '},
+              (), !, &&, {'<=!=>'}, ||, {'=>,<='}
             </Alert>
           </div>
         </Collapse>
