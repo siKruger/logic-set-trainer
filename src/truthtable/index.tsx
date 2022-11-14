@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import { useState } from 'react';
 import {
   Alert, AlertTitle, Button, TextField,
 } from '@mui/material';
@@ -8,9 +9,16 @@ import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEv
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import { evaluateWholeExpression } from '../helper/logicConverter';
 
+let amountOfColumns = 0;
+
 function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  const [counter, setCounter] = useState(' ');
+
+  const handleCounter = () => {
+    setCounter(String(amountOfColumns));
+  };
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
@@ -28,6 +36,7 @@ function Truthtable() {
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
+    handleCounter();
   };
 
   const getReplacedValue = (values: number[] | number, index: number) => {
@@ -60,6 +69,27 @@ function Truthtable() {
         {' '}
       </td>
     );
+  };
+
+  const addColumn = () => {
+    amountOfColumns += 1;
+
+    if (evaluatedExpression !== undefined) {
+      if (amountOfColumns > evaluatedExpression?.steps.length) {
+        amountOfColumns -= 1;
+      }
+    }
+
+    handleCounter();
+    getEvaluation();
+  };
+  const reduceColumn = () => {
+    amountOfColumns -= 1;
+
+    if (amountOfColumns < 0) { amountOfColumns = 0; }
+
+    handleCounter();
+    getEvaluation();
   };
 
   const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
@@ -95,8 +125,11 @@ function Truthtable() {
         <br />
       </Alert>
       <br />
-      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
-      <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
+      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
+      <Button onClick={() => getEvaluation()} variant="outlined">Evaluate</Button>
+      <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
+      <TextField style={{ width: '11%', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
+      <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
       <br />
       <br />
 
@@ -128,7 +161,7 @@ function Truthtable() {
                 {' '}
               </th>
             ))}
-            {evaluatedExpression?.steps.map((step) => (
+            {evaluatedExpression?.steps.slice(0, amountOfColumns).map((step) => (
               // eslint-disable-next-line react/jsx-key
               <th>
                 {' '}
@@ -167,7 +200,7 @@ function Truthtable() {
                     ))
                   }
 
-                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+                  {generateRow(evaluatedExpression?.steps.slice(0, amountOfColumns), binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
