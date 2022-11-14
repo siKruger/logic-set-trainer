@@ -11,6 +11,41 @@ function VenDiagramPage() {
 
     // twoSetVenn(venn);
     // threeSetVenn(venn);
+    venn.append('ellipse')
+      .attr('cx', 60)
+      .attr('cy', 250)
+      .attr('rx', 80)
+      .attr('ry', 170)
+      .attr('transform', 'rotate(-35)')
+      .style('fill', 'none')
+      .style('stroke', 'black');
+
+    venn.append('ellipse')
+      .attr('cx', 310)
+      .attr('cy', -10)
+      .attr('rx', 80)
+      .attr('ry', 170)
+      .attr('transform', 'rotate(35)')
+      .style('fill', 'none')
+      .style('stroke', 'black');
+
+    venn.append('ellipse')
+      .attr('cx', 0)
+      .attr('cy', 250)
+      .attr('rx', 80)
+      .attr('ry', 170)
+      .attr('transform', 'rotate(-35)')
+      .style('fill', 'none')
+      .style('stroke', 'black');
+
+    venn.append('ellipse')
+      .attr('cx', 370)
+      .attr('cy', -10)
+      .attr('rx', 80)
+      .attr('ry', 170)
+      .attr('transform', 'rotate(35)')
+      .style('fill', 'none')
+      .style('stroke', 'black');
   });
   return (
     <>
