@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import VenDiagramPage from '../venn';
+import { evaluateWholeExpression } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
