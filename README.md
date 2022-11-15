@@ -34,7 +34,7 @@ Pull-Requests require the confirmation of another contributor. This is to preven
 
 ### Kanban
 Every feature should be documented on Kanban. Create a draft and convert it into a issue and select this repository. \
-Tasks should have a clear and comprehensive description.
+Tasks should have a clear and comprehensive description. [Kanban Board](https://github.com/users/siKruger/projects/3/views/1)
 
 
 #### This is all for the Getting Started Guide. If there are any questions feel free to contact us.
@@ -66,5 +66,6 @@ Fixes all files according to eslint config
 
 ## Useful Links
 
+To check the progress, [Kanban Board](https://github.com/users/siKruger/projects/3/views/1) \
 To learn React, check out the [React documentation](https://reactjs.org/). \
 To check the coding style [Airbnb Config](https://github.com/airbnb/javascript).
