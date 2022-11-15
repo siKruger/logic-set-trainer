@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
+import { threeSetVenn } from '../helper/vennDiagrams';
 
 function VenDiagramPage() {
   const svgRef = React.useRef(null);
@@ -7,45 +8,14 @@ function VenDiagramPage() {
   const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
 
   useEffect(() => {
-    const venn = d3.select(svgRef.current);
+    const venn = d3.select(svgRef.current).on('mousemove', (event) => {
+      const coords = d3.pointer(event);
+      console.log(coords[0], coords[1]); // log the mouse x,y position
+    });
 
     // twoSetVenn(venn);
-    // threeSetVenn(venn);
-    venn.append('ellipse')
-      .attr('cx', 60)
-      .attr('cy', 250)
-      .attr('rx', 80)
-      .attr('ry', 170)
-      .attr('transform', 'rotate(-35)')
-      .style('fill', 'none')
-      .style('stroke', 'black');
-
-    venn.append('ellipse')
-      .attr('cx', 310)
-      .attr('cy', -10)
-      .attr('rx', 80)
-      .attr('ry', 170)
-      .attr('transform', 'rotate(35)')
-      .style('fill', 'none')
-      .style('stroke', 'black');
-
-    venn.append('ellipse')
-      .attr('cx', 0)
-      .attr('cy', 250)
-      .attr('rx', 80)
-      .attr('ry', 170)
-      .attr('transform', 'rotate(-35)')
-      .style('fill', 'none')
-      .style('stroke', 'black');
-
-    venn.append('ellipse')
-      .attr('cx', 370)
-      .attr('cy', -10)
-      .attr('rx', 80)
-      .attr('ry', 170)
-      .attr('transform', 'rotate(35)')
-      .style('fill', 'none')
-      .style('stroke', 'black');
+    threeSetVenn(venn);
+    // fourSetVenn(venn);
   });
   return (
     <>
