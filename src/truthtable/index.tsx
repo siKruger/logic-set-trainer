@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import VenDiagramPage from '../venn';
-import { evaluateWholeExpression } from '../helper/logicConverter';
+import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -31,26 +31,9 @@ function Truthtable() {
     }
   };
 
-  const getReplacedValue = (values: number[] | number, index: number) => {
-    if (typeof (values) !== 'number') {
-      return values[index];
-    }
-    return Number(values);
-  };
-
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
-    for (let x = 0; x < mutableExpression.length; x += 1) {
-      const currentChar = mutableExpression.charAt(x);
-
-      const index = variables.indexOf(currentChar);
-
-      // eslint-disable-next-line no-continue
-      if (index === -1) continue;
-      const replacedValue = getReplacedValue(values, index);
-
-      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
-    }
+    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
 
     mutableExpression = evaluateWholeExpression(mutableExpression);
 
