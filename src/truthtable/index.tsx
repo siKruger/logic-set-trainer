@@ -10,7 +10,7 @@ import VenDiagramPage from '../venn';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
-  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
