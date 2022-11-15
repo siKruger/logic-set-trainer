@@ -445,7 +445,7 @@ export const threeSetVenn = (venn: any) => {
     .style('stroke', 'red');
 };
 
-export const twoSetVenn = (venn: any) => {
+export const twoSetVenn = (venn: any, trueEvaluations: any) => {
   const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
 
   venn.append('circle')
@@ -467,6 +467,7 @@ export const twoSetVenn = (venn: any) => {
     .attr('x', 166)
     .attr('y', 105);
 
+  const alphaSet = ['A', 'B'];
   const alpha = 'M 165 15 '
       + 'A 110 110 0 0 1 220 110'
       + 'A 110 110 0 0 1 165 205'
@@ -484,6 +485,7 @@ export const twoSetVenn = (venn: any) => {
     .attr('x', 55)
     .attr('y', 105);
 
+  const betaSet = ['A'];
   const beta = 'M 165 15 '
       + 'A 110 110 0 1 1 165 205'
       + 'A 110 110 0 0 0 165 15';
@@ -499,13 +501,23 @@ export const twoSetVenn = (venn: any) => {
     .attr('x', 255)
     .attr('y', 105);
 
-  const gamma = 'M 165 15 '
+  const gammaDraw = () => {
+    const gammaSet = ['B'];
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    const filtered = trueEvaluations.filter((elem) => JSON.stringify(elem) === JSON.stringify(gammaSet));
+    console.log('gefiltert', filtered);
+
+    const gamma = 'M 165 15 '
       + 'A 110 110 0 1 0 165 205'
       + 'A 110 110 0 0 1 165 15';
 
-  venn.append('path')
-    // @ts-ignore
-    .attr('d', gamma)
-    .style('fill', 'none')
-    .style('stroke', 'red');
+    venn.append('path')
+      // @ts-ignore
+      .attr('d', gamma)
+      .style('fill', 'none')
+      .style('stroke', 'red');
+  };
+  gammaDraw();
 };
