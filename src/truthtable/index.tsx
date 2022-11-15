@@ -30,6 +30,40 @@ function Truthtable() {
     }
   };
 
+  const getReplacedValue = (values: number[] | number, index: number) => {
+    if (typeof (values) !== 'number') {
+      return values[index];
+    }
+    return Number(values);
+  };
+
+  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
+    let mutableExpression = singleStep;
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const currentChar = mutableExpression.charAt(x);
+
+      const index = variables.indexOf(currentChar);
+
+      // eslint-disable-next-line no-continue
+      if (index === -1) continue;
+      const replacedValue = getReplacedValue(values, index);
+
+      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+    }
+
+    mutableExpression = evaluateWholeExpression(mutableExpression);
+
+    return (
+      <td>
+        {' '}
+        {mutableExpression}
+        {' '}
+      </td>
+    );
+  };
+
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
+
   return (
     <>
       <Alert severity="info">
@@ -53,10 +87,10 @@ function Truthtable() {
         ||
         {' '}
         <br />
-        ==
+        {'<==>'}
         {' '}
         <br />
-        {'=>,<='}
+        {'=>'}
         {' '}
         <br />
       </Alert>
@@ -72,7 +106,7 @@ function Truthtable() {
       {' '}
       {evaluatedExpression?.variables}
       <ul>
-        { evaluatedExpression?.steps.map((val, index) => (
+        {evaluatedExpression?.steps.map((val, index) => (
           <li key={val}>
             Step
             {' '}
@@ -81,7 +115,7 @@ function Truthtable() {
             {' '}
             {val}
           </li>
-        )) }
+        ))}
       </ul>
 
       <Table striped bordered hover>
@@ -95,7 +129,8 @@ function Truthtable() {
               </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
-              <th key={step}>
+              // eslint-disable-next-line react/jsx-key
+              <th>
                 {' '}
                 {step}
                 {' '}
@@ -104,52 +139,39 @@ function Truthtable() {
           </tr>
         </thead>
         <tbody>
-          {/* todo better keys  */}
           {
             evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary`}>
+              ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
+                // eslint-disable-next-line react/jsx-key
+                <tr>
                   {' '}
                   <td>
                     {' '}
                     {binaryValue}
                   </td>
-                  {evaluatedExpression?.steps.map((step, lowerIndex) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + upperIndex + lowerIndex}>
-                      {' '}
-                      **PLACEHOLDER**
-                      {' '}
-                    </td>
-                  ))}
+                  {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
                 </tr>
               ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow, upperIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <tr key={`${upperIndex}upperBinary1`}>
+              : evaluatedExpression?.binaryOptions.map((binaryRow) => (
+                // eslint-disable-next-line react/jsx-key
+                <tr>
                   {' '}
                   {
-                binaryRow.map((binaryValue, lowerIndex) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <td key={`${upperIndex}lowerBinary1${lowerIndex}`}>
-                    {' '}
-                    {binaryValue}
-                    {' '}
-                  </td>
-                ))
-              }
-                  {evaluatedExpression?.steps.map((step) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={step + binaryRow + upperIndex}>
-                      {' '}
-                      **PLACEHOLDER**
-                      {' '}
-                    </td>
-                  ))}
+                    binaryRow.map((binaryValue) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <td>
+                        {' '}
+                        {binaryValue}
+                        {' '}
+                      </td>
+                    ))
+                  }
+
+                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+
                 </tr>
               ))
-        }
+          }
         </tbody>
       </Table>
 
