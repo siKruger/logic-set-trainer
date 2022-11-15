@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
+import VenDiagramPage from '../venn';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
@@ -151,6 +152,8 @@ function Truthtable() {
         }
         </tbody>
       </Table>
+
+      <VenDiagramPage data={evaluatedExpression} />
     </>
 
   );
