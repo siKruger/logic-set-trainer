@@ -3,23 +3,27 @@ import { Button, Container, Form } from 'react-bootstrap'
 import './feature.css'
 
 
-export default function Feature(props: { checkedVennDiagramm: any; checkedNote: any }) {
+export default function Feature(props: {
+    expression: any; checkedVennDiagramm: any; checkedNote: any; 
+}) {
  
     const [text, setText] = useState("");
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const element = document.createElement('a');
-        const file = new Blob([text], {
+        const txt = "" + props.expression + " :\n\n" + text;
+        const file = new Blob([txt], {
             type: "text/plain;charset=utf-8"
         });
         element.href = URL.createObjectURL(file);
         element.download = "NewDocument.txt";
         document.body.appendChild(element);
         element.click();
+        
     }
     const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        setText(e.target.value);
+        setText(e.target.value);     
     }
 
 
@@ -50,7 +54,7 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
 
 
                         <Form  onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
+                            <Form.Group className="mb-3"> <br />
                                 <Form.Label className="lead">Make a note</Form.Label>
                                 <Form.Control onChange={handleChange} id="text" as="textarea" rows={5} placeholder="Type your note here..." />
                             </Form.Group>
