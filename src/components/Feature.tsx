@@ -14,7 +14,6 @@ export default function Feature(props: {
 
         
         // props.setEvaluatedExpression(evaluateTruthtable(props.expression));
-        console.log(props.evaluatedExpression.steps);
         const element = document.createElement('a');
         const txt = "" + props.expression + " :\n\n"+ "Steps:  " + props.evaluatedExpression.steps + "\n\n" + text;
         const file = new Blob([txt], {
