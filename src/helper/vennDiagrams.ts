@@ -63,6 +63,18 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
     .attr('transform', 'rotate(35)')
     .style('fill', 'none')
     .style('stroke', 'black');
+
+  venn
+    .append('defs')
+    .append('pattern')
+    .attr('id', 'diagonalHatch')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+    .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+    .attr('stroke', 'red')
+    .attr('stroke-width', 1);
   //* **************************************************
   venn.append('text')
     .text(A + D)
@@ -79,7 +91,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', delta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -98,7 +110,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', epsilon)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -117,7 +129,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', zeta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -136,7 +148,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', alpha)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -155,7 +167,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', beta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -172,7 +184,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
       + 'A 300 300 0 0 0 225.38333129882812 149.31666564941406';
     venn.append('path')
       .attr('d', gamme)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -190,7 +202,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
       + 'A 300 300 0 0 0 191.38333129882812 113.4000015258789';
     venn.append('path')
       .attr('d', eta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -209,7 +221,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', theta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -227,7 +239,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', iota)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -245,7 +257,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', kappa)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -263,7 +275,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', lambda)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -281,7 +293,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', my)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -300,7 +312,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', ny)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -324,7 +336,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', xi)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -350,7 +362,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
     venn.append('path')
       .attr('d', omikron)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
 };
@@ -398,6 +410,18 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
     .attr('r', 110)
     .style('fill', 'none')
     .style('stroke', 'black');
+
+  venn
+    .append('defs')
+    .append('pattern')
+    .attr('id', 'diagonalHatch')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+    .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+    .attr('stroke', 'red')
+    .attr('stroke-width', 1);
   //* **************************************************
   venn.append('text')
     .text(A)
@@ -413,7 +437,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', alpha)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -431,7 +455,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', beta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -443,13 +467,13 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
   const gammaSet = [`!${A}`, `!${B}`, C];
   if (shouldDrawSet(trueEvaluations, gammaSet)) {
     const gamma = 'M 219.64999389648438 123.83332824707031 '
-        + 'A 110 110 0 0 1 273.79998779296875 205.76666259765625'
-        + 'A 100 100 0 0 0 165 14.75'
-        + 'A 110 110 0 0 1 219.64999389648438 123.83332824707031';
+      + 'A 110 110 0 0 1 273.79998779296875 205.76666259765625'
+      + 'A 100 100 0 0 0 165 14.75'
+      + 'A 110 110 0 0 1 219.64999389648438 123.83332824707031';
 
     venn.append('path')
       .attr('d', gamma)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -467,7 +491,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', delta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -484,7 +508,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', epsilon)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -501,7 +525,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', zeta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -518,7 +542,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
 
     venn.append('path')
       .attr('d', eta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
 };
@@ -536,7 +560,7 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
       .attr('x', '1')
       .attr('width', '330')
       .attr('height', '220')
-      .attr('fill', 'none')
+      .style('fill', 'none')
       .style('stroke', 'red');
   } else {
     venn.append('rect')
@@ -561,6 +585,17 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
     .style('fill', 'none')
     .style('stroke', 'black');
 
+  venn
+    .append('defs')
+    .append('pattern')
+    .attr('id', 'diagonalHatch')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+    .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+    .attr('stroke', 'red')
+    .attr('stroke-width', 1);
   //* **************************************************
   venn.append('text')
     .text(A + B)
@@ -578,7 +613,7 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
 
     venn.append('path')
       .attr('d', alpha)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -596,7 +631,7 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
 
     venn.append('path')
       .attr('d', beta)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
@@ -609,12 +644,12 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
 
   if (shouldDrawSet(trueEvaluations, gammaSet)) {
     const gamma = 'M 165 15 '
-        + 'A 110 110 0 1 0 165 205'
-        + 'A 110 110 0 0 1 165 15';
+      + 'A 110 110 0 1 0 165 205'
+      + 'A 110 110 0 0 1 165 15';
 
     venn.append('path')
       .attr('d', gamma)
-      .style('fill', 'none')
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   }
   //* **************************************************
