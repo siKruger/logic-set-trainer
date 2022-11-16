@@ -373,14 +373,33 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
   const B = variables[1];
   const C = variables[2];
 
-  const notArea = [`!${A}`, `!${B}`, `!${C}`];
+  const notAreaSet = [`!${A}`, `!${B}`, `!${C}`];
 
-  if (shouldDrawSet(trueEvaluations, notArea)) {
-    venn.append('rect')
-      .attr('x', '1')
-      .attr('width', '330')
-      .attr('height', '330')
-      .attr('fill', 'none')
+  if (shouldDrawSet(trueEvaluations, notAreaSet)) {
+    const notArea = 'M 0 110 '
+      + 'L 0 0'
+      + 'L 110 0'
+      + 'A 110 110 0 0 0 0 110'
+      + 'M 110 0'
+      + 'L 220 0'
+      + 'A 110 110 0 0 0 165 15'
+      + 'A 110 110 0 0 0 110 0'
+      + 'M 220 0'
+      + 'L 330 0'
+      + 'L 330 330'
+      + 'L 165 330'
+      + 'A 110 110 0 0 0 274.45001220703125 206.10000610351562'
+      + 'A 110 110 0 0 0 330 105'
+      + 'A 110 110 0 0 0 220 0'
+      + 'M 165 330'
+      + 'L 0 330'
+      + 'L 0 110'
+      + 'A 110 110 0 0 0 56 205.14999389648438'
+      + 'A 110 110 0 0 0 165 330';
+
+    venn.append('path')
+      .attr('d', notArea)
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   } else {
     venn.append('rect')
@@ -554,17 +573,10 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
 
   const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
 
-  const notArea = [`!${A}`, `!${B}`];
+  const notAreaSet = [`!${A}`, `!${B}`];
 
-  if (shouldDrawSet(trueEvaluations, notArea)) {
-    // venn.append('rect')
-    //   .attr('x', '1')
-    //   .attr('width', '330')
-    //   .attr('height', '220')
-    //   .style('fill', 'none')
-    //   .style('stroke', 'red');
-
-    const alpha = 'M 0 110 '
+  if (shouldDrawSet(trueEvaluations, notAreaSet)) {
+    const notArea = 'M 0 110 '
       + 'L 0 0'
       + 'L 110 0'
       + 'A 110 110 0 0 0 0 110'
@@ -587,7 +599,7 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
       + 'L 0 110'
       + 'A 110 110 0 0 0 110 220';
     venn.append('path')
-      .attr('d', alpha)
+      .attr('d', notArea)
       .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   } else {
