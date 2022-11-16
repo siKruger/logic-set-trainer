@@ -35,6 +35,7 @@ function VenDiagramPage({ data }: VennProps) {
 
         for (let y = 0; y < data.variables.length; y++) {
           if (binaryOption[y] === 1) foo.push(data.variables[y]);
+          if (binaryOption[y] === 0) foo.push(`!${data.variables[y]}`);
         }
 
         trueEvaluations.push(foo);
@@ -42,14 +43,11 @@ function VenDiagramPage({ data }: VennProps) {
     }
 
     // In this array we have the EXACT array that needs to match our intersection on the set
-    console.log(trueEvaluations);
-
-    // todo translate letters into our coded letters so we can use this shit
 
     switch (data.variables.length) {
-      case 2: twoSetVenn(venn, trueEvaluations); break;
-      case 3: threeSetVenn(venn); break;
-      case 4: fourSetVenn(venn); break;
+      case 2: twoSetVenn(venn, trueEvaluations, data.variables); break;
+      case 3: threeSetVenn(venn, trueEvaluations, data.variables); break;
+      case 4: fourSetVenn(venn, trueEvaluations, data.variables); break;
     }
   });
 
