@@ -557,11 +557,38 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
   const notArea = [`!${A}`, `!${B}`];
 
   if (shouldDrawSet(trueEvaluations, notArea)) {
-    venn.append('rect')
-      .attr('x', '1')
-      .attr('width', '330')
-      .attr('height', '220')
-      .style('fill', 'none')
+    // venn.append('rect')
+    //   .attr('x', '1')
+    //   .attr('width', '330')
+    //   .attr('height', '220')
+    //   .style('fill', 'none')
+    //   .style('stroke', 'red');
+
+    const alpha = 'M 0 110 '
+      + 'L 0 0'
+      + 'L 110 0'
+      + 'A 110 110 0 0 0 0 110'
+      + 'M 110 0'
+      + 'L 220 0'
+      + 'A 110 110 0 0 0 165 15'
+      + 'A 110 110 0 0 0 110 0'
+      + 'M 220 0'
+      + 'L 330 0'
+      + 'L 330 220'
+      + 'L 220 220'
+      + 'A 110 110 0 0 0 330 115'
+      + 'A 110 110 0 0 0 220 0'
+      + 'M 220 220'
+      + 'L 110 220'
+      + 'A 110 110 0 0 0 165 205'
+      + 'A 110 110 0 0 0 220 220'
+      + 'M 110 220'
+      + 'L 0 220'
+      + 'L 0 110'
+      + 'A 110 110 0 0 0 110 220';
+    venn.append('path')
+      .attr('d', alpha)
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   } else {
     venn.append('rect')
