@@ -8,15 +8,39 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   const C = variables[2];
   const D = variables[3];
 
-  const notArea = [`!${A}`, `!${B}`, `!${C}`, `!${D}`];
+  const notAreaSet = [`!${A}`, `!${B}`, `!${C}`, `!${D}`];
 
-  if (shouldDrawSet(trueEvaluations, notArea)) {
-    venn.append('rect')
-      .attr('x', '26')
-      .attr('y', '44')
-      .attr('width', '400')
-      .attr('height', '330')
-      .attr('fill', 'none')
+  if (shouldDrawSet(trueEvaluations, notAreaSet)) {
+    const notArea = 'M 27 147'
+      + 'L 27 46'
+      + 'L 145 46'
+      + 'A 50 50 0 0 0 98.63333129882812 70.16666412353516'
+      + 'A 60 60 0 0 0 47 91.13333129882812'
+      + 'A 80 80 0 0 0 27 147'
+      + 'M 145 46'
+      + 'L 300 46'
+      + 'A 150 150 0 0 0 225.7833251953125 80.78333282470703'
+      + 'A 150 150 0 0 0 145 46'
+      + 'M 310 46'
+      + 'L 425 46'
+      + 'L 425 143'
+      + 'A 80 80 0 0 0 399.3166809082031 84.56666564941406'
+      + 'A 70 70 0 0 0 353.8999938964844 69.36666870117188'
+      + 'A 50 50 0 0 0 310 46'
+      + 'M 425 46'
+      + 'L 425 371'
+      + 'L 240 371'
+      + 'A 160 160 0 0 0 348 315.6166687011719'
+      + 'A 250 250 0 0 0 425 143'
+      + 'M 200 371'
+      + 'L 27 371'
+      + 'L 27 147'
+      + 'A 250 250 0 0 0 92 301.566650390625'
+      + 'A 180 180 0 0 0 200 371';
+
+    venn.append('path')
+      .attr('d', notArea)
+      .style('fill', 'url(#diagonalHatch)')
       .style('stroke', 'red');
   } else {
     venn.append('rect')
