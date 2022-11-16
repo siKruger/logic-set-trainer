@@ -60,7 +60,7 @@ const Main = () => {
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />
         <TruthTable evaluatedExpression={evaluatedExpression} />
-        <Feature expression={expression} checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
+        <Feature setEvaluatedExpression={setEvaluatedExpression} evaluatedExpression={evaluatedExpression}  expression={expression} checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
       </div>
       )) : (expression !== "" && <Error />)} 
     </>

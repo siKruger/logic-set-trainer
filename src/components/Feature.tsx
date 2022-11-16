@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import './feature.css'
-
+import { evaluateTruthtable } from "../helper/expressionEvaluator";
 
 export default function Feature(props: {
-    expression: any; checkedVennDiagramm: any; checkedNote: any; 
+    setEvaluatedExpression:any; evaluatedExpression:any; expression: any; checkedVennDiagramm: any; checkedNote: any; 
 }) {
  
     const [text, setText] = useState("");
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+
+        
+        // props.setEvaluatedExpression(evaluateTruthtable(props.expression));
+        console.log(props.evaluatedExpression.steps);
         const element = document.createElement('a');
-        const txt = "" + props.expression + " :\n\n" + text;
+        const txt = "" + props.expression + " :\n\n"+ "Steps:  " + props.evaluatedExpression.steps + "\n\n" + text;
         const file = new Blob([txt], {
             type: "text/plain;charset=utf-8"
         });
