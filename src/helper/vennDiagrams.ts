@@ -178,7 +178,8 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
 
   const gammaSet = [`!${A}`, B, C, D];
   if (shouldDrawSet(trueEvaluations, gammaSet)) {
-    const gamme = 'M 282.1499938964844 286.5000061035156'
+    const gamme = 'M 225.38333129882812 149.31666564941406'
+      + 'A 330 280 0 0 1 282.1499938964844 286.5000061035156'
       + 'A 330 280 0 0 0 325.75 230.93333435058594'
       + 'A 330 280 0 0 0 259.33331298828125 113.11666870117188'
       + 'A 300 300 0 0 0 225.38333129882812 149.31666564941406';
