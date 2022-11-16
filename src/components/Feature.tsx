@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import './feature.css'
 
 
 export default function Feature(props: { checkedVennDiagramm: any; checkedNote: any }) {
-
-
+ 
+    const [text, setText] = useState("");
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        // hier kommt das Code für Download
+        const element = document.createElement('a');
+        const file = new Blob([text], {
+            type: "text/plain;charset=utf-8"
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = "NewDocument.txt";
+        document.body.appendChild(element);
+        element.click();
     }
+    const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setText(e.target.value);
+    }
+
 
     return (
         <>
@@ -38,20 +49,17 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                     <div id="note">
 
 
-                        <Form >
+                        <Form  onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> <br />
                                 <Form.Label className="lead">Make a note</Form.Label>
-                                <Form.Control id="text" as="textarea" rows={5} placeholder="Type your note here..." />
+                                <Form.Control onChange={handleChange} id="text" as="textarea" rows={5} placeholder="Type your note here..." />
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Control id="filename" as="input" placeholder="Specify a filename..." />
-                            </Form.Group>
 
                             <Button variant="contained" type="submit" className="btn btn-success">
                                 save
                             </Button>
-                            
+
                         </Form>
                     </div>
                     {/* <div id="note">
@@ -59,7 +67,7 @@ export default function Feature(props: { checkedVennDiagramm: any; checkedNote: 
                         <div id="note_content">
                             <form onSubmit={handleSubmit}>
                                 <label >
-                                    <textarea  id="note_form" rows={5} cols={100} placeholder="Type your note here..."></textarea>
+                                    <textarea onChange={handleChange} id="note_form" rows={5} cols={100} placeholder="Type your note here..."></textarea>
                                 </label><br />
                                 <button>Save</button>
                             </form>

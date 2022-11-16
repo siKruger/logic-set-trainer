@@ -8,18 +8,18 @@ const Footer = () => {
 
 
 
-  const setFooter = () => {
-    const footerContainer = document.getElementById("footer_container");
-    if (window.outerHeight-document.body.clientHeight>100) {
-      let footerPosition = window.outerHeight-document.body.clientHeight-200;
-      // alert(footerPosition)
-      // @ts-ignore
-      footerContainer.style.marginTop = footerPosition.toString() + "px";
-      // footerContainer.style.marginTop = "100px";
-    }
-    // @ts-ignore
-    else footerContainer.style.marginTop = 0;
-  }
+  // const setFooter = () => {
+  //   const footerContainer = document.getElementById("footer_container");
+  //   if (window.outerHeight-document.body.clientHeight>100) {
+  //     let footerPosition = window.outerHeight-document.body.clientHeight-200;
+  //     // alert(footerPosition)
+  //     // @ts-ignore
+  //     footerContainer.style.marginTop = footerPosition.toString() + "px";
+  //     // footerContainer.style.marginTop = "100px";
+  //   }
+  //   // @ts-ignore
+  //   else footerContainer.style.marginTop = 0;
+  // }
 
   return (
       <Container id="footer_container">
