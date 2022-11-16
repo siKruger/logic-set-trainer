@@ -18,6 +18,14 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
       .attr('height', '330')
       .attr('fill', 'none')
       .style('stroke', 'red');
+  } else {
+    venn.append('rect')
+      .attr('x', '26')
+      .attr('y', '44')
+      .attr('width', '400')
+      .attr('height', '330')
+      .attr('fill', 'none')
+      .style('stroke', 'black');
   }
 
   venn.append('ellipse')
@@ -77,8 +85,9 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   //* **************************************************
   venn.append('text')
     .text(A + C + D)
-    .attr('x', 185.68333435058594)
-    .attr('y', 322.5);
+    .style('font-size', '15px')
+    .attr('x', 180)
+    .attr('y', 330.5);
 
   const epsilonSet = [A, `!${B}`, C, D];
   if (shouldDrawSet(trueEvaluations, epsilonSet)) {
@@ -95,8 +104,9 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   //* **************************************************
   venn.append('text')
     .text(A + B + D)
-    .attr('x', 259.683349609375)
-    .attr('y', 323.5);
+    .style('font-size', '15px')
+    .attr('x', 245)
+    .attr('y', 330.5);
 
   const zetaSet = [A, B, `!${C}`, D];
   if (shouldDrawSet(trueEvaluations, zetaSet)) {
@@ -259,7 +269,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   //* **************************************************
   venn.append('text')
     .text(B)
-    .attr('x', 159.13333129882812)
+    .attr('x', 159.13333129882)
     .attr('y', 79);
   const mySet = [`!${A}`, B, `!${C}`, `!${D}`];
   if (shouldDrawSet(trueEvaluations, mySet)) {
@@ -279,7 +289,7 @@ export const fourSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   venn.append('text')
     .text(C)
     .attr('x', 277.2833251953125)
-    .attr('y', 72.38333129882812);
+    .attr('y', 72.383331298828);
   const nySet = [`!${A}`, `!${B}`, C, `!${D}`];
   if (shouldDrawSet(trueEvaluations, nySet)) {
     const ny = 'M 225.7833251953125 80.78333282470703'
@@ -359,6 +369,13 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
       .attr('height', '330')
       .attr('fill', 'none')
       .style('stroke', 'red');
+  } else {
+    venn.append('rect')
+      .attr('x', '1')
+      .attr('width', '330')
+      .attr('height', '330')
+      .attr('fill', 'none')
+      .style('stroke', 'black');
   }
 
   venn.append('circle')
@@ -405,7 +422,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
     .attr('x', 50)
     .attr('y', 105);
 
-  const betaSet = [`!${B}`, B, `!${C}`];
+  const betaSet = [`!${A}`, B, `!${C}`];
   if (shouldDrawSet(trueEvaluations, betaSet)) {
     const beta = 'M 165 14.75 '
       + 'A 100 100 0 0 0 55.849998474121094 205.76666259765625'
@@ -458,7 +475,7 @@ export const threeSetVenn = (venn: d3.Selection<null, unknown, null, undefined>,
     .text(A + B + C)
     .attr('x', 166)
     .attr('y', 159);
-  const epsilonSet = [A, B, B];
+  const epsilonSet = [A, B, C];
   if (shouldDrawSet(trueEvaluations, epsilonSet)) {
     const epsilon = 'M 219.64999389648438 123.83332824707031 '
       + 'A 110 110 0 0 0 111 123.83332824707031'
@@ -521,6 +538,13 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
       .attr('height', '220')
       .attr('fill', 'none')
       .style('stroke', 'red');
+  } else {
+    venn.append('rect')
+      .attr('x', '1')
+      .attr('width', '330')
+      .attr('height', '220')
+      .attr('fill', 'none')
+      .style('stroke', 'black');
   }
 
   venn.append('circle')
