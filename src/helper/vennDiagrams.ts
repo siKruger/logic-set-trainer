@@ -718,3 +718,73 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
   }
   //* **************************************************
 };
+
+export const oneSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, trueEvaluations: string[][], variables: string[]) => {
+  const A = variables[0];
+
+  const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
+
+  console.log(trueEvaluations);
+
+  const notAreaSet = [`!${A}`];
+  if (shouldDrawSet(trueEvaluations, notAreaSet)) {
+    const notArea = 'M 1 110 '
+      + 'L 1 0'
+      + 'L 110 0'
+      + 'L 220 0'
+      + 'L 220 110'
+      + 'A 90 90 0 0 0 1 110'
+      + 'M 220 110'
+      + 'L 220 220'
+      + 'L 1 220'
+      + 'L 1 110'
+      + 'A 90 90 0 0 0 220 110';
+
+    venn.append('path')
+      .attr('d', notArea)
+      .style('fill', 'url(#diagonalHatch)')
+      .style('stroke', 'red');
+  } else {
+    venn.append('rect')
+      .attr('x', '1')
+      .attr('width', '220')
+      .attr('height', '220')
+      .attr('fill', 'none')
+      .style('stroke', 'black');
+  }
+  //* **************************************************
+  venn.append('text')
+    .text(A)
+    .attr('x', 100)
+    .attr('y', 105);
+
+  const alphaSet = [A];
+
+  if (shouldDrawSet(trueEvaluations, alphaSet)) {
+    venn.append('circle')
+      .attr('cx', circleProps.xOffset)
+      .attr('cy', circleProps.yOffset)
+      .attr('r', circleProps.radius)
+      .style('fill', 'url(#diagonalHatch)')
+      .style('stroke', 'black');
+  } else {
+    venn.append('circle')
+      .attr('cx', circleProps.xOffset)
+      .attr('cy', circleProps.yOffset)
+      .attr('r', circleProps.radius)
+      .style('fill', 'none')
+      .style('stroke', 'black');
+  }
+
+  venn
+    .append('defs')
+    .append('pattern')
+    .attr('id', 'diagonalHatch')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+    .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+    .attr('stroke', 'red')
+    .attr('stroke-width', 1);
+};
