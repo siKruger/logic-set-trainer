@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import {
-  fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
+  fiveSetVenn, fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
 } from '../helper/vennDiagrams';
 import { TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
@@ -59,6 +59,7 @@ function VenDiagramPage({ data }: VennProps) {
       case 2: twoSetVenn(venn, trueEvaluations, data.variables); break;
       case 3: threeSetVenn(venn, trueEvaluations, data.variables); break;
       case 4: fourSetVenn(venn, trueEvaluations, data.variables); break;
+      case 5: fiveSetVenn(venn, trueEvaluations, data.variables); break;
       default:
     }
   });
@@ -66,7 +67,7 @@ function VenDiagramPage({ data }: VennProps) {
   // console.log(data);
 
   return (
-    <svg ref={svgRef} width={500} height={500} />
+    <svg ref={svgRef} width={750} height={750} />
   );
 }
 
