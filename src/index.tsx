@@ -7,6 +7,7 @@ import Layout from './webapp/Layout';
 import Landingpage from './webapp/Landingpage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from './webapp/ErrorPage';
 
 const router = createHashRouter([
   {
@@ -20,6 +21,7 @@ const router = createHashRouter([
       {
         path: '/truthtable',
         element: <Truthtable />,
+        errorElement: <ErrorPage />,
       },
     ],
   },
