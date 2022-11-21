@@ -48,6 +48,17 @@ function Truthtable() {
 
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
+
+    if (mutableExpression === 'blank') {
+      return (
+        <td>
+          {' '}
+          {' - '}
+          {' '}
+        </td>
+      );
+    }
+
     for (let x = 0; x < mutableExpression.length; x += 1) {
       const currentChar = mutableExpression.charAt(x);
 
@@ -161,7 +172,7 @@ function Truthtable() {
                 {' '}
               </th>
             ))}
-            {evaluatedExpression?.steps.slice(0, amountOfColumns).map((step) => (
+            {evaluatedExpression?.steps.map((step) => (
               // eslint-disable-next-line react/jsx-key
               <th>
                 {' '}
@@ -200,7 +211,8 @@ function Truthtable() {
                     ))
                   }
 
-                  {generateRow(evaluatedExpression?.steps.slice(0, amountOfColumns), binaryRow, evaluatedExpression?.variables)}
+                  {/* eslint-disable-next-line no-unsafe-optional-chaining */}
+                  {generateRow(evaluatedExpression?.steps.slice(0, amountOfColumns).concat(Array(evaluatedExpression?.steps.length - amountOfColumns).fill('blank')), binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
