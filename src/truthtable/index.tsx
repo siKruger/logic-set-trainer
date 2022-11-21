@@ -139,7 +139,7 @@ function Truthtable() {
       <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
       <Button onClick={() => getEvaluation()} variant="outlined">Evaluate</Button>
       <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
-      <TextField style={{ width: '11%', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
+      <TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
       <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
       <br />
       <br />
