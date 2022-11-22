@@ -9,16 +9,10 @@ import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEv
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import { evaluateWholeExpression } from '../helper/logicConverter';
 
-let amountOfColumns = 0;
-
 function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
-  const [counter, setCounter] = useState(' ');
-
-  const handleCounter = () => {
-    setCounter(String(amountOfColumns));
-  };
+  const [counter, setCounter] = useState(0);
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
@@ -36,7 +30,6 @@ function Truthtable() {
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
-    handleCounter();
   };
 
   const getReplacedValue = (values: number[] | number, index: number) => {
@@ -83,23 +76,20 @@ function Truthtable() {
   };
 
   const addColumn = () => {
-    amountOfColumns += 1;
 
     if (evaluatedExpression !== undefined) {
-      if (amountOfColumns > evaluatedExpression?.steps.length) {
-        amountOfColumns -= 1;
+      if (counter < evaluatedExpression?.steps.length) {
+        setCounter(counter + 1);
       }
     }
-
-    handleCounter();
     getEvaluation();
   };
   const reduceColumn = () => {
-    amountOfColumns -= 1;
 
-    if (amountOfColumns < 0) { amountOfColumns = 0; }
+    if (counter > 0) {
+      setCounter(counter - 1);
+    }
 
-    handleCounter();
     getEvaluation();
   };
 
@@ -138,9 +128,9 @@ function Truthtable() {
       <br />
       <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
       <Button onClick={() => getEvaluation()} variant="outlined">Evaluate</Button>
-      <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
-      <TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
       <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
+      <TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
+      <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
       <br />
       <br />
 
@@ -212,7 +202,7 @@ function Truthtable() {
                   }
 
                   {/* eslint-disable-next-line no-unsafe-optional-chaining */}
-                  {generateRow(evaluatedExpression?.steps.slice(0, amountOfColumns).concat(Array(evaluatedExpression?.steps.length - amountOfColumns).fill('blank')), binaryRow, evaluatedExpression?.variables)}
+                  {generateRow(evaluatedExpression?.steps.slice(0, counter).concat(Array(evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
