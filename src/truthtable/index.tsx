@@ -76,7 +76,6 @@ function Truthtable() {
   };
 
   const addColumn = () => {
-
     if (evaluatedExpression !== undefined) {
       if (counter < evaluatedExpression?.steps.length) {
         setCounter(counter + 1);
@@ -85,7 +84,6 @@ function Truthtable() {
     getEvaluation();
   };
   const reduceColumn = () => {
-
     if (counter > 0) {
       setCounter(counter - 1);
     }
