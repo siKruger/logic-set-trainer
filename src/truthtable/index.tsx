@@ -6,11 +6,16 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
+<<<<<<< HEAD
 import { evaluateWholeExpression } from '../helper/logicConverter';
+=======
+import VenDiagramPage from '../venn';
+import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+>>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
-  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
@@ -30,6 +35,7 @@ function Truthtable() {
     }
   };
 
+<<<<<<< HEAD
   const getReplacedValue = (values: number[] | number, index: number) => {
     if (typeof (values) !== 'number') {
       return values[index];
@@ -50,15 +56,28 @@ function Truthtable() {
 
       mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
     }
+=======
+  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
+    let mutableExpression = singleStep;
+    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
+>>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
 
     mutableExpression = evaluateWholeExpression(mutableExpression);
 
     return (
+<<<<<<< HEAD
         <td>
           {' '}
           {mutableExpression}
           {' '}
         </td>
+=======
+      <td>
+        {' '}
+        {mutableExpression}
+        {' '}
+      </td>
+>>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
     );
   };
 
@@ -99,6 +118,7 @@ function Truthtable() {
         <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
         <br />
         <br />
+<<<<<<< HEAD
 
         {evaluatedExpression?.parentheses}
         <br />
@@ -117,6 +137,50 @@ function Truthtable() {
               </li>
           ))}
         </ul>
+=======
+        !
+        {' '}
+        <br />
+        &&
+        {' '}
+        <br />
+        {'<=!=>'}
+        {' '}
+        <br />
+        ||
+        {' '}
+        <br />
+        {'<==>'}
+        {' '}
+        <br />
+        {'=>'}
+        {' '}
+        <br />
+      </Alert>
+      <br />
+      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
+      <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
+      <br />
+      <br />
+
+      {evaluatedExpression?.parentheses}
+      <br />
+      Variables:
+      {' '}
+      {evaluatedExpression?.variables}
+      <ul>
+        {evaluatedExpression?.steps.map((val, index) => (
+          <li key={val}>
+            Step
+            {' '}
+            {index}
+            :
+            {' '}
+            {val}
+          </li>
+        ))}
+      </ul>
+>>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
 
         <Table striped bordered hover>
           <thead>
@@ -129,6 +193,7 @@ function Truthtable() {
                 </th>
             ))}
             {evaluatedExpression?.steps.map((step) => (
+<<<<<<< HEAD
                 // eslint-disable-next-line react/jsx-key
                 <th>
                   {' '}
@@ -175,6 +240,56 @@ function Truthtable() {
           </tbody>
         </Table>
       </>
+=======
+              // eslint-disable-next-line react/jsx-key
+              <th>
+                {' '}
+                {step}
+                {' '}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
+              ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
+                // eslint-disable-next-line react/jsx-key
+                <tr>
+                  {' '}
+                  <td>
+                    {' '}
+                    {binaryValue}
+                  </td>
+                  {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
+                </tr>
+              ))
+              : evaluatedExpression?.binaryOptions.map((binaryRow) => (
+                // eslint-disable-next-line react/jsx-key
+                <tr>
+                  {' '}
+                  {
+                    binaryRow.map((binaryValue) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <td>
+                        {' '}
+                        {binaryValue}
+                        {' '}
+                      </td>
+                    ))
+                  }
+
+                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+
+                </tr>
+              ))
+          }
+        </tbody>
+      </Table>
+
+      <VenDiagramPage data={evaluatedExpression} />
+    </>
+>>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
 
   );
 }

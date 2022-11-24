@@ -17,6 +17,10 @@ describe('check for valid expression inputs', () => {
   test('Correct parentheses amount', () => {
     expect(checkCorrectParenthesesAmount('&ad')).toBe(true);
     expect(checkCorrectParenthesesAmount('(!a)')).toBe(true);
+    expect(checkCorrectParenthesesAmount('((!a)')).toBe(false);
+    expect(checkCorrectParenthesesAmount('()!a)')).toBe(false);
+    expect(checkCorrectParenthesesAmount('()!a()')).toBe(true);
+    expect(checkCorrectParenthesesAmount('(a&&b))')).toBe(false);
     expect(checkCorrectParenthesesAmount('!a (&)("§&& b')).toBe(false);
     expect(checkCorrectParenthesesAmount('!1()a4 &&32 b)')).toBe(false);
   });

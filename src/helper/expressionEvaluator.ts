@@ -1,3 +1,10 @@
+/**
+ * Type for a evaluation
+ * variables: all variables in the expression
+ * steps: the expression split up into individual steps
+ * binaryOptions: all possible mutations for the variables, e.g. 00, 01, 10, 11
+ * parentheses: the expression with all parentheses set by program. Basically the product wich steps uses to evaluate
+ */
 export type TruthtableEvaluation = {
   variables: string[],
   steps: string[],
@@ -6,17 +13,23 @@ export type TruthtableEvaluation = {
 };
 
 /**
- * Gets all parameters in a expression
- * @param expression
+ * Gets all parameters in a expression. Only matches A-Z
+ * @param expression: string
+ * @return string[]
  */
 export const getAllVariables = (expression: string): string[] => [...new Set([...expression.matchAll(/\w/g)].flat())];
 
 /**
  * Splits a string up into its parentheses parts. The higher the order in the array the earlier it needs to be
  * evaluated
- * @param expression Expression to evalute.
+ * @param expression:string Expression to evalute.#
+ * @return string[]
  */
 export const splitByParentheses = (expression: string): string[] => {
+  // Check if our expression is only 1 char long (so its just a letter)
+  if (expression.length === 1) {
+    return [expression];
+  }
   const mutableExpression = expression;
 
   const openParentheses = [...mutableExpression].filter((val) => val === '(');
@@ -64,11 +77,12 @@ export const splitByParentheses = (expression: string): string[] => {
 const cartesian = (a) => a.reduce((f, b) => f.flatMap((d) => b.map((e) => [d, e].flat())));
 
 /**
- * Finds the position where to place the )
- * @param x start of search
- * @param mutableExpression expression
+ * Finds the position where to place the closing-bracket
+ * @param x: index from where to start the search (going right)
+ * @param mutableExpression: string
+ * @return number -1 if no position found
  */
-function findRightPlacement(x: number, mutableExpression: string) {
+function findRightPlacement(x: number, mutableExpression: string): number {
   let openBracketCount = 0;
   let placeRight = -1;
   for (let letterRight = x + 1; letterRight < mutableExpression.length; letterRight += 1) {
@@ -97,9 +111,10 @@ function findRightPlacement(x: number, mutableExpression: string) {
 }
 
 /**
- * Finds the position where to place the (
- * @param x start of search
- * @param mutableExpression expression
+ * Finds the position where to place the opening-bracket
+ * @param x: index from where to start the search (going left)
+ * @param mutableExpression: string
+ * @return number -1 if no position found
  */
 function findLeftPlacement(x: number, mutableExpression: string) {
   let openBracketCount = 0;
@@ -125,11 +140,12 @@ function findLeftPlacement(x: number, mutableExpression: string) {
 }
 
 /**
- * Operators have their precedence. We do not want to hardcode them but instead set the parentheses in the right way
- * @param expression expression
- * @param operator operator to enclose with parentheses
+ * Operators have their precedence. We do not want to hardcode them but instead set the parentheses in the right way. Thus we set the parentheses for each operator
+ * @param expression: string
+ * @param operator: string- operator to enclose
+ * @return string
  */
-const setOptionalParenthesesForOperator = (expression: string, operator: string) => {
+const setOptionalParenthesesForOperator = (expression: string, operator: string): string => {
   let mutableExpression = expression;
   for (let x = 0; x < mutableExpression.length; x += 1) {
     const currentChar = mutableExpression.charAt(x);
@@ -150,7 +166,8 @@ const setOptionalParenthesesForOperator = (expression: string, operator: string)
 
 /**
  * Finds the position where the double parentheses occur (returns the closing position)
- * @param expression
+ * @param expression: string
+ * @return number
  */
 const findDoubleParenthesesPosition = (expression: string): number => {
   const stack: string[] = [];
@@ -177,8 +194,9 @@ const findDoubleParenthesesPosition = (expression: string): number => {
 
 /**
  * Removes the double parantheses from the expression
- * @param expression expression
- * @param doublePosition position where the double parentheses closes
+ * @param expression: string
+ * @param doublePosition: number- The Position where the unnecessary parentheses close
+ * @return string
  */
 const extractSubstringFooBar = (expression: string, doublePosition: number): string => {
   const searching = expression.slice(0, doublePosition);
@@ -202,7 +220,8 @@ const extractSubstringFooBar = (expression: string, doublePosition: number): str
 
 /**
  * Sometimes we can get (( XXX )). We want to remove them
- * @param expression expression
+ * @param expression: string
+ * @return string
  */
 const removeDoubleParentheses = (expression: string): string => {
   let doublePosition = findDoubleParenthesesPosition(expression);
@@ -221,8 +240,10 @@ const removeDoubleParentheses = (expression: string): string => {
 
 /**
  * Operators have their precedence. We want to set all parentheses in order to evaluate correct
+ * @param expression: string
+ * @return string
  */
-export const setOptionalParenthesis = (expression: string) => {
+export const setOptionalParenthesis = (expression: string): string => {
   let mutableExpression = expression;
 
   for (let x = 0; x < mutableExpression.length; x += 1) {
@@ -232,9 +253,14 @@ export const setOptionalParenthesis = (expression: string) => {
     if (char === '¬') {
       // Search the right side
       // Right Search
-      const placeRight = findRightPlacement(x, mutableExpression);
+      if (mutableExpression.charAt(x + 1) === '¬') {
+        const placeRight = findRightPlacement(x + 1, mutableExpression);
+        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
+      } else {
+        const placeRight = findRightPlacement(x, mutableExpression);
+        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
+      }
 
-      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
       x += 1;
     }
   }
@@ -251,8 +277,9 @@ export const setOptionalParenthesis = (expression: string) => {
 };
 
 /**
- * Prepares a statement for evaluation
- * @param expression expression
+ * Prepares a statement for evaluation. Uppercase + Replace symbols
+ * @param expression: string expression
+ * @return string
  */
 export const prepareForEvaluation = (expression: string): string => {
   let uppercaseExpression = expression.toUpperCase().replaceAll(/\s/g, '');
@@ -270,8 +297,9 @@ export const prepareForEvaluation = (expression: string): string => {
 };
 
 /**
- * Evaluates a truthtable
- * @param expression to evaluate
+ * Evaluates the input from a user input field
+ * @param expression: string
+ * @return object: TruthtableEvaluation
  */
 export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
   let uppercaseExpression = prepareForEvaluation(expression);

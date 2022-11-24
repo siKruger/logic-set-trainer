@@ -2,7 +2,8 @@ import { prepareForEvaluation } from './expressionEvaluator';
 
 /**
  * Runs a regex to check if there are any invalid characters
- * @param expression
+ * @param expression: string
+ * @return boolean
  */
 export const checkCorrectSymbols = (expression: string): boolean => {
   const validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|\(|\)|[A-Z])+$/g;
@@ -11,7 +12,8 @@ export const checkCorrectSymbols = (expression: string): boolean => {
 
 /**
  * Checks if the expression has the correct amount of parentheses and if those are placed correct
- * @param expression
+ * @param expression: string
+ * @return boolean
  */
 export const checkCorrectParenthesesAmount = (expression: string): boolean => {
   let openBrackets = 0;
@@ -31,7 +33,8 @@ export const checkCorrectParenthesesAmount = (expression: string): boolean => {
 
 /**
  * Checks for the correct syntax of the expression
- * @param expression
+ * @param expression: string
+ * @return boolean
  */
 export const checkCorrectSubexpressions = (expression: string): boolean => {
   const mutableExpression = prepareForEvaluation(expression);
@@ -74,7 +77,7 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
     //! needs a [A-Z] and ( OR operator following.
     if (char.match(negation)) {
       if (!(mutableExpression.charAt(x + 1)
-        .match(letter) || mutableExpression.charAt(x + 1)
+        .match(letter) || mutableExpression.match(negation) || mutableExpression.charAt(x + 1)
         .match(parenthesesOpen))) {
         return false;
       }
@@ -83,4 +86,8 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
   return true;
 };
 
-export const checkCorrectSyntax = (expression: string) => checkCorrectSymbols(expression) && checkCorrectSubexpressions(expression) && checkCorrectSubexpressions(expression);
+/** Checks if an expression follows the rules to be a valid one
+ * @param expression: string.
+ * @return boolean
+ */
+export const checkCorrectSyntax = (expression: string) => checkCorrectSymbols(expression) && checkCorrectParenthesesAmount(expression) && checkCorrectSubexpressions(expression);
