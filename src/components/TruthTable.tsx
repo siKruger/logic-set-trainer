@@ -61,12 +61,15 @@ export default function TruthTable(props: { evaluatedExpression: { variables: an
             <div id="table_text">
               Truth Table
             </div>
-            <div id="button_of_add">
-              <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
+            <div id="increment_button">
+              <div id="button_of_add">
+                <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
+              </div>
+              <div id="button_of_reduce">
+                <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
+              </div>
             </div>
-            <div id="button_of_reduce">
-              <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
-            </div>
+
 
             {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
             <div id="table_content">
@@ -120,7 +123,7 @@ export default function TruthTable(props: { evaluatedExpression: { variables: an
                             }
 
                             {/*{props.evaluatedExpression?.steps!==undefined?generateRow(props.evaluatedExpression?.steps, binaryRow, props.evaluatedExpression?.variables):undefined}*/}
-                            {props.evaluatedExpression?.steps!==undefined?(generateRow(props.evaluatedExpression?.steps.slice(0, counter).concat(Array(props.evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, props.evaluatedExpression?.variables)):undefined};
+                            {props.evaluatedExpression?.steps!==undefined?generateRow(props.evaluatedExpression?.steps.slice(0, counter).concat(Array(props.evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, props.evaluatedExpression?.variables):undefined};
 
                           </tr>
                       ))

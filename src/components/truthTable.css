@@ -42,7 +42,10 @@ th,tr,td {
     color: #E5E7EB;
 }
 
-
+#increment_button {
+    display: flex;
+    justify-content: space-around;
+}
 
 #table_content {
     overflow: auto;
