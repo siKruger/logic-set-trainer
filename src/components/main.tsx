@@ -12,6 +12,8 @@ import Error from "./Error";
 import Checkboxes from "./Checkboxes";
 import onChange = toast.onChange;
 
+
+
 const Main = () => {
 
 
@@ -20,6 +22,7 @@ const Main = () => {
   const [expression, setExpression] = useState('');
   const [showError, setShowError] = useState(false);
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
@@ -59,10 +62,10 @@ const Main = () => {
       {/* für Error Darstellung oder Property und TruthTable und Feature(Venn-Diagramm und Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />
-        <TruthTable evaluatedExpression={evaluatedExpression} />
+        <TruthTable evaluatedExpression={evaluatedExpression}/>
         <Feature setEvaluatedExpression={setEvaluatedExpression} evaluatedExpression={evaluatedExpression}  expression={expression} checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
       </div>
-      )) : (expression !== "" && <Error />)} 
+      )) : (expression !== "" && <Error />)}
     </>
   )
 }
