@@ -96,9 +96,6 @@ const evaluateWholeExpression = (expression: string): string => {
   return returnedExpression;
 };
 
-<<<<<<< HEAD
-export { evaluateSymbol, evaluateWholeExpression };
-=======
 const getReplacedValue = (values: number[] | number, index: number) => {
   if (typeof (values) !== 'number') {
     return values[index];
@@ -124,4 +121,3 @@ const replaceExpressionToBoolean = (expressionParam: string, variables: string[]
 };
 
 export { evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean };
->>>>>>> 5f06dd40b3c9e8ad12efbcab6d019d782b3845ab
