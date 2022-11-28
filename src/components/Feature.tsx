@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 import './feature.css'
 import { evaluateTruthtable } from "../helper/expressionEvaluator";
-
+import VenDiagramPage from "./VennDiagram";
 export default function Feature(props: {
     setEvaluatedExpression:any; evaluatedExpression:any; expression: any; checkedVennDiagramm: any; checkedNote: any; 
 }) {
@@ -40,11 +40,13 @@ export default function Feature(props: {
                             venn-diagram
                         </div>
                         <div id="venn_content">
-                            <img
+                            {/* <img
                                 src="https://www.presentationload.de/blog/wp-content/uploads/Venn-Diagramm-Titelbild-16-zu-9.jpg.webp"
                                 className='img-thumbnail'
                                 alt='...'
-                            /><br />
+                            /> */}
+                            <VenDiagramPage data={props.evaluatedExpression}/>
+                            <br />
                         </div>
                     </div>
                 </Container>
@@ -69,17 +71,6 @@ export default function Feature(props: {
 
                         </Form>
                     </div>
-                    {/* <div id="note">
-                        <div id="note_text">note</div>
-                        <div id="note_content">
-                            <form onSubmit={handleSubmit}>
-                                <label >
-                                    <textarea onChange={handleChange} id="note_form" rows={5} cols={100} placeholder="Type your note here..."></textarea>
-                                </label><br />
-                                <button>Save</button>
-                            </form>
-                        </div>
-                    </div> */}
                 </Container>
             }
         </>

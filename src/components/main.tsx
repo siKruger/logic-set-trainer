@@ -16,7 +16,7 @@ import {
   fiveSetVenn, fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
 } from '../helper/vennDiagrams';
 import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
-import VenDiagramPage from "../venn/index";
+
 
 const Main = () => {
 
@@ -69,14 +69,13 @@ const Main = () => {
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />
         <TruthTable evaluatedExpression={evaluatedExpression}/>
-        <Feature setEvaluatedExpression={setEvaluatedExpression} evaluatedExpression={evaluatedExpression}  expression={expression} checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
+        <Feature setEvaluatedExpression={setEvaluatedExpression} 
+        evaluatedExpression={evaluatedExpression}  expression={expression} 
+        checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
         
       </div>
       )) : (expression !== "" && <Error />)}
       
-      <Container className="venn">
-      <VenDiagramPage data={evaluatedExpression}/>
-      </Container>
     
     </>
   )
