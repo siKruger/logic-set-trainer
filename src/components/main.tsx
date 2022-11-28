@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, AlertTitle, TextField, Button } from "@mui/material";
 import { evaluateTruthtable, TruthtableEvaluation } from "../helper/expressionEvaluator";
 import { checkCorrectSyntax } from "../helper/expressionValidator";
@@ -11,8 +11,12 @@ import Property from "./Property";
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
 import onChange = toast.onChange;
-
-
+import * as d3 from 'd3';
+import {
+  fiveSetVenn, fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
+} from '../helper/vennDiagrams';
+import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+import VenDiagramPage from "../venn/index";
 
 const Main = () => {
 
@@ -32,6 +36,8 @@ const Main = () => {
       setShowError(false);
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
+      
+
     }
   };
 
@@ -64,8 +70,14 @@ const Main = () => {
         <Property evaluatedExpression={evaluatedExpression} />
         <TruthTable evaluatedExpression={evaluatedExpression}/>
         <Feature setEvaluatedExpression={setEvaluatedExpression} evaluatedExpression={evaluatedExpression}  expression={expression} checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
+        
       </div>
       )) : (expression !== "" && <Error />)}
+      
+      <Container className="venn">
+      <VenDiagramPage data={evaluatedExpression}/>
+      </Container>
+    
     </>
   )
 }
