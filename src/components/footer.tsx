@@ -25,7 +25,7 @@ const Footer = () => {
       <Container id="footer_container">
         <div id="footer_text">
           ©Copyright 2022 <br/>
-          designed by Krüger, Simon; May,Moritz; Geisler, Moritz; Ghalandari, Mohammad; Reichmuth, Julian;
+          designed by Judenhagen, Felix; Krüger, Simon; May,Moritz; Geisler, Moritz; Ghalandari, Mohammad; Reichmuth, Julian;
           Bohlens, Tristan; Li, Kehao; Moffo Kamta, Diane with <FavoriteIcon id="love_icon"/>
         </div>
       </Container>

@@ -57,15 +57,15 @@ function VenDiagramPage({ data }: VennProps) {
     switch (data.variables.length) {
       case 1: oneSetVenn(venn, trueEvaluations, data.variables); break;
       case 2: twoSetVenn(venn, trueEvaluations, data.variables); break;
-      case 3: threeSetVenn(venn, trueEvaluations, data.variables); break;
-      case 4: fourSetVenn(venn, trueEvaluations, data.variables); break;
-      case 5: fiveSetVenn(venn, trueEvaluations, data.variables); break;
+      // case 3: threeSetVenn(venn, trueEvaluations, data.variables); break;
+      // case 4: fourSetVenn(venn, trueEvaluations, data.variables); break;
+      // case 5: fiveSetVenn(venn, trueEvaluations, data.variables); break;
       default:
     }
   });
 
   return (
-    <svg ref={svgRef} />
+    <svg ref={svgRef} width={350} height={300} />
   );
 }
 
