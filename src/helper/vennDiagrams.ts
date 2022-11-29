@@ -10,7 +10,47 @@ export const fiveSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   const E = variables[4];
 
   const notAreaSet = [`!${A}`, `!${B}`, `!${C}`, `!${D}`, `!${E}`];
+  if (shouldDrawSet(trueEvaluations, notAreaSet)) {
+    const notArea = 'M 27 147'
+      + 'L 27 46'
+      + 'L 145 46'
+      + 'A 50 50 0 0 0 98.63333129882812 70.16666412353516'
+      + 'A 60 60 0 0 0 47 91.13333129882812'
+      + 'A 80 80 0 0 0 27 147'
+      + 'M 145 46'
+      + 'L 300 46'
+      + 'A 150 150 0 0 0 225.7833251953125 80.78333282470703'
+      + 'A 150 150 0 0 0 145 46'
+      + 'M 310 46'
+      + 'L 425 46'
+      + 'L 425 143'
+      + 'A 80 80 0 0 0 399.3166809082031 84.56666564941406'
+      + 'A 70 70 0 0 0 353.8999938964844 69.36666870117188'
+      + 'A 50 50 0 0 0 310 46'
+      + 'M 425 46'
+      + 'L 425 371'
+      + 'L 240 371'
+      + 'A 160 160 0 0 0 348 315.6166687011719'
+      + 'A 250 250 0 0 0 425 143'
+      + 'M 200 371'
+      + 'L 27 371'
+      + 'L 27 147'
+      + 'A 250 250 0 0 0 92 301.566650390625'
+      + 'A 180 180 0 0 0 200 371';
 
+    venn.append('path')
+      .attr('d', notArea)
+      .style('fill', 'url(#diagonalHatch)')
+      .style('stroke', 'red');
+  } else {
+    venn.append('rect')
+      .attr('x', '10')
+      .attr('y', '1')
+      .attr('width', '739')
+      .attr('height', '703')
+      .attr('fill', 'none')
+      .style('stroke', 'black');
+  }
 
 
   venn.append('ellipse')
@@ -57,8 +97,489 @@ export const fiveSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, 
   .attr('transform', 'rotate(-78,375,375)')
   .style('fill', 'none')
   .style('stroke', 'black');
-
   
+  venn
+    .append('defs')
+    .append('pattern')
+    .attr('id', 'diagonalHatch')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+    .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+    .attr('stroke', 'red')
+    .attr('stroke-width', 1);
+/*************************************************************/
+    venn.append('text')
+    .text(A)
+    .attr('x', 360)
+    .attr('y', 50);
+
+  const alphaSet = [A, `!${B}`, `!${C}`, `!${D}`, `!${E}`];
+  if (shouldDrawSet(trueEvaluations, alphaSet)) {
+    const alpha = '';//todo
+
+    venn.append('path')
+      .attr('d', alpha)
+      .style('fill', 'url(#diagonalHatch)')
+      .style('stroke', 'red');
+  }
+/*************************************************************/
+venn.append('text')
+.text(B)
+.attr('x', 666)
+.attr('y', 274);
+
+const betaSet = [`!${A}`, B, `!${C}`, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, betaSet)) {
+const beta = '';//todo
+
+venn.append('path')
+  .attr('d', beta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(C)
+.attr('x', 563)
+.attr('y', 621);
+
+const gammaSet = [`!${A}`, `!${B}`, C, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, gammaSet)) {
+const gamma = '';//todo
+
+venn.append('path')
+  .attr('d', gamma)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(D)
+.attr('x', 213)
+.attr('y', 613);
+
+const deltaSet = [`!${A}`, `!${B}`, `!${C}`, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, deltaSet)) {
+const delta = '';//todo
+
+venn.append('path')
+  .attr('d', delta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(E)
+.attr('x', 93)
+.attr('y', 294);
+
+const epsilonSet = [`!${A}`, `!${B}`, `!${C}`, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, epsilonSet)) {
+const epsilon = '';//todo
+
+venn.append('path')
+  .attr('d', epsilon)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B)
+.attr('x', 502)
+.attr('y', 198);
+
+const zetaSet = [A, B, `!${C}`, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, zetaSet)) {
+const zeta = '';//todo
+
+venn.append('path')
+  .attr('d', zeta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+C)
+.attr('x', 579)
+.attr('y', 459);
+
+const etaSet = [`!${A}`, B, C, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, etaSet)) {
+const eta = '';//todo
+
+venn.append('path')
+  .attr('d', eta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(C+D)
+.attr('x', 354)
+.attr('y', 604);
+
+const thetaSet = [`!${A}`, `!${B}`, C, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, thetaSet)) {
+const theta = '';//todo
+
+venn.append('path')
+  .attr('d', theta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(D+E)
+.attr('x', 147)
+.attr('y', 433);
+
+const iotaSet = [`!${A}`, `!${B}`, `!${C}`, D, E];
+if (shouldDrawSet(trueEvaluations, iotaSet)) {
+const iota = '';//todo
+
+venn.append('path')
+  .attr('d', iota)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(E+A)
+.attr('x', 246)
+.attr('y', 182);
+
+const kappaSet = [A, `!${B}`, `!${C}`, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, kappaSet)) {
+const kappa = '';//todo
+
+venn.append('path')
+  .attr('d', kappa)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+D)
+.attr('x', 414)
+.attr('y', 183);
+
+const lambdaSet = [A, `!${B}`, `!${C}`, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, lambdaSet)) {
+const lambda = '';//todo
+
+venn.append('path')
+  .attr('d', lambda)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(E+C)
+.attr('x', 562)
+.attr('y', 352);
+
+const mySet = [`!${A}`, `!${B}`, C, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, mySet)) {
+const my = '';//todo
+
+venn.append('path')
+  .attr('d', my)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+C)
+.attr('x', 445)
+.attr('y', 562);
+
+const nySet = [A, `!${B}`, C, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, nySet)) {
+const ny = '';//todo
+
+venn.append('path')
+  .attr('d', ny)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+D)
+.attr('x', 214)
+.attr('y', 513);
+
+const xiSet = [`!${A}`, B, `!${C}`, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, xiSet)) {
+const xi = '';//todo
+
+venn.append('path')
+  .attr('d', xi)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(E+C)
+.attr('x', 190)
+.attr('y', 280);
+
+const omikronSet = [`!${A}`, `!${B}`, C, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, omikronSet)) {
+const omikron = '';//todo
+
+venn.append('path')
+  .attr('d', omikron)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+D+E)
+.attr('x', 337)
+.attr('y', 197);
+
+const piSet = [A, `!${B}`, `!${C}`, D, E];
+if (shouldDrawSet(trueEvaluations, piSet)) {
+const pi = '';//todo
+
+venn.append('path')
+  .attr('d', pi)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+E)
+.attr('x', 528)
+.attr('y', 310);
+
+const rhoSet = [A, B, `!${C}`, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, rhoSet)) {
+const rho = '';//todo
+
+venn.append('path')
+  .attr('d', rho)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+C)
+.attr('x', 473)
+.attr('y', 517);
+
+const sigmaSet = [A, B, C, `!${D}`, `!${E}`];
+if (shouldDrawSet(trueEvaluations, sigmaSet)) {
+const sigma = '';//todo
+
+venn.append('path')
+  .attr('d', sigma)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+C+D)
+.attr('x', 260)
+.attr('y', 530);
+
+const tauSet = [`!${A}`, B, C, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, tauSet)) {
+const tau = '';//todo
+
+venn.append('path')
+  .attr('d', tau)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(C+D+E)
+.attr('x', 185)
+.attr('y', 336);
+
+const ypsilonSet = [`!${A}`, `!${B}`, C, D, E];
+if (shouldDrawSet(trueEvaluations, ypsilonSet)) {
+const ypsilon = '';//todo
+
+venn.append('path')
+  .attr('d', ypsilon)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(E+A+C)
+.attr('x', 225)
+.attr('y', 235);
+
+const phiSet = [A, `!${B}`, C, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, phiSet)) {
+const phi = '';//todo
+
+venn.append('path')
+  .attr('d', phi)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+D)
+.attr('x', 448)
+.attr('y', 200);
+
+const chiSet = [A, B, `!${C}`, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, chiSet)) {
+const chi = '';//todo
+
+venn.append('path')
+  .attr('d', chi)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+C+E)
+.attr('x', 555)
+.attr('y', 407);
+
+const psiSet = [`!${A}`, B, C, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, psiSet)) {
+const psi = '';//todo
+
+venn.append('path')
+  .attr('d', psi)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+C+D)
+.attr('x', 372)
+.attr('y', 575);
+
+const omegaSet = [A, `!${B}`, C, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, omegaSet)) {
+const omega = '';//todo
+
+venn.append('path')
+  .attr('d', omega)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+D+E)
+.attr('x', 184)
+.attr('y', 470);
+
+const alphaalphaSet = [`!${A}`, B, `!${C}`, D, E];
+if (shouldDrawSet(trueEvaluations, alphaalphaSet)) {
+const alphaalpha = '';//todo
+
+venn.append('path')
+  .attr('d', alphaalpha)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+C+D+E)
+.attr('x', 251)
+.attr('y', 259);
+
+const alphabetaSet = [A, `!${B}`, C, D, E];
+if (shouldDrawSet(trueEvaluations, alphabetaSet)) {
+const alphabeta = '';//todo
+
+venn.append('path')
+  .attr('d', alphabeta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+D+E)
+.attr('x', 448)
+.attr('y', 246);
+
+const alphagammaSet = [A, B, `!${C}`, D, E];
+if (shouldDrawSet(trueEvaluations, alphagammaSet)) {
+const alphagamma = '';//todo
+
+venn.append('path')
+  .attr('d', alphagamma)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+C+E)
+.attr('x', 499)
+.attr('y', 457);
+
+const alphadeltaSet = [A, B, C, `!${D}`, E];
+if (shouldDrawSet(trueEvaluations, alphadeltaSet)) {
+const alphadelta = '';//todo
+
+venn.append('path')
+  .attr('d', alphadelta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+C+D)
+.attr('x', 338)
+.attr('y', 539);
+
+const alphaepsilonSet = [A, B, C, D, `!${E}`];
+if (shouldDrawSet(trueEvaluations, alphaepsilonSet)) {
+const alphaepsilon = '';//todo
+
+venn.append('path')
+  .attr('d', alphaepsilon)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(B+C+D+E)
+.attr('x', 192)
+.attr('y', 396);
+
+const alphazetaSet = [`!${A}`, B, C, D, E];
+if (shouldDrawSet(trueEvaluations, alphazetaSet)) {
+const alphazeta = '';//todo
+
+venn.append('path')
+  .attr('d', alphazeta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+venn.append('text')
+.text(A+B+C+D+E)
+.attr('x', 350)
+.attr('y', 375);
+
+const alphaetaSet = [A, B, C, D, E];
+if (shouldDrawSet(trueEvaluations, alphaetaSet)) {
+const alphaeta = '';//todo
+
+venn.append('path')
+  .attr('d', alphaeta)
+  .style('fill', 'url(#diagonalHatch)')
+  .style('stroke', 'red');
+}
+/*************************************************************/
+
+
+
+
+
 
 
 };
