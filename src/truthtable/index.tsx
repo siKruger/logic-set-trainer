@@ -15,8 +15,9 @@ function Truthtable() {
   const [counter, setCounter] = useState(0);
 
   const getEvaluation = () => {
-    if (!checkCorrectSyntax(expression)) {
-      toast.error('Der eingegebene Ausdruck enthält einen Fehler und kann nicht ausgewertet werden!', {
+    let check = checkCorrectSyntax(expression);
+    if (check != "") {
+      toast.error('Der eingegebene Ausdruck enthält einen Fehler und kann nicht ausgewertet werden:\n' + check, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
