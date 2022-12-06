@@ -20,13 +20,13 @@ import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/l
 
 const Main = () => {
 
-
+  
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState('');
   const [showError, setShowError] = useState(false);
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
-
+  
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
@@ -41,9 +41,29 @@ const Main = () => {
     }
   };
 
+  // const exportAsImage = async (el: any, imageFileName: any) => {
+  //   const canvas = await html2canvas(el);
+  //   const image = canvas.toDataURL("image/png", 1.0);
+  //   downloadImage(image, imageFileName);
+  // };
+  
+  // const downloadImage = (blob: any, fileName: string) => {
+  //   const fakeLink = window.document.createElement("a");
+  //   // fakeLink.style = "display:none;";
+  //   fakeLink.download = fileName;
+  
+  //   fakeLink.href = blob;
+  
+  //   document.body.appendChild(fakeLink);
+  //   fakeLink.click();
+  //   document.body.removeChild(fakeLink);
+  
+  //   fakeLink.remove();
+  // };
+
   return (
     <>
-      <Container className="cover">
+      <Container className="cover" >
         <div id="text_field_control">
           <TextField id="input_text_field" fullWidth autoComplete="off"
             placeholder="Enter the logical expression to be computed"
@@ -64,7 +84,7 @@ const Main = () => {
           checkedNote={checkedNote}
           setCheckedNote={setCheckedNote} />
       </Container>
-
+      
       {/* für Error Darstellung oder Property und TruthTable und Feature(Venn-Diagramm und Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />

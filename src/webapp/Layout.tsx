@@ -40,7 +40,7 @@ function Layout() {
           {/*top: include instructions for use and task text*/}
           <Top></Top>
 
-          {/*main field*/}
+          {/* main field */}
           <Main></Main>
         </div>
 
