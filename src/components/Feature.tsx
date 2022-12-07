@@ -4,15 +4,15 @@ import './feature.css'
 import { evaluateTruthtable } from "../helper/expressionEvaluator";
 import VenDiagramPage from "./VennDiagram";
 export default function Feature(props: {
-    setEvaluatedExpression:any; evaluatedExpression:any; expression: any; checkedVennDiagramm: any; checkedNote: any; 
+    setEvaluatedExpression:any; evaluatedExpression:any; expression: any; checkedVennDiagramm: any; checkedNote: any;
 }) {
- 
+
     const [text, setText] = useState("");
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        
+
         // props.setEvaluatedExpression(evaluateTruthtable(props.expression));
         const element = document.createElement('a');
         const txt = "" + props.expression + " :\n\n"+ "Steps:  " + props.evaluatedExpression.steps + "\n\n" + text;
@@ -23,10 +23,10 @@ export default function Feature(props: {
         element.download = "NewDocument.txt";
         document.body.appendChild(element);
         element.click();
-        
+
     }
     const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        setText(e.target.value);     
+        setText(e.target.value);
     }
 
 
@@ -56,11 +56,12 @@ export default function Feature(props: {
             {!props.checkedNote &&
                 <Container id="note_container">
                     <div id="note">
-
+                        <div id="note_text">
+                            note
+                        </div>
 
                         <Form  onSubmit={handleSubmit}>
                             <Form.Group className="mb-3"> <br />
-                                <Form.Label className="lead">Make a note</Form.Label>
                                 <Form.Control onChange={handleChange} id="text" as="textarea" rows={5} placeholder="Type your note here..." />
                             </Form.Group>
 
