@@ -9,16 +9,15 @@ export const checkCorrectSymbols = (expression: string): string => {
   const validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|\(|\)|[A-Z]|\s)+$/g;
   const expression2 = expression.toUpperCase();
 
-  for(let x = 0; x < expression2.length; x += 1) {
-    if(expression2.charAt(x).match(validCharacters) == null) {
-      if((expression2.charAt(x) + expression2.charAt(x+1)).match(validCharacters) == null) {
-        return "Ungültiges Symbol an Stelle: " + x;
-      } else {
-        x += 1;
+  for (let x = 0; x < expression2.length; x += 1) {
+    if (expression2.charAt(x).match(validCharacters) == null) {
+      if ((expression2.charAt(x) + expression2.charAt(x + 1)).match(validCharacters) == null) {
+        return `Ungültiges Symbol an Stelle: ${x}`;
       }
+      x += 1;
     }
   }
-  return "";
+  return '';
 };
 
 /**
@@ -28,7 +27,7 @@ export const checkCorrectSymbols = (expression: string): string => {
  */
 export const checkCorrectParenthesesAmount = (expression: string): string => {
   let openBrackets = 0;
-  let brackets = [];
+  const brackets = [];
 
   // Let's first check if those parentheses are at least the correct amount
   for (let x = 0; x < expression.length; x += 1) {
@@ -44,13 +43,13 @@ export const checkCorrectParenthesesAmount = (expression: string): string => {
     }
 
     if (openBrackets < 0) {
-      return "Eine Klammer wurde nicht geöffnet! An Stelle: " + x;
+      return `Eine Klammer wurde nicht geöffnet! An Stelle: ${x}`;
     }
   }
-  if(openBrackets > 0) {
-    return "Eine Klammer wurde nicht geschlossen! An Stelle: " + brackets.pop();
+  if (openBrackets > 0) {
+    return `Eine Klammer wurde nicht geschlossen! An Stelle: ${brackets.pop()}`;
   }
-  return "";
+  return '';
 };
 
 /**
@@ -113,18 +112,18 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
  * @return string
  */
 export const checkCorrectSyntax = (expression: string): string => {
-  let sym = checkCorrectSymbols(expression);
-  let par = checkCorrectParenthesesAmount(expression);
+  const sym = checkCorrectSymbols(expression);
+  const par = checkCorrectParenthesesAmount(expression);
 
-  if(sym != "") {
+  if (sym !== '') {
     return sym;
   }
-  if(par != "") {
+  if (par !== '') {
     return par;
   }
-  if(!checkCorrectSubexpressions(expression)) {
-    return "Ungültige Syntax!";
+  if (!checkCorrectSubexpressions(expression)) {
+    return 'Ungültige Syntax!';
   }
 
-  return "";
-}
+  return '';
+};
