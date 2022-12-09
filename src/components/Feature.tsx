@@ -73,9 +73,8 @@ export default function Feature(props: {
               <br />
             </div>
 
-            <button onClick={() => exportAsImage(divRef.current, "test")}>
-              Capture Image
-            </button>
+            <Button onClick={() => exportAsImage(divRef.current, "venn-diagram")}>Capture Image</Button>
+            
           </div>
         </Container>
       )}
@@ -102,7 +101,7 @@ export default function Feature(props: {
                 type="submit"
                 className="btn btn-success"
               >
-                save
+                SAVE
               </Button>
             </Form>
           </div>
