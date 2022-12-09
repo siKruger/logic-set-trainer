@@ -80,32 +80,25 @@ export default function Feature(props: {
       )}
 
       {!props.checkedNote && (
-        <Container id="note_container">
-          <div id="note">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                {" "}
-                <br />
-                <Form.Label className="lead">Make a note</Form.Label>
-                <Form.Control
-                  onChange={handleChange}
-                  id="text"
-                  as="textarea"
-                  rows={5}
-                  placeholder="Type your note here..."
-                />
-              </Form.Group>
+         <Container id="note_container">
+         <div id="note">
+             <div id="note_text">
+                 note
+             </div>
 
-              <Button
-                variant="contained"
-                type="submit"
-                className="btn btn-success"
-              >
-                SAVE
-              </Button>
-            </Form>
-          </div>
-        </Container>
+             <Form  onSubmit={handleSubmit}>
+                 <Form.Group className="mb-3"> <br />
+                     <Form.Control onChange={handleChange} id="text" as="textarea" rows={5} placeholder="Type your note here..." />
+                 </Form.Group>
+
+
+                 <Button variant="contained" type="submit" className="btn btn-success">
+                     save
+                 </Button>
+
+             </Form>
+         </div>
+     </Container>
       )}
     </>
   );
