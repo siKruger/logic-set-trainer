@@ -1,11 +1,37 @@
 import React, { useState } from 'react'
-import { Container, Table } from 'react-bootstrap'
+import { Container, Table, Button as Button2} from 'react-bootstrap'
 import './truthTable.css'
 import { evaluateWholeExpression } from '../helper/logicConverter';
-import { Button } from "@mui/material";
+import { Button as Button} from "@mui/material";
+import html2canvas from "html2canvas";
 
-export default function TruthTable(props: { evaluatedExpression: { variables: any[]; steps: any[]; binaryOptions: any[] } | undefined }) {
+export default function TruthTable(props: {
+  evaluatedExpression: { variables: any[]; steps: any[]; binaryOptions: any[] } | undefined ;
+  expression: any;
+}) {
+  const divRef = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
+  const imageFileName = props.expression.replaceAll(" ","")+"(truth_table)";
+
+  const exportAsImage = async (el: any, imageFileName: any) => {
+    const canvas = await html2canvas(el);
+    const image = canvas.toDataURL("image/png", 1.0);
+    downloadImage(image, imageFileName);
+  };
+
+  const downloadImage = (blob: any, fileName: string) => {
+    const fakeLink = window.document.createElement("a");
+    // fakeLink.style = "display:none;";
+    fakeLink.download = fileName;
+
+    fakeLink.href = blob;
+
+    document.body.appendChild(fakeLink);
+    fakeLink.click();
+    document.body.removeChild(fakeLink);
+
+    fakeLink.remove();
+  };
 
   const addColumn = () => {
     if (props.evaluatedExpression !== undefined) {
@@ -82,7 +108,7 @@ export default function TruthTable(props: { evaluatedExpression: { variables: an
 
 
           {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
-          <div id="table_content">
+          <div id="table_content" ref={divRef}>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -141,7 +167,7 @@ export default function TruthTable(props: { evaluatedExpression: { variables: an
               </tbody>
             </Table>
           </div>
-          <div id="table_instead_content"></div>
+          <Button2 onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture table</Button2>
         </div>
 
 

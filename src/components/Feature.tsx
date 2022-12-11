@@ -14,6 +14,7 @@ export default function Feature(props: {
 }) {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [text, setText] = useState("");
+  const imageFileName = props.expression.replaceAll(" ","")+"(venn-diagram)";
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -70,11 +71,10 @@ export default function Feature(props: {
             <div id="venn_text">venn-diagram</div>
             <div id="venn_content" ref={divRef}>
               <VenDiagramPage data={props.evaluatedExpression} />
-              <br />
             </div>
 
-            <Button onClick={() => exportAsImage(divRef.current, "venn-diagram")}>Capture Image</Button>
-            
+            <Button onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture Image</Button>
+
           </div>
         </Container>
       )}

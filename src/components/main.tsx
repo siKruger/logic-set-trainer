@@ -20,13 +20,13 @@ import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/l
 
 const Main = () => {
 
-  
+
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState('');
   const [showError, setShowError] = useState(false);
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
-  
+
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
@@ -36,7 +36,7 @@ const Main = () => {
       setShowError(false);
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
-      
+
 
     }
   };
@@ -46,18 +46,18 @@ const Main = () => {
   //   const image = canvas.toDataURL("image/png", 1.0);
   //   downloadImage(image, imageFileName);
   // };
-  
+
   // const downloadImage = (blob: any, fileName: string) => {
   //   const fakeLink = window.document.createElement("a");
   //   // fakeLink.style = "display:none;";
   //   fakeLink.download = fileName;
-  
+
   //   fakeLink.href = blob;
-  
+
   //   document.body.appendChild(fakeLink);
   //   fakeLink.click();
   //   document.body.removeChild(fakeLink);
-  
+
   //   fakeLink.remove();
   // };
 
@@ -84,19 +84,19 @@ const Main = () => {
           checkedNote={checkedNote}
           setCheckedNote={setCheckedNote} />
       </Container>
-      
+
       {/* für Error Darstellung oder Property und TruthTable und Feature(Venn-Diagramm und Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />
-        <TruthTable evaluatedExpression={evaluatedExpression}/>
-        <Feature setEvaluatedExpression={setEvaluatedExpression} 
-        evaluatedExpression={evaluatedExpression}  expression={expression} 
+        <TruthTable evaluatedExpression={evaluatedExpression} expression={expression}/>
+        <Feature setEvaluatedExpression={setEvaluatedExpression}
+        evaluatedExpression={evaluatedExpression}  expression={expression}
         checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
-        
+
       </div>
       )) : (expression !== "" && <Error />)}
-      
-    
+
+
     </>
   )
 }
