@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import { useState } from 'react';
 import {
   Alert, AlertTitle, Button, TextField,
 } from '@mui/material';
@@ -12,6 +13,7 @@ import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/l
 function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
+  const [counter, setCounter] = useState(0);
 
   const getEvaluation = () => {
     if (!checkCorrectSyntax(expression)) {
@@ -33,7 +35,27 @@ function Truthtable() {
 
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
-    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
+    if (mutableExpression === 'blank') {
+      return (
+        <td>
+          {' '}
+          {' - '}
+          {' '}
+        </td>
+      );
+    }
+
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const currentChar = mutableExpression.charAt(x);
+
+      const index = variables.indexOf(currentChar);
+
+      // eslint-disable-next-line no-continue
+      if (index === -1) continue;
+      const replacedValue = getReplacedValue(values, index);
+
+      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+    }
 
     mutableExpression = evaluateWholeExpression(mutableExpression);
 
@@ -44,6 +66,22 @@ function Truthtable() {
         {' '}
       </td>
     );
+  };
+
+  const addColumn = () => {
+    if (evaluatedExpression !== undefined) {
+      if (counter < evaluatedExpression?.steps.length) {
+        setCounter(counter + 1);
+      }
+    }
+    getEvaluation();
+  };
+  const reduceColumn = () => {
+    if (counter > 0) {
+      setCounter(counter - 1);
+    }
+
+    getEvaluation();
   };
 
   const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
@@ -79,8 +117,11 @@ function Truthtable() {
         <br />
       </Alert>
       <br />
-      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} id="standard-basic" label="Expression" variant="standard" />
-      <Button onClick={getEvaluation} variant="outlined">Evaluate</Button>
+      <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
+      <Button onClick={() => getEvaluation()} variant="outlined">Evaluate</Button>
+      <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
+      <TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
+      <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
       <br />
       <br />
 
@@ -151,7 +192,8 @@ function Truthtable() {
                     ))
                   }
 
-                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
+                  {/* eslint-disable-next-line no-unsafe-optional-chaining */}
+                  {generateRow(evaluatedExpression?.steps.slice(0, counter).concat(Array(evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
