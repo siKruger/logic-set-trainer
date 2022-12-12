@@ -120,4 +120,6 @@ const replaceExpressionToBoolean = (expressionParam: string, variables: string[]
   return mutableExpression;
 };
 
-export { evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean };
+export {
+  getReplacedValue, evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean,
+};
