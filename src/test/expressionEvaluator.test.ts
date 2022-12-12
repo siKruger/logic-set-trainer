@@ -8,21 +8,21 @@ import {
 
 describe('check for valid expression inputs', () => {
   test('Correct symbols', () => {
-    expect(checkCorrectSymbols('&ad')).toBe(false);
-    expect(checkCorrectSymbols('(!a)')).toBe(true);
-    expect(checkCorrectSymbols('!a &"§&& b')).toBe(false);
-    expect(checkCorrectSymbols('!1(a4 &&32 b)')).toBe(false);
+    expect(checkCorrectSymbols('&ad')).toBe('Ungültiges Symbol an Stelle: 0');
+    expect(checkCorrectSymbols('(!a)')).toBe('');
+    expect(checkCorrectSymbols('!a &"§&& b')).toBe('Ungültiges Symbol an Stelle: 3');
+    expect(checkCorrectSymbols('!1(a4 &&32 b)')).toBe('Ungültiges Symbol an Stelle: 1');
   });
 
   test('Correct parentheses amount', () => {
-    expect(checkCorrectParenthesesAmount('&ad')).toBe(true);
-    expect(checkCorrectParenthesesAmount('(!a)')).toBe(true);
-    expect(checkCorrectParenthesesAmount('((!a)')).toBe(false);
-    expect(checkCorrectParenthesesAmount('()!a)')).toBe(false);
-    expect(checkCorrectParenthesesAmount('()!a()')).toBe(true);
-    expect(checkCorrectParenthesesAmount('(a&&b))')).toBe(false);
-    expect(checkCorrectParenthesesAmount('!a (&)("§&& b')).toBe(false);
-    expect(checkCorrectParenthesesAmount('!1()a4 &&32 b)')).toBe(false);
+    expect(checkCorrectParenthesesAmount('&ad')).toBe('');
+    expect(checkCorrectParenthesesAmount('(!a)')).toBe('');
+    expect(checkCorrectParenthesesAmount('((!a)')).toBe('Eine Klammer wurde nicht geschlossen! An Stelle: 0');
+    expect(checkCorrectParenthesesAmount('()!a)')).toBe('Eine Klammer wurde nicht geöffnet! An Stelle: 4');
+    expect(checkCorrectParenthesesAmount('()!a()')).toBe('');
+    expect(checkCorrectParenthesesAmount('(a&&b))')).toBe('Eine Klammer wurde nicht geöffnet! An Stelle: 6');
+    expect(checkCorrectParenthesesAmount('!a (&)("§&& b')).toBe('Eine Klammer wurde nicht geschlossen! An Stelle: 6');
+    expect(checkCorrectParenthesesAmount('!1()a4 &&32 b)')).toBe('Eine Klammer wurde nicht geöffnet! An Stelle: 13');
   });
 
   test('Correct expression', () => {
