@@ -45,18 +45,7 @@ function Truthtable() {
       );
     }
 
-    for (let x = 0; x < mutableExpression.length; x += 1) {
-      const currentChar = mutableExpression.charAt(x);
-
-      const index = variables.indexOf(currentChar);
-
-      // eslint-disable-next-line no-continue
-      if (index === -1) continue;
-      const replacedValue = getReplacedValue(values, index);
-
-      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
-    }
-
+    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
     mutableExpression = evaluateWholeExpression(mutableExpression);
 
     return (
