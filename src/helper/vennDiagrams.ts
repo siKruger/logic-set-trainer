@@ -1393,11 +1393,7 @@ export const twoSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, t
 
 export const oneSetVenn = (venn: d3.Selection<null, unknown, null, undefined>, trueEvaluations: string[][], variables: string[]) => {
   const A = variables[0];
-  console.log('test');
   const circleProps = { radius: 110, yOffset: 110, xOffset: 110 };
-
-  console.log(trueEvaluations);
-
   const notAreaSet = [`!${A}`];
   if (shouldDrawSet(trueEvaluations, notAreaSet)) {
     const notArea = 'M 1 110 '
