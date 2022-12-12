@@ -28,6 +28,7 @@ function Truthtable() {
         theme: 'light',
       });
     } else {
+      setCounter(0);
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
@@ -77,22 +78,15 @@ function Truthtable() {
   };
 
   const addColumn = () => {
-    if (evaluatedExpression !== undefined) {
-      if (counter < evaluatedExpression?.steps.length) {
-        setCounter(counter + 1);
-      }
-    }
-    getEvaluation();
+    if (evaluatedExpression !== undefined && counter >= evaluatedExpression?.steps.length) return;
+    setCounter(counter + 1);
   };
   const reduceColumn = () => {
-    if (counter > 0) {
-      setCounter(counter - 1);
-    }
-
-    getEvaluation();
+    if (counter === 0) return;
+    setCounter(counter - 1);
   };
 
-  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
 
   return (
     <>
@@ -201,7 +195,7 @@ function Truthtable() {
                   }
 
                   {/* eslint-disable-next-line no-unsafe-optional-chaining */}
-                  {generateRow(evaluatedExpression?.steps.slice(0, counter).concat(Array(evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, evaluatedExpression?.variables)}
+                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
 
                 </tr>
               ))
