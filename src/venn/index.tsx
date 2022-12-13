@@ -35,10 +35,11 @@ function VenDiagramPage({ data, step }: VennProps) {
 
       // Only one var so only !X or X
       if (data.variables.length === 1) {
-        if (lastExpression.includes('¬')) {
-          trueEvaluations.push([`!${[data.variables[0]]}`]);
-        } else {
-          trueEvaluations.push([data.variables[0]]);
+        for (let x = 0; x < 2; x += 1) {
+          const replacedExpression = replaceExpressionToBoolean(lastExpression, data.variables, [x]);
+          const evaluated = evaluateWholeExpression(replacedExpression);
+
+          if (evaluated === '1' && x === 0) trueEvaluations.push([`!${[data.variables[0]]}`]); else if (evaluated === '1' && x === 1) trueEvaluations.push([data.variables[0]]);
         }
 
         // Multiple Vars, sadly
