@@ -1,10 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useState } from 'react';
 import {
-  Alert, AlertTitle, Button, TextField,
+  Alert, AlertTitle, Button, CircularProgress, TextField,
 } from '@mui/material';
 import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import useInterval from 'use-interval';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import VenDiagramPage from '../venn';
@@ -14,6 +15,31 @@ function Truthtable() {
   const [expression, setExpression] = useState('');
   const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
   const [counter, setCounter] = useState(0);
+  const [autoplay, setAutoplay] = useState<boolean>(false);
+  const [progressSpinner, setProgressSpinner] = useState<number>(0);
+
+  const toggleAutoplay = () => {
+    setAutoplay(!autoplay);
+  };
+
+  const addColumn = () => {
+    if (evaluatedExpression === undefined || counter >= evaluatedExpression?.steps.length) return;
+    setCounter(counter + 1);
+  };
+  const reduceColumn = () => {
+    if (counter === 0) return;
+    setCounter(counter - 1);
+  };
+
+  useInterval(() => {
+    if (evaluatedExpression === undefined || !autoplay) return;
+    // Increment counter
+    setProgressSpinner(progressSpinner + 3.125);
+
+    // If counter is at X * 100
+    if (progressSpinner % 100 === 0) if (counter >= evaluatedExpression?.steps.length) setCounter(0); else addColumn();
+    // setProgressspinner(0);
+  }, 125);
 
   const getEvaluation = () => {
     const check = checkCorrectSyntax(expression);
@@ -29,6 +55,8 @@ function Truthtable() {
         theme: 'light',
       });
     } else {
+      setAutoplay(false);
+      setProgressSpinner(0);
       setCounter(0);
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
@@ -57,15 +85,6 @@ function Truthtable() {
         {' '}
       </td>
     );
-  };
-
-  const addColumn = () => {
-    if (evaluatedExpression !== undefined && counter >= evaluatedExpression?.steps.length) return;
-    setCounter(counter + 1);
-  };
-  const reduceColumn = () => {
-    if (counter === 0) return;
-    setCounter(counter - 1);
   };
 
   const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
@@ -103,9 +122,13 @@ function Truthtable() {
       <br />
       <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
       <Button onClick={() => getEvaluation()} variant="outlined">Evaluate</Button>
-      <Button onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
+      <Button color={autoplay ? 'success' : 'error'} onClick={() => toggleAutoplay()} variant="outlined" style={{ marginLeft: '50px' }}>
+        Autoplay
+        <CircularProgress style={{ marginLeft: '1em' }} size={25} variant="determinate" value={progressSpinner} />
+      </Button>
+      <Button disabled={autoplay} onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1 Schritt</Button>
       <TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />
-      <Button onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
+      <Button disabled={autoplay} onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
       <br />
       <br />
 
@@ -185,7 +208,7 @@ function Truthtable() {
         </tbody>
       </Table>
 
-      <VenDiagramPage data={evaluatedExpression} />
+      <VenDiagramPage data={evaluatedExpression} step={counter} />
     </>
 
   );
