@@ -96,4 +96,41 @@ const evaluateWholeExpression = (expression: string): string => {
   return returnedExpression;
 };
 
-export { evaluateSymbol, evaluateWholeExpression };
+/**
+ * Gets 0 or 1 for a variable
+ * @param values
+ * @param index
+ */
+const getReplacedValue = (values: number[] | number, index: number) => {
+  if (typeof (values) !== 'number') {
+    return values[index];
+  }
+  return Number(values);
+};
+
+/**
+ * Replaces a expression with variables to 0 and 1
+ * @param expressionParam
+ * @param variables
+ * @param values
+ */
+const replaceExpressionToBoolean = (expressionParam: string, variables: string[], values: number[]) => {
+  let mutableExpression = expressionParam;
+  for (let x = 0; x < mutableExpression.length; x += 1) {
+    const currentChar = mutableExpression.charAt(x);
+
+    const index = variables.indexOf(currentChar);
+
+    // eslint-disable-next-line no-continue
+    if (index === -1) continue;
+    const replacedValue = getReplacedValue(values, index);
+
+    mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
+  }
+
+  return mutableExpression;
+};
+
+export {
+  getReplacedValue, evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean,
+};

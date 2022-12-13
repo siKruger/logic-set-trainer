@@ -26,6 +26,10 @@ export const getAllVariables = (expression: string): string[] => [...new Set([..
  * @return string[]
  */
 export const splitByParentheses = (expression: string): string[] => {
+  // Check if our expression is only 1 char long (so its just a letter)
+  if (expression.length === 1) {
+    return [expression];
+  }
   const mutableExpression = expression;
 
   const openParentheses = [...mutableExpression].filter((val) => val === '(');

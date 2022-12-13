@@ -4,7 +4,6 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Truthtable from './truthtable';
 import Layout from './webapp/Layout';
-import Landingpage from './webapp/Landingpage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from './webapp/ErrorPage';
@@ -16,10 +15,6 @@ const router = createHashRouter([
     children: [
       {
         path: '/',
-        element: <Landingpage />,
-      },
-      {
-        path: '/truthtable',
         element: <Truthtable />,
         errorElement: <ErrorPage />,
       },

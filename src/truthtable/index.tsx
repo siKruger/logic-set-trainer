@@ -7,11 +7,12 @@ import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
-import { evaluateWholeExpression } from '../helper/logicConverter';
+import VenDiagramPage from '../venn';
+import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
-  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
   const [counter, setCounter] = useState(0);
 
   const getEvaluation = () => {
@@ -34,16 +35,8 @@ function Truthtable() {
     }
   };
 
-  const getReplacedValue = (values: number[] | number, index: number) => {
-    if (typeof (values) !== 'number') {
-      return values[index];
-    }
-    return Number(values);
-  };
-
   const generateCell = (singleStep: string, values: number[], variables: string[]) => {
     let mutableExpression = singleStep;
-
     if (mutableExpression === 'blank') {
       return (
         <td>
@@ -54,18 +47,7 @@ function Truthtable() {
       );
     }
 
-    for (let x = 0; x < mutableExpression.length; x += 1) {
-      const currentChar = mutableExpression.charAt(x);
-
-      const index = variables.indexOf(currentChar);
-
-      // eslint-disable-next-line no-continue
-      if (index === -1) continue;
-      const replacedValue = getReplacedValue(values, index);
-
-      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
-    }
-
+    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
     mutableExpression = evaluateWholeExpression(mutableExpression);
 
     return (
@@ -202,6 +184,8 @@ function Truthtable() {
           }
         </tbody>
       </Table>
+
+      <VenDiagramPage data={evaluatedExpression} />
     </>
 
   );
