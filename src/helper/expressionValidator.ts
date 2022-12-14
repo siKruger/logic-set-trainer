@@ -77,10 +77,11 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
       }
     }
 
-    // ( needs a ! or a [A-Z] following
+    // ( needs a ! or a [A-Z] or a ( following
     if (char.match(parenthesesOpen)) {
       if (!(mutableExpression.charAt(x + 1)
         .match(negation) || mutableExpression.charAt(x + 1)
+        .match(parenthesesOpen) || mutableExpression.charAt(x + 1)
         .match(letter))) {
         return false;
       }
