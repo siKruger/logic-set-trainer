@@ -208,6 +208,10 @@ function Truthtable() {
         </tbody>
       </Table>
 
+      Momentan angezeigt:
+      {' '}
+      {evaluatedExpression?.steps[counter - 1]}
+      <p />
       <VenDiagramPage data={evaluatedExpression} step={counter} />
     </>
 

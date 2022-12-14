@@ -74,8 +74,6 @@ function VenDiagramPage({ data, step }: VennProps) {
     }
   });
 
-  // console.log(data);
-
   return (
     <svg ref={svgRef} width={750} height={750} />
   );
