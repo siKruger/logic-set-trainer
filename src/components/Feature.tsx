@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "./feature.css";
-import { evaluateTruthtable } from "../helper/expressionEvaluator";
 import VenDiagramPage from "./VennDiagram";
 import html2canvas from "html2canvas";
-import { useRef } from "react";
 export default function Feature(props: {
   setEvaluatedExpression: any;
   evaluatedExpression: any;
@@ -73,7 +71,7 @@ export default function Feature(props: {
               <VenDiagramPage data={props.evaluatedExpression} />
             </div>
 
-            <Button onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture Image</Button>
+            <Button id="venn_download_button" onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture Image</Button>
 
           </div>
         </Container>
@@ -92,7 +90,7 @@ export default function Feature(props: {
                  </Form.Group>
 
 
-                 <Button variant="contained" type="submit" className="btn btn-success">
+                 <Button id="save_note_button" type="submit">
                      save
                  </Button>
 

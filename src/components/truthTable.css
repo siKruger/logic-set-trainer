@@ -60,3 +60,23 @@ th,tr,td {
     height: 10vh;
     display: none;
 }
+
+#truth_table_download_button {
+    margin-bottom: 1vh;
+    background-color: #D0C6FF;
+    border: none;
+    color: #783EEF;
+}
+
+#truth_table_download_button:hover {
+    background-color: #C8BCFE;
+}
+
+.dark #truth_table_download_button {
+    background-color: #131A28;
+    color: #E5E7EB;
+}
+
+.dark #truth_table_download_button:hover {
+    background-color: #48515E;
+}
