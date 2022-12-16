@@ -10,12 +10,6 @@ import TruthTable from "./TruthTable";
 import Property from "./Property";
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
-import onChange = toast.onChange;
-import * as d3 from 'd3';
-import {
-  fiveSetVenn, fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
-} from '../helper/vennDiagrams';
-import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 
 const Main = () => {
@@ -30,7 +24,8 @@ const Main = () => {
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
-    if (!checkCorrectSyntax(expression)) {
+    alert(expression);
+    if (checkCorrectSyntax(expression)) {
       setShowError(true);
     } else {
       setShowError(false);
@@ -40,26 +35,6 @@ const Main = () => {
 
     }
   };
-
-  // const exportAsImage = async (el: any, imageFileName: any) => {
-  //   const canvas = await html2canvas(el);
-  //   const image = canvas.toDataURL("image/png", 1.0);
-  //   downloadImage(image, imageFileName);
-  // };
-
-  // const downloadImage = (blob: any, fileName: string) => {
-  //   const fakeLink = window.document.createElement("a");
-  //   // fakeLink.style = "display:none;";
-  //   fakeLink.download = fileName;
-
-  //   fakeLink.href = blob;
-
-  //   document.body.appendChild(fakeLink);
-  //   fakeLink.click();
-  //   document.body.removeChild(fakeLink);
-
-  //   fakeLink.remove();
-  // };
 
   return (
     <>
