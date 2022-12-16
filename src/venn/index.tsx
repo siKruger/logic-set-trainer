@@ -7,11 +7,11 @@ import {
   threeSetVenn,
   twoSetVenn,
 } from '../helper/vennDiagrams';
-import { TruthtableEvaluation } from '../helper/expressionEvaluator';
+import { VariableEvaluation } from '../helper/expressionEvaluator';
 import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 type VennProps = {
-  data?: TruthtableEvaluation;
+  data?: VariableEvaluation;
   step: number
 };
 

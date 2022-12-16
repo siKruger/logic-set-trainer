@@ -43,6 +43,21 @@ const evaluateOperator = (operator: string, leftSide: string, rightSide: string)
   }
 };
 
+const findInnerParentheses = (expression: string): { pos1: number, pos2: number } => {
+  let posLeft = -1;
+  let posRight = -1;
+  for (let i = 0; i < expression.length; i += 1) {
+    if (expression.charAt(i) === '(') {
+      posLeft = i;
+    } else if (expression.charAt(i) === ')') {
+      posRight = i;
+      break;
+    }
+  }
+
+  return { pos1: posLeft, pos2: posRight };
+};
+
 /**
  * Determines wether the operator is a negation or else
  * @param expression: string
@@ -70,16 +85,8 @@ const evaluateSymbol = (expression: string): string => {
 const evaluateWholeExpression = (expression: string): string => {
   // finding most inner parentheses
   let returnedExpression = ' ';
-  let pos1 = -1;
-  let pos2 = -1;
-  for (let i = 0; i < expression.length; i += 1) {
-    if (expression.charAt(i) === '(') {
-      pos1 = i;
-    } else if (expression.charAt(i) === ')') {
-      pos2 = i;
-      break;
-    }
-  }
+
+  const { pos1, pos2 } = findInnerParentheses(expression);
 
   if (pos1 !== -1 && pos2 !== -1) {
     const selectedPart = expression.substring(pos1 + 1, pos2);
@@ -108,6 +115,49 @@ const getReplacedValue = (values: number[] | number, index: number) => {
   return Number(values);
 };
 
+const evaluateSetOperation = (operator: string, leftSide: string, rightSide: string) => {
+  if (rightSide === '{}') {
+    return leftSide.substring(1, leftSide.length - 1);
+  }
+  if (leftSide === '{}') {
+    return rightSide.substring(1, rightSide.length - 1);
+  }
+  const leftSideArray = leftSide.substring(1, leftSide.length - 1).split(',');
+  const rightSideArray = rightSide.substring(1, rightSide.length - 1).split(',');
+  // eslint-disable-next-line default-case
+  switch (operator) {
+    case '∧':
+      return leftSideArray.filter((val) => rightSideArray.includes(val)).join(',');
+    case '∨':
+      return [...new Set(leftSideArray.concat(rightSideArray))].join(',');
+    // case '¬':
+    //   return
+    case '⇒':
+      return leftSideArray.filter((val) => !rightSideArray.includes(val)).join(',');
+  }
+  return [];
+};
+
+const evaluateSetSubexpression = (expression: string) => {
+  const op = findOperator(expression);
+  const evaluatedSet = evaluateSetOperation(op, expression.substring(0, expression.indexOf(op)), expression.substring(expression.indexOf(op) + 1));
+  return `{${evaluatedSet}}`;
+};
+
+const evaluateSetExpression = (expression: string) => {
+  let mutableExpression = expression;
+
+  while (findOperator(mutableExpression) !== ' ') {
+    const { pos1, pos2 } = findInnerParentheses(mutableExpression);
+
+    const selectedPart = mutableExpression.substring(pos1 + 1, pos2);
+    const evaluated = evaluateSetSubexpression(selectedPart);
+    mutableExpression = mutableExpression.replaceAll(`(${selectedPart})`, evaluated);
+  }
+
+  return mutableExpression;
+};
+
 /**
  * Replaces a expression with variables to 0 and 1
  * @param expressionParam
@@ -132,5 +182,5 @@ const replaceExpressionToBoolean = (expressionParam: string, variables: string[]
 };
 
 export {
-  getReplacedValue, evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean,
+  getReplacedValue, evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean, evaluateSetExpression,
 };
