@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "./feature.css";
-import VenDiagramPage from "./VennDiagram";
+// import VenDiagramPage from "./VennDiagram";
+import VenDiagramPage from "../venn/index";
 import html2canvas from "html2canvas";
+
 export default function Feature(props: {
   setEvaluatedExpression: any;
   evaluatedExpression: any;
@@ -68,6 +70,8 @@ export default function Feature(props: {
           <div id="venn">
             <div id="venn_text">venn-diagram</div>
             <div id="venn_content" ref={divRef}>
+              {/* Das ist das Komponent, das ich extra gemacht hatte */}
+              {/* <VenDiagramPage data={props.evaluatedExpression} /> */}
               <VenDiagramPage data={props.evaluatedExpression} />
             </div>
 

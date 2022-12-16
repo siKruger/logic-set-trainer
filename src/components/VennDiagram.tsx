@@ -9,7 +9,7 @@ import "./feature.css"
 type VennProps = {
   data?: TruthtableEvaluation;
 };
-
+//! Das ganze Komponent brauchen wir nicht mehr.
 function VenDiagramPage({ data }: VennProps) {
   const svgRef = React.useRef(null);
 
