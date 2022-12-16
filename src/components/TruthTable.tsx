@@ -60,7 +60,7 @@ export default function TruthTable(props: {
     setProgressSpinner(progressSpinner + 3.125);
 
     // If counter is at X * 100
-    if (progressSpinner % 100 === 0) if (counter >= props.evaluatedExpression?.steps.length!==undefined?props.evaluatedExpression?.steps.length:undefined) setCounter(0); else addColumn();
+    if (progressSpinner % 100 === 0) if (counter >= props.evaluatedExpression?.steps.length) setCounter(0); else addColumn();
     // setProgressspinner(0);
   }, 125);
 
@@ -83,17 +83,6 @@ export default function TruthTable(props: {
           </td>
       );
     }
-    // for (let x = 0; x < mutableExpression.length; x += 1) {
-    //   const currentChar = mutableExpression.charAt(x);
-    //
-    //   const index = variables.indexOf(currentChar);
-    //
-    //   // eslint-disable-next-line no-continue
-    //   if (index === -1) continue;
-    //   const replacedValue = getReplacedValue(values, index);
-    //
-    //   mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
-    // }
 
     mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
     mutableExpression = evaluateWholeExpression(mutableExpression);
@@ -182,7 +171,6 @@ export default function TruthTable(props: {
                             }
 
                             {props.evaluatedExpression?.steps!==undefined?generateRow(props.evaluatedExpression?.steps, binaryRow, props.evaluatedExpression?.variables):undefined}
-                            {/*{props.evaluatedExpression?.steps !== undefined ? generateRow(props.evaluatedExpression?.steps.slice(0, counter).concat(Array(props.evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, props.evaluatedExpression?.variables) : undefined}*/}
 
                           </tr>
                       ))
