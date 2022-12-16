@@ -24,7 +24,6 @@ const Main = () => {
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
-    alert(expression);
     if (checkCorrectSyntax(expression)) {
       setShowError(true);
     } else {
