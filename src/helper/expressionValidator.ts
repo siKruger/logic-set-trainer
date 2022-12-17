@@ -71,8 +71,8 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
     // a operator needs [A-Z] or a (
     if (char.match(operators)) {
       if (!(mutableExpression.charAt(x + 1)
-          .match(letter) || mutableExpression.charAt(x + 1)
-          .match(parenthesesOpen) || mutableExpression.charAt(x + 1).match(negation))) {
+        .match(letter) || mutableExpression.charAt(x + 1)
+        .match(parenthesesOpen) || mutableExpression.charAt(x + 1).match(negation))) {
         return false;
       }
     }
@@ -80,9 +80,9 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
     // ( needs a ! or a [A-Z] or a ( following
     if (char.match(parenthesesOpen)) {
       if (!(mutableExpression.charAt(x + 1)
-          .match(negation) || mutableExpression.charAt(x + 1)
-          .match(parenthesesOpen) || mutableExpression.charAt(x + 1)
-          .match(letter))) {
+        .match(negation) || mutableExpression.charAt(x + 1)
+        .match(parenthesesOpen) || mutableExpression.charAt(x + 1)
+        .match(letter))) {
         return false;
       }
     }
@@ -90,8 +90,8 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
     // [A-Z] needs a operator following or empty
     if (char.match(letter)) {
       if (!(mutableExpression.charAt(x + 1)
-          .match(operators) || mutableExpression.charAt(x + 1) === '' || mutableExpression.charAt(x + 1)
-          .match(parenthesesClose))) {
+        .match(operators) || mutableExpression.charAt(x + 1) === '' || mutableExpression.charAt(x + 1)
+        .match(parenthesesClose))) {
         return false;
       }
     }
@@ -99,8 +99,8 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
     //! needs a [A-Z] and ( OR operator following.
     if (char.match(negation)) {
       if (x === mutableExpression.length - 1 || !(mutableExpression.charAt(x + 1)
-          .match(letter) || mutableExpression.match(negation) || mutableExpression.charAt(x + 1)
-          .match(parenthesesOpen))) {
+        .match(letter) || mutableExpression.match(negation) || mutableExpression.charAt(x + 1)
+        .match(parenthesesOpen))) {
         return false;
       }
     }
