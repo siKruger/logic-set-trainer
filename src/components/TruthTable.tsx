@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Container, Table, Button as Button2} from 'react-bootstrap'
 import './truthTable.css'
 import useInterval from 'use-interval';
+// import {useInterval} from 'react-use';
 import {evaluateWholeExpression, replaceExpressionToBoolean} from '../helper/logicConverter';
 import {Button as Button, CircularProgress} from "@mui/material";
 import html2canvas from "html2canvas";

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "./feature.css";
-// import VenDiagramPage from "./VennDiagram";
-import VenDiagramPage from "../venn/index";
+import VenDiagramPage from "./VennDiagram";
+// import VenDiagramPage from "../venn/index";
 import html2canvas from "html2canvas";
 
 export default function Feature(props: {
@@ -72,7 +72,7 @@ export default function Feature(props: {
             <div id="venn_content" ref={divRef}>
               {/* Das ist das Komponent, das ich extra gemacht hatte */}
               {/* <VenDiagramPage data={props.evaluatedExpression} /> */}
-              <VenDiagramPage data={props.evaluatedExpression} />
+              <VenDiagramPage data={props.evaluatedExpression} step={props.evaluatedExpression?.steps.length} />
             </div>
 
             <Button id="venn_download_button" onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture Image</Button>
