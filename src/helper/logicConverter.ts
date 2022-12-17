@@ -96,6 +96,11 @@ const evaluateWholeExpression = (expression: string): string => {
   return returnedExpression;
 };
 
+/**
+ * Gets 0 or 1 for a variable
+ * @param values
+ * @param index
+ */
 const getReplacedValue = (values: number[] | number, index: number) => {
   if (typeof (values) !== 'number') {
     return values[index];
@@ -103,6 +108,12 @@ const getReplacedValue = (values: number[] | number, index: number) => {
   return Number(values);
 };
 
+/**
+ * Replaces a expression with variables to 0 and 1
+ * @param expressionParam
+ * @param variables
+ * @param values
+ */
 const replaceExpressionToBoolean = (expressionParam: string, variables: string[], values: number[]) => {
   let mutableExpression = expressionParam;
   for (let x = 0; x < mutableExpression.length; x += 1) {
@@ -120,4 +131,6 @@ const replaceExpressionToBoolean = (expressionParam: string, variables: string[]
   return mutableExpression;
 };
 
-export { evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean };
+export {
+  getReplacedValue, evaluateSymbol, evaluateWholeExpression, replaceExpressionToBoolean,
+};

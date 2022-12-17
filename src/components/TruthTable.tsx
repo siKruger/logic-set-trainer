@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import {Container, Table, Button as Button2} from 'react-bootstrap'
 import './truthTable.css'
-import {evaluateWholeExpression} from '../helper/logicConverter';
-import {Button as Button} from "@mui/material";
+import useInterval from 'use-interval';
+import {evaluateWholeExpression, replaceExpressionToBoolean} from '../helper/logicConverter';
+import {Button as Button, CircularProgress} from "@mui/material";
 import html2canvas from "html2canvas";
 
 export default function TruthTable(props: {
@@ -12,6 +13,12 @@ export default function TruthTable(props: {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
   const imageFileName = props.expression.replaceAll(" ", "") + "(truth_table)";
+  const [autoplay, setAutoplay] = useState<boolean>(false);
+  const [progressSpinner, setProgressSpinner] = useState<number>(0);
+
+  const toggleAutoplay = () => {
+    setAutoplay(!autoplay);
+  };
 
   const exportAsImage = async (el: any, imageFileName: any) => {
     const canvas = await html2canvas(el);
@@ -47,6 +54,16 @@ export default function TruthTable(props: {
     }
   };
 
+  useInterval(() => {
+    if (props.evaluatedExpression === undefined || !autoplay) return;
+    // Increment counter
+    setProgressSpinner(progressSpinner + 3.125);
+
+    // If counter is at X * 100
+    if (progressSpinner % 100 === 0) if (counter >= props.evaluatedExpression?.steps.length) setCounter(0); else addColumn();
+    // setProgressspinner(0);
+  }, 125);
+
   const getReplacedValue = (values: number[] | number, index: number) => {
     if (typeof (values) !== 'number') {
       return values[index];
@@ -66,18 +83,8 @@ export default function TruthTable(props: {
           </td>
       );
     }
-    for (let x = 0; x < mutableExpression.length; x += 1) {
-      const currentChar = mutableExpression.charAt(x);
 
-      const index = variables.indexOf(currentChar);
-
-      // eslint-disable-next-line no-continue
-      if (index === -1) continue;
-      const replacedValue = getReplacedValue(values, index);
-
-      mutableExpression = mutableExpression.replaceAll(currentChar, `${replacedValue}`);
-    }
-
+    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
     mutableExpression = evaluateWholeExpression(mutableExpression);
     return (
         <td>
@@ -88,7 +95,7 @@ export default function TruthTable(props: {
     );
   };
 
-  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string) => generateCell(singleStep, values, variables));
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
 
   return (
       <>
@@ -98,11 +105,15 @@ export default function TruthTable(props: {
               Truth Table
             </div>
             <div id="increment_button">
+              <Button color={autoplay ? 'success' : 'error'} onClick={() => toggleAutoplay()} variant="outlined" style={{ marginLeft: '50px' }}>
+                Autoplay
+                <CircularProgress style={{ marginLeft: '1em' }} size={25} variant="determinate" value={progressSpinner} />
+              </Button>
               <div id="button_of_add">
-                <Button onClick={() => addColumn()} variant="outlined" style={{marginLeft: '50px'}}>+1 Schritt</Button>
+                <Button disabled={autoplay} onClick={() => addColumn()} variant="outlined" style={{marginLeft: '50px'}}>+1 Schritt</Button>
               </div>
               <div id="button_of_reduce">
-                <Button onClick={() => reduceColumn()} variant="outlined" style={{marginLeft: '30px'}}>-1
+                <Button disabled={autoplay} onClick={() => reduceColumn()} variant="outlined" style={{marginLeft: '30px'}}>-1
                   Schritt</Button>
               </div>
             </div>
@@ -159,8 +170,7 @@ export default function TruthTable(props: {
                               ))
                             }
 
-                            {/*{props.evaluatedExpression?.steps!==undefined?generateRow(props.evaluatedExpression?.steps, binaryRow, props.evaluatedExpression?.variables):undefined}*/}
-                            {props.evaluatedExpression?.steps !== undefined ? generateRow(props.evaluatedExpression?.steps.slice(0, counter).concat(Array(props.evaluatedExpression?.steps.length - counter).fill('blank')), binaryRow, props.evaluatedExpression?.variables) : undefined}
+                            {props.evaluatedExpression?.steps!==undefined?generateRow(props.evaluatedExpression?.steps, binaryRow, props.evaluatedExpression?.variables):undefined}
 
                           </tr>
                       ))

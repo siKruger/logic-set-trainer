@@ -10,12 +10,6 @@ import TruthTable from "./TruthTable";
 import Property from "./Property";
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
-import onChange = toast.onChange;
-import * as d3 from 'd3';
-import {
-  fiveSetVenn, fourSetVenn, oneSetVenn, threeSetVenn, twoSetVenn,
-} from '../helper/vennDiagrams';
-import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 
 const Main = () => {
@@ -30,7 +24,7 @@ const Main = () => {
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
-    if (!checkCorrectSyntax(expression)) {
+    if (checkCorrectSyntax(expression)) {
       setShowError(true);
     } else {
       setShowError(false);
@@ -40,7 +34,6 @@ const Main = () => {
 
     }
   };
-
 
   return (
     <>

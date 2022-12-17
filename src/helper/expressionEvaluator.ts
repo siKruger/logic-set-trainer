@@ -246,22 +246,15 @@ const removeDoubleParentheses = (expression: string): string => {
 export const setOptionalParenthesis = (expression: string): string => {
   let mutableExpression = expression;
 
-  for (let x = 0; x < mutableExpression.length; x += 1) {
+  for (let x = mutableExpression.length; x >= 0; x -= 1) {
     const char = mutableExpression.charAt(x);
 
     // For negations
     if (char === '¬') {
       // Search the right side
       // Right Search
-      if (mutableExpression.charAt(x + 1) === '¬') {
-        const placeRight = findRightPlacement(x + 1, mutableExpression);
-        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
-      } else {
-        const placeRight = findRightPlacement(x, mutableExpression);
-        mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
-      }
-
-      x += 1;
+      const placeRight = findRightPlacement(x, mutableExpression);
+      mutableExpression = `${mutableExpression.slice(0, x)}(${mutableExpression.slice(x, placeRight)})${mutableExpression.slice(placeRight)}`;
     }
   }
 
