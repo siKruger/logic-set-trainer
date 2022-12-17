@@ -4,7 +4,7 @@ import { evaluateTruthtable, TruthtableEvaluation } from "../helper/expressionEv
 import { checkCorrectSyntax } from "../helper/expressionValidator";
 import { toast } from "react-toastify";
 import "./main.css";
-import { Container, Row, Table } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Feature from "./Feature";
 import TruthTable from "./TruthTable";
 import Property from "./Property";
