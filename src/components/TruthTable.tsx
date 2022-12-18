@@ -6,7 +6,12 @@ import useInterval from 'use-interval';
 import {evaluateWholeExpression, replaceExpressionToBoolean} from '../helper/logicConverter';
 import {Button as Button, CircularProgress} from "@mui/material";
 import html2canvas from "html2canvas";
+import VenDiagramPage from './VennDiagram';
 
+// export default function TruthTable(props: { 
+//   evaluatedExpression: any;
+//   expression: any;
+// })
 export default function TruthTable(props: {
   evaluatedExpression: { variables: any[]; steps: any[]; binaryOptions: any[] } | undefined;
   expression: any;
@@ -178,10 +183,14 @@ export default function TruthTable(props: {
                 }
                 </tbody>
               </Table>
+              
             </div>
+            {/* <VenDiagramPage data={props.evaluatedExpression} step={counter} /> */}
+            
             <Button2 id="truth_table_download_button" onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture
               table</Button2>
           </div>
+          <VenDiagramPage data={props.evaluatedExpression} step={counter} />
 
 
         </Container>
