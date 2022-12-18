@@ -11,7 +11,7 @@ import { TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 type VennProps = {
-  data?: TruthtableEvaluation;
+  data?: { variables: any[]; steps: any[]; binaryOptions: any[]; } | undefined;
   step: number
 };
 
