@@ -1,10 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ErrorPage() {
   return (
-    <>
-      FEHLER FEHLER ALARM ALARM
-    </>
+    <div>
+      <h1>An Error Occured!</h1>
+      <p>
+        Something went wrong!
+      </p>
+      <Link to="/">back</Link>
+    </div>
   );
 }
 
