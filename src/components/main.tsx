@@ -59,10 +59,10 @@ const Main = () => {
           setCheckedNote={setCheckedNote} />
       </Container>
 
-      {/* für Error Darstellung oder Property und TruthTable und Feature(Venn-Diagramm und Note) Felder */}
+      {/* für Error Darstellung oder Property und TruthTable(und VennDiagramm) und Feature(Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         <Property evaluatedExpression={evaluatedExpression} />
-        <TruthTable evaluatedExpression={evaluatedExpression} expression={expression}/>
+        <TruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm}/>
         <Feature setEvaluatedExpression={setEvaluatedExpression}
         evaluatedExpression={evaluatedExpression}  expression={expression}
         checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>

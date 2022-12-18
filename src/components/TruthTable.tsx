@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
-import { Container, Table, Button as Button2 } from 'react-bootstrap'
-import './truthTable.css'
-import useInterval from 'use-interval';
-// import {useInterval} from 'react-use';
-import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+import React, { useState } from "react";
+import { Container, Table, Button as Button2 } from "react-bootstrap";
+import "./truthTable.css";
+import useInterval from "use-interval";
+import {
+  evaluateWholeExpression,
+  replaceExpressionToBoolean,
+} from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
-import VenDiagramPage from './VennDiagram';
+import VenDiagramPage from "./VennDiagram";
 
-// export default function TruthTable(props: { 
-//   evaluatedExpression: any;
-//   expression: any;
-// })
+
 export default function TruthTable(props: {
-  evaluatedExpression: { variables: any[]; steps: any[]; binaryOptions: any[] } | undefined;
+  evaluatedExpression:
+    | { variables: any[]; steps: any[]; binaryOptions: any[] }
+    | undefined;
   expression: any;
+  checkedVennDiagramm: any;
 }) {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
@@ -66,64 +68,89 @@ export default function TruthTable(props: {
     setProgressSpinner(progressSpinner + 3.125);
 
     // If counter is at X * 100
-    if (progressSpinner % 100 === 0) if (counter >= props.evaluatedExpression?.steps.length) setCounter(0); else addColumn();
+    if (progressSpinner % 100 === 0)
+      if (counter >= props.evaluatedExpression?.steps.length) setCounter(0);
+      else addColumn();
     // setProgressspinner(0);
   }, 125);
 
   const getReplacedValue = (values: number[] | number, index: number) => {
-    if (typeof (values) !== 'number') {
+    if (typeof values !== "number") {
       return values[index];
     }
     return Number(values);
   };
 
-  const generateCell = (singleStep: string, values: number[], variables: string[]) => {
+  const generateCell = (
+    singleStep: string,
+    values: number[],
+    variables: string[]
+  ) => {
     let mutableExpression = singleStep;
 
-    if (mutableExpression == 'blank') {
-      return (
-        <td>
-          {' '}
-          {' - '}
-          {' '}
-        </td>
-      );
+    if (mutableExpression == "blank") {
+      return <td> {" - "} </td>;
     }
 
-    mutableExpression = replaceExpressionToBoolean(mutableExpression, variables, values);
-    mutableExpression = evaluateWholeExpression(mutableExpression);
-    return (
-      <td>
-        {' '}
-        {mutableExpression}
-        {' '}
-      </td>
+    mutableExpression = replaceExpressionToBoolean(
+      mutableExpression,
+      variables,
+      values
     );
+    mutableExpression = evaluateWholeExpression(mutableExpression);
+    return <td> {mutableExpression} </td>;
   };
 
-  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
+  const generateRow = (step: string[], values: number[], variables: string[]) =>
+    step.map((singleStep: string, index) =>
+      index < counter ? (
+        generateCell(singleStep, values, variables)
+      ) : (
+        <td> - </td>
+      )
+    );
 
   return (
     <>
       <Container id="table_container">
         <div id="table">
-          <div id="table_text">
-            Truth Table
-          </div>
+          <div id="table_text">Truth Table</div>
           <div id="increment_button">
-            <Button color={autoplay ? 'success' : 'error'} onClick={() => toggleAutoplay()} variant="outlined" style={{ marginLeft: '50px' }}>
+            <Button
+              color={autoplay ? "success" : "error"}
+              onClick={() => toggleAutoplay()}
+              variant="outlined"
+              style={{ marginLeft: "50px" }}
+            >
               Autoplay
-              <CircularProgress style={{ marginLeft: '1em' }} size={25} variant="determinate" value={progressSpinner} />
+              <CircularProgress
+                style={{ marginLeft: "1em" }}
+                size={25}
+                variant="determinate"
+                value={progressSpinner}
+              />
             </Button>
             <div id="button_of_add">
-              <Button disabled={autoplay} onClick={() => addColumn()} variant="outlined" style={{ marginLeft: '50px' }}>+1 Schritt</Button>
+              <Button
+                disabled={autoplay}
+                onClick={() => addColumn()}
+                variant="outlined"
+                style={{ marginLeft: "50px" }}
+              >
+                +1 Schritt
+              </Button>
             </div>
             <div id="button_of_reduce">
-              <Button disabled={autoplay} onClick={() => reduceColumn()} variant="outlined" style={{ marginLeft: '30px' }}>-1
-                Schritt</Button>
+              <Button
+                disabled={autoplay}
+                onClick={() => reduceColumn()}
+                variant="outlined"
+                style={{ marginLeft: "30px" }}
+              >
+                -1 Schritt
+              </Button>
             </div>
           </div>
-
 
           {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
           <div id="table_content" ref={divRef}>
@@ -131,69 +158,86 @@ export default function TruthTable(props: {
               <thead>
                 <tr>
                   {props.evaluatedExpression?.variables.map((variable) => (
-                    <th key={variable}>
-                      {' '}
-                      {variable}
-                      {' '}
-                    </th>
+                    <th key={variable}> {variable} </th>
                   ))}
                   {props.evaluatedExpression?.steps.map((step) => (
                     // eslint-disable-next-line react/jsx-key
-                    <th>
-                      {' '}
-                      {step}
-                      {' '}
-                    </th>
+                    <th> {step} </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {
-                  props.evaluatedExpression !== undefined && props.evaluatedExpression?.variables.length === 1
-                    ? props.evaluatedExpression?.binaryOptions.map((binaryValue) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <tr>
-                        {' '}
-                        <td>
-                          {' '}
-                          {binaryValue}
-                        </td>
-                        {props.evaluatedExpression?.variables !== undefined ? generateRow(props.evaluatedExpression?.steps, binaryValue, props.evaluatedExpression?.variables) : undefined}
-                      </tr>
-                    ))
-                    : props.evaluatedExpression?.binaryOptions.map((binaryRow) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <tr>
-                        {' '}
-                        {
-                          binaryRow.map((binaryValue: any) => (
+                {props.evaluatedExpression !== undefined &&
+                props.evaluatedExpression?.variables.length === 1
+                  ? props.evaluatedExpression?.binaryOptions.map(
+                      (binaryValue) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <tr>
+                          {" "}
+                          <td> {binaryValue}</td>
+                          {props.evaluatedExpression?.variables !== undefined
+                            ? generateRow(
+                                props.evaluatedExpression?.steps,
+                                binaryValue,
+                                props.evaluatedExpression?.variables
+                              )
+                            : undefined}
+                        </tr>
+                      )
+                    )
+                  : props.evaluatedExpression?.binaryOptions.map(
+                      (binaryRow) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <tr>
+                          {" "}
+                          {binaryRow.map((binaryValue: any) => (
                             // eslint-disable-next-line react/jsx-key
-                            <td>
-                              {' '}
-                              {binaryValue}
-                              {' '}
-                            </td>
-                          ))
-                        }
-
-                        {props.evaluatedExpression?.steps !== undefined ? generateRow(props.evaluatedExpression?.steps, binaryRow, props.evaluatedExpression?.variables) : undefined}
-
-                      </tr>
-                    ))
-                }
+                            <td> {binaryValue} </td>
+                          ))}
+                          {props.evaluatedExpression?.steps !== undefined
+                            ? generateRow(
+                                props.evaluatedExpression?.steps,
+                                binaryRow,
+                                props.evaluatedExpression?.variables
+                              )
+                            : undefined}
+                        </tr>
+                      )
+                    )}
               </tbody>
             </Table>
-
+            
           </div>
-          {/* <VenDiagramPage data={props.evaluatedExpression} step={counter} /> */}
 
-          <Button2 id="truth_table_download_button" onClick={() => exportAsImage(divRef.current, imageFileName)}>Capture
-            table</Button2>
+          <Button2
+            id="truth_table_download_button"
+            onClick={() => exportAsImage(divRef.current, imageFileName)}
+          >
+            Capture table
+          </Button2>
         </div>
-        <VenDiagramPage data={props.evaluatedExpression} step={counter} />
-
 
       </Container>
+      {!props.checkedVennDiagramm && (
+          <Container id="venn_container">
+            <div id="venn">
+              <div id="venn_text">venn-diagram</div>
+              <div id="venn_content" ref={divRef}>
+                <VenDiagramPage
+                  data={props.evaluatedExpression}
+                  step={counter}
+                />
+              </div>
+
+              <Button
+                id="venn_download_button"
+                onClick={() => exportAsImage(divRef.current, imageFileName)}
+              >
+                Capture venn-diagram
+              </Button>
+            </div>
+          </Container>
+        )}
     </>
-  )
+  );
 }

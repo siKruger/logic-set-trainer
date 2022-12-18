@@ -23,12 +23,7 @@
     margin-left: 1vw;
     margin-right: 1vw;
 }
-#venn_label {
-    color: #7C3AED;
-}
-.dark #venn_label {
-    color: #E5E7EB;
-}
+
 #note_label {
     color: #7C3AED;
 }
@@ -36,6 +31,3 @@
     color: #E5E7EB;
 }
 
-.venn{
-    background-color: aqua;
-}
