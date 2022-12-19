@@ -154,60 +154,61 @@ export default function TruthTable(props: {
           </div>
 
           {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
-          <div id="table_content" ref={divRef}>
-            <Table striped bordered hover>
-              <thead>
+          <div id="table_content">
+            <div ref={divRef}>
+              <Table striped bordered hover>
+                <thead>
                 <tr>
                   {props.evaluatedExpression?.variables.map((variable) => (
-                    <th key={variable}> {variable} </th>
+                      <th key={variable}> {variable} </th>
                   ))}
                   {props.evaluatedExpression?.steps.map((step) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <th> {step} </th>
+                      // eslint-disable-next-line react/jsx-key
+                      <th> {step} </th>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
+                </thead>
+                <tbody>
                 {props.evaluatedExpression !== undefined &&
                 props.evaluatedExpression?.variables.length === 1
-                  ? props.evaluatedExpression?.binaryOptions.map(
-                      (binaryValue) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <tr>
-                          {" "}
-                          <td> {binaryValue}</td>
-                          {props.evaluatedExpression?.variables !== undefined
-                            ? generateRow(
-                                props.evaluatedExpression?.steps,
-                                binaryValue,
-                                props.evaluatedExpression?.variables
-                              )
-                            : undefined}
-                        </tr>
-                      )
-                    )
-                  : props.evaluatedExpression?.binaryOptions.map(
-                      (binaryRow) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <tr>
-                          {" "}
-                          {binaryRow.map((binaryValue: any) => (
+                    ? props.evaluatedExpression?.binaryOptions.map(
+                        (binaryValue) => (
                             // eslint-disable-next-line react/jsx-key
-                            <td> {binaryValue} </td>
-                          ))}
-                          {props.evaluatedExpression?.steps !== undefined
-                            ? generateRow(
-                                props.evaluatedExpression?.steps,
-                                binaryRow,
-                                props.evaluatedExpression?.variables
-                              )
-                            : undefined}
-                        </tr>
-                      )
+                            <tr>
+                              {" "}
+                              <td> {binaryValue}</td>
+                              {props.evaluatedExpression?.variables !== undefined
+                                  ? generateRow(
+                                      props.evaluatedExpression?.steps,
+                                      binaryValue,
+                                      props.evaluatedExpression?.variables
+                                  )
+                                  : undefined}
+                            </tr>
+                        )
+                    )
+                    : props.evaluatedExpression?.binaryOptions.map(
+                        (binaryRow) => (
+                            // eslint-disable-next-line react/jsx-key
+                            <tr>
+                              {" "}
+                              {binaryRow.map((binaryValue: any) => (
+                                  // eslint-disable-next-line react/jsx-key
+                                  <td> {binaryValue} </td>
+                              ))}
+                              {props.evaluatedExpression?.steps !== undefined
+                                  ? generateRow(
+                                      props.evaluatedExpression?.steps,
+                                      binaryRow,
+                                      props.evaluatedExpression?.variables
+                                  )
+                                  : undefined}
+                            </tr>
+                        )
                     )}
-              </tbody>
-            </Table>
-            
+                </tbody>
+              </Table>
+            </div>
           </div>
 
           <Button
@@ -220,7 +221,7 @@ export default function TruthTable(props: {
         </div>
 
       </Container>
-      
+
       {!props.checkedVennDiagramm && (
           <Container id="venn_container">
             <div id="venn">
