@@ -1,6 +1,7 @@
 #table {
     margin: 2vh 0 !important;
-    background-color: #DCD6FF;
+    /* background-color: #DCD6FF; */
+    background-color: #F5F5F5;
     box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
     border-radius: 2vh;
 }
@@ -14,7 +15,7 @@
 
 th,tr,td {
     text-align: center;
-    color: #783EEF !important;
+    /* color: #783EEF !important; */
 }
 .dark th {
     color: #E5E7EB !important;
@@ -27,13 +28,13 @@ th,tr,td {
 }
 
 #table_text {
-    background-color: #C3B6FE;
+    /* background-color: #C3B6FE; */
     padding-left: 10px;
     padding-bottom: 4px;
     /*height: 5vh;*/
     width: 6.5rem;
     border-radius: 2vh 0 1vh 0;
-    color: #783EEF;
+    /* color: #783EEF; */
     letter-spacing: .03em;
     font-weight: 400;
 }
@@ -61,13 +62,13 @@ th,tr,td {
 
 #truth_table_download_button {
     margin-bottom: 1vh;
-    background-color: #D0C6FF;
-    border: none;
-    color: #783EEF;
+    /* background-color: #D0C6FF; */
+    /* border: none; */
+    /* color: #783EEF; */
 }
 
 #truth_table_download_button:hover {
-    background-color: #C8BCFE;
+    /* background-color: #C8BCFE; */
 }
 
 .dark #truth_table_download_button {
@@ -80,47 +81,51 @@ th,tr,td {
 }
 #venn {
     margin: 2vh 0 !important;
-    background-color: #DCD6FF;
+    /* background-color: #DCD6FF; */
+    background-color: #F5F5F5;
     box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
     border-radius: 2vh;
     text-align: center;
 
 }
 .dark #venn {
-    background-color: #1F2937;
+    /* background-color: #1F2937; */
+    background-color: #746b61;
     box-shadow: none;
 }
 #venn_text {
-    background-color: #C3B6FE;
+    /* background-color: #C3B6FE; */
     padding-left: 10px;
     padding-bottom: 4px;
     width: 8rem;
     border-radius: 2vh 0 1vh 0;
-    color: #783EEF;
+    /* color: #783EEF; */
     letter-spacing: .03em;
 }
 .dark #venn_text {
-    background-color: #121A29;
+    /* background-color: #121A29; */
+    background-color: #48433d;
     color: #E5E7EB;
 }
 #venn_content {
-    padding: 4vh 10vw;
-    color: #783EEF;
+    padding: 1vh 10vw 1vh 10vw;
+    /* color: #783EEF; */
     text-align: center;
 
 }
 .dark #venn_content {
     color: #E5E7EB;
+    
 }
 #venn_download_button {
     margin-bottom: 1vh;
-    background-color: #D0C6FF;
-    border: none;
-    color: #783EEF;
+    /* background-color: #D0C6FF; */
+    /* border: none; */
+    /* color: #783EEF; */
 }
 
 #venn_download_button:hover {
-    background-color: #C8BCFE;
+    /* background-color: #C8BCFE; */
 }
 
 .dark #venn_download_button {
@@ -132,12 +137,46 @@ th,tr,td {
     background-color: #48515E;
 }
 .venn{
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 #venn_label {
-    color: #7C3AED;
+    /* color: #7C3AED; */
 }
 .dark #venn_label {
     color: #E5E7EB;
+}
+.dark textarea{
+    background-color: #1F2937;
+}
+.dark textarea:focus{
+    background-color: #35455d;
+}
+.oneSetVenn{
+    width: 250px;
+    height: 250px;
+}
+.twoSetVenn{
+    width: 350px;
+    height: 250px;
+}
+.threeSetVenn{
+    width: 350px;
+    height: 350px;
+}
+.fourSetVenn{
+    width: 450px;
+    height: 400px;
+}
+.fiveSetVenn{
+    width: 760px;
+    height: 700px;
+    
+}
+.fiveSetVenn svg{
+    font-size: large;
+    
+}
+h6{
+    font-weight: bold;
 }

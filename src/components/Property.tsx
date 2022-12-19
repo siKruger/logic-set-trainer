@@ -9,7 +9,7 @@ export default function Property(props: { evaluatedExpression: { parentheses: st
             <Container id="property_container">
                 <div id="property">
                     <div id="property_text">
-                        property
+                        <h6>property</h6>
                     </div>
                     <div id="property_content">
                         {props.evaluatedExpression?.parentheses}

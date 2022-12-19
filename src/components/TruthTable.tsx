@@ -19,8 +19,9 @@ export default function TruthTable(props: {
   checkedVennDiagramm: any;
 }) {
   const divRef = React.useRef<HTMLDivElement>(null);
+  const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
-  const imageFileName = props.expression.replaceAll(" ", "") + "(truth_table)";
+  const imageFileName = props.expression.replaceAll(" ", "");
   const [autoplay, setAutoplay] = useState<boolean>(false);
   const [progressSpinner, setProgressSpinner] = useState<number>(0);
 
@@ -114,7 +115,7 @@ export default function TruthTable(props: {
     <>
       <Container id="table_container">
         <div id="table">
-          <div id="table_text">Truth Table</div>
+          <div id="table_text"><h6>Truth Table</h6></div>
           <div id="increment_button">
             <Button
               color={autoplay ? "success" : "error"}
@@ -209,20 +210,22 @@ export default function TruthTable(props: {
             
           </div>
 
-          <Button2
+          <Button
+            variant="outlined"
             id="truth_table_download_button"
             onClick={() => exportAsImage(divRef.current, imageFileName)}
           >
             Capture table
-          </Button2>
+          </Button>
         </div>
 
       </Container>
+      
       {!props.checkedVennDiagramm && (
           <Container id="venn_container">
             <div id="venn">
-              <div id="venn_text">venn-diagram</div>
-              <div id="venn_content" ref={divRef}>
+              <div id="venn_text"><h6>venn-diagram</h6></div>
+              <div id="venn_content" ref={divRef2}>
                 <VenDiagramPage
                   data={props.evaluatedExpression}
                   step={counter}
@@ -230,8 +233,9 @@ export default function TruthTable(props: {
               </div>
 
               <Button
+              variant="outlined"
                 id="venn_download_button"
-                onClick={() => exportAsImage(divRef.current, imageFileName)}
+                onClick={() => exportAsImage(divRef2.current, imageFileName)}
               >
                 Capture venn-diagram
               </Button>

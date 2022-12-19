@@ -68,7 +68,7 @@ export default function Feature(props: {
       {!props.checkedNote && (
         <Container id="note_container">
           <div id="note">
-            <div id="note_text">note</div>
+            <div id="note_text"><h6>note</h6></div>
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
@@ -83,7 +83,7 @@ export default function Feature(props: {
                 />
               </Form.Group>
 
-              <Button id="save_note_button" type="submit">
+              <Button id="save_note_button" type="submit" variant="outlined" className="btn btn-outline-primary">
                 save
               </Button>
             </Form>

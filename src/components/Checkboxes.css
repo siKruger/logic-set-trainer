@@ -17,7 +17,7 @@ label{
 }
 
 .checkbox_label {
-    color: #783EEF;
+    /* color: #783EEF; */
 }
 .dark .checkbox_label {
     color: #E5E7EB;

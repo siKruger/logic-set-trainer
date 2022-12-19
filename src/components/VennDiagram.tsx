@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import {
   fiveSetVenn,
@@ -10,12 +10,16 @@ import {
 import { TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
+
 type VennProps = {
   data?: { variables: any[]; steps: any[]; binaryOptions: any[]; } | undefined;
   step: number
 };
+// let cl = "oneSetVenn";
+
 
 function VenDiagramPage({ data, step }: VennProps) {
+  const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
   useEffect(() => {
@@ -66,16 +70,16 @@ function VenDiagramPage({ data, step }: VennProps) {
 
     switch (data.variables.length) {
       case 1: oneSetVenn(venn, trueEvaluations, data.variables); break;
-      case 2: twoSetVenn(venn, trueEvaluations, data.variables); break;
-      case 3: threeSetVenn(venn, trueEvaluations, data.variables); break;
-      case 4: fourSetVenn(venn, trueEvaluations, data.variables); break;
-      case 5: fiveSetVenn(venn, trueEvaluations, data.variables); break;
+      case 2: twoSetVenn(venn, trueEvaluations, data.variables); setCl('twoSetVenn'); break;
+      case 3: threeSetVenn(venn, trueEvaluations, data.variables); setCl('threeSetVenn'); break;
+      case 4: fourSetVenn(venn, trueEvaluations, data.variables); setCl('fourSetVenn'); break;
+      case 5: fiveSetVenn(venn, trueEvaluations, data.variables); setCl('fiveSetVenn'); break;
       default:
     }
   });
 
   return (
-    <svg ref={svgRef} width={750} height={750} />
+    <svg className={cl} ref={svgRef} />
   );
 }
 

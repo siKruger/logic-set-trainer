@@ -1,6 +1,7 @@
 #note {
     margin: 2vh 0 !important;
-    background-color: #DCD6FF;
+    /* background-color: #DCD6FF; */
+    background-color: #F5F5F5;
     box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
     border-radius: 2vh;
 }
@@ -13,12 +14,12 @@
     box-shadow: none;
 }
 #note_text {
-    background-color: #C3B6FE;
+    /* background-color: #C3B6FE; */
     padding-left: 10px;
     padding-bottom: 4px;
     width: 3.5rem;
     border-radius: 2vh 0 1vh 0;
-    color: #783EEF;
+    /* color: #783EEF; */
     letter-spacing: .03em;
 }
 .dark #note_text {
@@ -27,15 +28,15 @@
 }
 #note_content {
     padding: 1vh 4vw;
-    color: #783EEF;
+    /* color: #783EEF; */
 }
 .dark #note_content {
     color: #E5E7EB;
 }
 #note_form {
     padding: 0 1rem;
-    background-color: #DCD6FF;
-    color: black;
+    /* background-color: #DCD6FF; */
+    /* color: black; */
 }
 .dark #note_form {
     background-color: #1F2937;
@@ -44,7 +45,7 @@
 
 
 #make_a_note {
-    color: #783EEF;
+    /* color: #783EEF; */
 }
 .dark #make_a_note {
     color: #E5E7EB;
@@ -53,13 +54,14 @@
 
 #save_note_button {
     margin-bottom: 1vh;
-    background-color: #D0C6FF;
-    border: none;
-    color: #783EEF;
+    /* background-color: #D0C6FF; */
+    /* border: none; */
+    /* color: #783EEF; */
+    
 }
 
 #save_note_button:hover {
-    background-color: #C8BCFE;
+    /* background-color: #C8BCFE; */
 }
 
 .dark #save_note_button {

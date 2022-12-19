@@ -22,7 +22,7 @@ const Top = () => {
       <Container id="top_container">
         <Row className="header">
           <Col className="logo" xs={8}>
-            logic set trainer
+            <h3>logic set trainer</h3> 
           </Col>
           <Col className="toolbar">
             <button onClick={() => setOpen(!open)}

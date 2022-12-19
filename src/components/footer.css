@@ -1,7 +1,8 @@
 #footer_container {
-    color:#976BF3;
+    /* color:#976BF3; */
     text-align: center;
     padding-bottom: 5vh;
+    
 }
 .dark #footer_container {
     color: #BABDC4;
@@ -9,4 +10,8 @@
 #love_icon {
     color: #F76263;
     font-size: 1.5rem;
+}
+#footer_text {
+    color: #555;
+    font-weight: 200;
 }
