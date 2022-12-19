@@ -116,22 +116,33 @@ const getReplacedValue = (values: number[] | number, index: number) => {
 };
 
 const evaluateSetOperation = (operator: string, leftSide: string, rightSide: string) => {
-  if (rightSide === '{}') {
-    return leftSide.substring(1, leftSide.length - 1);
-  }
-  if (leftSide === '{}') {
-    return rightSide.substring(1, rightSide.length - 1);
-  }
   const leftSideArray = leftSide.substring(1, leftSide.length - 1).split(',');
   const rightSideArray = rightSide.substring(1, rightSide.length - 1).split(',');
+  const negRightSide = [];
   // eslint-disable-next-line default-case
   switch (operator) {
     case '∧':
+      if (rightSide === '{}' || leftSide === '{}') {
+        return '';
+      }
       return leftSideArray.filter((val) => rightSideArray.includes(val)).join(',');
     case '∨':
+      if (rightSide === '{}') {
+        return leftSide.substring(1, leftSide.length - 1);
+      }
+      if (leftSide === '{}') {
+        return rightSide.substring(1, rightSide.length - 1);
+      }
       return [...new Set(leftSideArray.concat(rightSideArray))].join(',');
-    // case '¬':
-    //   return
+    case '¬':
+      for (let i = 0; i < rightSideArray.length; i += 1) {
+        if (rightSideArray[i].charAt(0) === '-') {
+          negRightSide.push(rightSideArray[i].substring(1, rightSideArray[i].length));
+        } else {
+          negRightSide.push(`-${rightSideArray[i]}`);
+        }
+      }
+      return leftSide.concat(negRightSide.join(','));
     case '⇒':
       return leftSideArray.filter((val) => !rightSideArray.includes(val)).join(',');
   }

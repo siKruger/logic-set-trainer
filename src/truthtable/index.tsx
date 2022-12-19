@@ -10,7 +10,7 @@ import {
   evaluateTruthtable, VariableEvaluation, SetEvaluation, EvaluationType,
 } from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
-import VenDiagramPage from '../venn';
+import { VennDiagramPage, VennDiagramPageSets } from '../venn';
 import { evaluateWholeExpression, replaceExpressionToBoolean, evaluateSetExpression } from '../helper/logicConverter';
 
 function Truthtable() {
@@ -173,7 +173,7 @@ function Truthtable() {
         {' '}
         {evaluation?.steps[counter - 1]}
         <p />
-        <VenDiagramPage data={evaluation} step={counter} />
+        <VennDiagramPage data={evaluation} step={counter} />
       </>
     );
   }
@@ -241,6 +241,11 @@ function Truthtable() {
             </tr>
           </tbody>
         </Table>
+        Momentan angezeigt:
+        {' '}
+        {evaluation?.steps[counter - 1]}
+        <p />
+        <VennDiagramPageSets data={evaluation} step={counter} />
       </>
     );
   }

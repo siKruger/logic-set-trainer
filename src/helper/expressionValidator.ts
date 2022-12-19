@@ -7,8 +7,8 @@ import { prepareForEvaluation } from './expressionEvaluator';
  */
 export const checkCorrectSymbols = (expression: string): string => {
   let validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|\(|\)|[A-Z]|\s)+$/g;
-  if (expression.match(/{|}|[0-9]/)) {
-    validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|{|}|,|\(|\)|[0-9]|\s)+$/g;
+  if (expression.match(/{|}/)) {
+    validCharacters = /^(&&|\|\||!|=>|{|}|,|\(|\)|[0-9]|\s)+$/g;
   }
   const expression2 = expression.toUpperCase();
 
@@ -73,7 +73,7 @@ export const checkCorrectSubexpressions = (expression: string): string => {
   const curlyBracketClose = /}/;
   const comma = /,/;
 
-  if (expression.match(/{|}|[0-9]/)) {
+  if (expression.match(/{|}/)) {
     for (let x = 0; x < mutableExpression.length; x += 1) {
       const char = mutableExpression.charAt(x);
       const nextChar = mutableExpression.charAt(x + 1);
@@ -100,9 +100,9 @@ export const checkCorrectSubexpressions = (expression: string): string => {
         }
       }
 
-      // ! needs a { or ( following.
+      // ! needs a { or ( or another ! following.
       if (char.match(negation)) {
-        if (x === mutableExpression.length - 1 || !(nextChar.match(curlyBracketOpen) || nextChar.match(parenthesesOpen))) {
+        if (x === mutableExpression.length - 1 || !(nextChar.match(curlyBracketOpen) || nextChar.match(parenthesesOpen) || nextChar.match(negation))) {
           return `Ungültige Syntax! An Stelle: ${x + 1}`;
         }
       }
