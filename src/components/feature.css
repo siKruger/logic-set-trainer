@@ -50,6 +50,9 @@
 .dark #make_a_note {
     color: #E5E7EB;
 }
+.dark textarea:focus{
+    color: #E5E7EB;
+}
 
 
 #save_note_button {
