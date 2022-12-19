@@ -226,12 +226,16 @@ export default function TruthTable(props: {
           <Container id="venn_container">
             <div id="venn">
               <div id="venn_text"><h6>venn-diagram</h6></div>
-              <div id="venn_content" ref={divRef2}>
-                <VenDiagramPage
-                  data={props.evaluatedExpression}
-                  step={counter}
-                />
+              <div ref={divRef2}>
+                <div id="now">{props.evaluatedExpression?.steps[counter - 1]}</div>
+                <div id="venn_content">
+                  <VenDiagramPage
+                      data={props.evaluatedExpression}
+                      step={counter}
+                  />
+                </div>
               </div>
+
 
               <Button
               variant="outlined"
