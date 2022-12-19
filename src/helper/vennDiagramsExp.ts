@@ -393,11 +393,11 @@ export const fiveSetVennExp = (venn: d3.Selection<null, unknown, null, undefined
   }
   /** ********************************************************** */
   venn.append('text')
-    .text(CE.join(','))
+    .text(BE.join(','))
     .attr('x', 562)
     .attr('y', 352);
 
-  if (CE.length === 0 ? shouldDrawSet(trueSet, C, U) && shouldDrawSet(trueSet, E, U) : shouldDrawSet(trueSet, CE, U)) {
+  if (BE.length === 0 ? shouldDrawSet(trueSet, B, U) && shouldDrawSet(trueSet, E, U) : shouldDrawSet(trueSet, BE, U)) {
     const my = 'M557,292 '
       + 'C582,322 598,359 589,401 '
       + 'C578,382 570,372 558,355 '
@@ -444,11 +444,11 @@ export const fiveSetVennExp = (venn: d3.Selection<null, unknown, null, undefined
   }
   /** ********************************************************** */
   venn.append('text')
-    .text(BE.join(','))
+    .text(CE.join(','))
     .attr('x', 190)
     .attr('y', 280);
 
-  if (BE.length === 0 ? shouldDrawSet(trueSet, B, U) && shouldDrawSet(trueSet, E, U) : shouldDrawSet(trueSet, BE, U)) {
+  if (CE.length === 0 ? shouldDrawSet(trueSet, C, U) && shouldDrawSet(trueSet, E, U) : shouldDrawSet(trueSet, CE, U)) {
     const omikron = 'M179,335 '
       + 'C180,284 188,259 217,227 '
       + 'C215,247 215,259 216,283 '
