@@ -12,6 +12,7 @@ import Main from "../components/main";
 import Footer from "../components/footer";
 
 
+
 function Layout() {
   const [open, setOpen] = useState(false);
   const [expression, setExpression] = useState('');
@@ -39,7 +40,6 @@ function Layout() {
         <div>
           {/*top: include instructions for use and task text*/}
           <Top></Top>
-
           {/* main field */}
           <Main></Main>
         </div>

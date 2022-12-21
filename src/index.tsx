@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createHashRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Truthtable from './truthtable';
 import Layout from './webapp/Layout';
@@ -20,7 +20,13 @@ const router = createHashRouter([
       },
     ],
   },
+  {
+    path: '/error_page',
+    element: <ErrorPage />,
+  }
 ]);
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
