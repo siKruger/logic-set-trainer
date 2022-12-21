@@ -1279,7 +1279,7 @@ export const threeSetVennExp = (venn: d3.Selection<null, unknown, null, undefine
   }
   //* **************************************************
   venn.append('text')
-    .text(C.join(','))
+    .text(CSet.join(','))
     .attr('x', 250)
     .attr('y', 105);
 
