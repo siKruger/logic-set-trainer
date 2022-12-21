@@ -102,13 +102,13 @@ function VennDiagramPageSets({ data, step }: VennProps) {
     let trueSet = [];
 
     if (data.sets.length === 1 && step === 0) {
-      const evaluated = evaluateSetExpression(data.sets[0]);
+      const evaluated = evaluateSetExpression(data.sets[0], data.sets);
       const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
         trueSet.push(numbers[i]);
       }
     } else if (step !== 0) {
-      const evaluated = evaluateSetExpression(data.steps[step - 1]);
+      const evaluated = evaluateSetExpression(data.steps[step - 1], data.sets);
       const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
         trueSet.push(numbers[i]);

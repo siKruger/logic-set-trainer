@@ -115,7 +115,7 @@ const getReplacedValue = (values: number[] | number, index: number) => {
   return Number(values);
 };
 
-const evaluateSetOperation = (operator: string, leftSide: string, rightSide: string) => {
+const evaluateSetOperation = (operator: string, leftSide: string, rightSide: string, universe: string[]) => {
   const leftSideArray = leftSide.substring(1, leftSide.length - 1).split(',');
   const rightSideArray = rightSide.substring(1, rightSide.length - 1).split(',');
   const negRightSide = [];
@@ -135,11 +135,12 @@ const evaluateSetOperation = (operator: string, leftSide: string, rightSide: str
       }
       return [...new Set(leftSideArray.concat(rightSideArray))].join(',');
     case '¬':
-      for (let i = 0; i < rightSideArray.length; i += 1) {
-        if (rightSideArray[i].charAt(0) === '-') {
-          negRightSide.push(rightSideArray[i].substring(1, rightSideArray[i].length));
-        } else {
-          negRightSide.push(`-${rightSideArray[i]}`);
+      if (!rightSideArray.includes('U')) {
+        negRightSide.push('U');
+      }
+      for (let i = 0; i < universe.length; i += 1) {
+        if (!rightSideArray.includes(universe[i])) {
+          negRightSide.push(universe[i]);
         }
       }
       return leftSide.concat(negRightSide.join(','));
@@ -149,20 +150,26 @@ const evaluateSetOperation = (operator: string, leftSide: string, rightSide: str
   return [];
 };
 
-const evaluateSetSubexpression = (expression: string) => {
+const evaluateSetSubexpression = (expression: string, universe: string[]) => {
   const op = findOperator(expression);
-  const evaluatedSet = evaluateSetOperation(op, expression.substring(0, expression.indexOf(op)), expression.substring(expression.indexOf(op) + 1));
+  const evaluatedSet = evaluateSetOperation(op, expression.substring(0, expression.indexOf(op)), expression.substring(expression.indexOf(op) + 1), universe);
   return `{${evaluatedSet}}`;
 };
 
-const evaluateSetExpression = (expression: string) => {
+const evaluateSetExpression = (expression: string, sets: string[]) => {
   let mutableExpression = expression;
+
+  let universe = sets[0].substring(1, sets[0].length - 1).split(',');
+  for (let i = 1; i < sets.length; i += 1) {
+    universe = universe.concat(sets[i].substring(1, sets[i].length - 1).split(','));
+  }
+  universe = Array.from(new Set(universe));
 
   while (findOperator(mutableExpression) !== ' ') {
     const { pos1, pos2 } = findInnerParentheses(mutableExpression);
 
     const selectedPart = mutableExpression.substring(pos1 + 1, pos2);
-    const evaluated = evaluateSetSubexpression(selectedPart);
+    const evaluated = evaluateSetSubexpression(selectedPart, universe);
     mutableExpression = mutableExpression.replaceAll(`(${selectedPart})`, evaluated);
   }
 

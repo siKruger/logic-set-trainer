@@ -227,7 +227,7 @@ function Truthtable() {
               {evaluation.steps.slice(0, counter).map((step) => (
                 <td key={step}>
                   {' '}
-                  {evaluateSetExpression(step)}
+                  {evaluateSetExpression(step, evaluation.sets)}
                   {' '}
                 </td>
               ))}
