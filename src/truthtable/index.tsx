@@ -6,14 +6,16 @@ import {
 import { Table } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import useInterval from 'use-interval';
-import { evaluateTruthtable, TruthtableEvaluation } from '../helper/expressionEvaluator';
+import {
+  evaluateTruthtable, VariableEvaluation, SetEvaluation, EvaluationType,
+} from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
-import VenDiagramPage from '../venn';
-import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+import { VennDiagramPage, VennDiagramPageSets } from '../venn';
+import { evaluateWholeExpression, replaceExpressionToBoolean, evaluateSetExpression } from '../helper/logicConverter';
 
 function Truthtable() {
   const [expression, setExpression] = useState('');
-  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation | undefined>(undefined);
+  const [evaluatedExpression, setEvaluatedExpression] = useState<VariableEvaluation | SetEvaluation>();
   const [counter, setCounter] = useState(0);
   const [autoplay, setAutoplay] = useState<boolean>(false);
   const [progressSpinner, setProgressSpinner] = useState<number>(0);
@@ -89,6 +91,165 @@ function Truthtable() {
 
   const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
 
+  function createVariableTable(evaluation: VariableEvaluation) {
+    return (
+      <>
+        Variables:
+        {' '}
+        {evaluation?.variables}
+        <ul>
+          {evaluation?.steps.map((val, index) => (
+            <li key={val}>
+              Step
+              {' '}
+              {index}
+              :
+              {' '}
+              {val}
+            </li>
+          ))}
+        </ul>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              {evaluation?.variables.map((variable) => (
+                <th key={variable}>
+                  {' '}
+                  {variable}
+                  {' '}
+                </th>
+              ))}
+              {evaluation?.steps.map((step) => (
+                // eslint-disable-next-line react/jsx-key
+                <th>
+                  {' '}
+                  {step}
+                  {' '}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              evaluation !== undefined && evaluation?.variables.length === 1
+                ? evaluation?.binaryOptions.map((binaryValue) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <tr>
+                    {' '}
+                    <td>
+                      {' '}
+                      {binaryValue}
+                    </td>
+                    {generateRow(evaluation?.steps, binaryValue, evaluation?.variables)}
+                  </tr>
+                ))
+                : evaluation?.binaryOptions.map((binaryRow) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <tr>
+                    {' '}
+                    {
+                      binaryRow.map((binaryValue) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <td>
+                          {' '}
+                          {binaryValue}
+                          {' '}
+                        </td>
+                      ))
+                    }
+
+                    {/* eslint-disable-next-line no-unsafe-optional-chaining */}
+                    {generateRow(evaluation?.steps.slice(0, counter)
+                      // eslint-disable-next-line no-unsafe-optional-chaining
+                      .concat(Array(evaluation?.steps.length - counter)
+                        .fill('blank')), binaryRow, evaluation?.variables)}
+
+                  </tr>
+                ))
+            }
+          </tbody>
+        </Table>
+        Momentan angezeigt:
+        {' '}
+        {evaluation?.steps[counter - 1]}
+        <p />
+        <VennDiagramPage data={evaluation} step={counter} />
+      </>
+    );
+  }
+
+  function createSetTable(evaluation: SetEvaluation) {
+    return (
+      <>
+        Variables:
+        {' '}
+        {evaluation?.sets}
+        <ul>
+          {evaluation?.steps.map((val, index) => (
+            <li key={val}>
+              Step
+              {' '}
+              {index}
+              :
+              {' '}
+              {val}
+            </li>
+          ))}
+        </ul>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              {evaluation?.sets.map((set) => (
+                <th key={set}>
+                  {' '}
+                  {set}
+                  {' '}
+                </th>
+              ))}
+              {evaluation?.steps.map((step) => (
+                <th key={step}>
+                  {' '}
+                  {step}
+                  {' '}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {evaluation?.sets.map((set) => (
+                <td key={set}>
+                  {' '}
+                  {set}
+                  {' '}
+                </td>
+              ))}
+              {evaluation.steps.slice(0, counter).map((step) => (
+                <td key={step}>
+                  {' '}
+                  {evaluateSetExpression(step, evaluation.sets)}
+                  {' '}
+                </td>
+              ))}
+              {evaluation.steps.slice(counter, evaluation.steps.length).map((step) => (
+                <td key={step}>
+                  {' '}
+                  -
+                  {' '}
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </Table>
+        Momentan angezeigt:
+        {' '}
+        {evaluation?.steps[counter - 1]}
+        <p />
+        <VennDiagramPageSets data={evaluation} step={counter} />
+      </>
+    );
+  }
+
   return (
     <>
       <Alert severity="info">
@@ -118,6 +279,23 @@ function Truthtable() {
         {'=>'}
         {' '}
         <br />
+        For explicit sets:
+        <br />
+        ()
+        {' '}
+        <br />
+        ! (Complement)
+        {' '}
+        <br />
+        && (Intersection)
+        {' '}
+        <br />
+        || (Union)
+        <br />
+        {'=>'}
+        {' '}
+        (Difference)
+        <br />
       </Alert>
       <br />
       <TextField style={{ width: '40%' }} value={expression} onChange={(e) => setExpression(e.target.value)} onKeyDown={(e) => ((e.key === 'Enter') ? (getEvaluation()) : '')} id="standard-basic" label="Expression" variant="standard" />
@@ -134,85 +312,9 @@ function Truthtable() {
 
       {evaluatedExpression?.parentheses}
       <br />
-      Variables:
-      {' '}
-      {evaluatedExpression?.variables}
-      <ul>
-        {evaluatedExpression?.steps.map((val, index) => (
-          <li key={val}>
-            Step
-            {' '}
-            {index}
-            :
-            {' '}
-            {val}
-          </li>
-        ))}
-      </ul>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            {evaluatedExpression?.variables.map((variable) => (
-              <th key={variable}>
-                {' '}
-                {variable}
-                {' '}
-              </th>
-            ))}
-            {evaluatedExpression?.steps.map((step) => (
-              // eslint-disable-next-line react/jsx-key
-              <th>
-                {' '}
-                {step}
-                {' '}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {
-            evaluatedExpression !== undefined && evaluatedExpression?.variables.length === 1
-              ? evaluatedExpression?.binaryOptions.map((binaryValue) => (
-                // eslint-disable-next-line react/jsx-key
-                <tr>
-                  {' '}
-                  <td>
-                    {' '}
-                    {binaryValue}
-                  </td>
-                  {generateRow(evaluatedExpression?.steps, binaryValue, evaluatedExpression?.variables)}
-                </tr>
-              ))
-              : evaluatedExpression?.binaryOptions.map((binaryRow) => (
-                // eslint-disable-next-line react/jsx-key
-                <tr>
-                  {' '}
-                  {
-                    binaryRow.map((binaryValue) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <td>
-                        {' '}
-                        {binaryValue}
-                        {' '}
-                      </td>
-                    ))
-                  }
-
-                  {/* eslint-disable-next-line no-unsafe-optional-chaining */}
-                  {generateRow(evaluatedExpression?.steps, binaryRow, evaluatedExpression?.variables)}
-
-                </tr>
-              ))
-          }
-        </tbody>
-      </Table>
-
-      Momentan angezeigt:
-      {' '}
-      {evaluatedExpression?.steps[counter - 1]}
-      <p />
-      <VenDiagramPage data={evaluatedExpression} step={counter} />
+      {evaluatedExpression?.type === EvaluationType.VARIABLE ? createVariableTable(evaluatedExpression) : <> </>}
+      {evaluatedExpression?.type === EvaluationType.SET ? createSetTable(evaluatedExpression) : <> </>}
     </>
 
   );

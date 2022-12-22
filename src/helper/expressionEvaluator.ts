@@ -5,11 +5,24 @@
  * binaryOptions: all possible mutations for the variables, e.g. 00, 01, 10, 11
  * parentheses: the expression with all parentheses set by program. Basically the product wich steps uses to evaluate
  */
-export type TruthtableEvaluation = {
+export enum EvaluationType {
+  VARIABLE,
+  SET,
+}
+
+export type VariableEvaluation = {
+  type: EvaluationType.VARIABLE
   variables: string[],
   steps: string[],
   binaryOptions: number[][],
   parentheses: string
+};
+
+export type SetEvaluation = {
+  type: EvaluationType.SET
+  sets: string[],
+  steps: string[],
+  parentheses: string,
 };
 
 /**
@@ -18,6 +31,8 @@ export type TruthtableEvaluation = {
  * @return string[]
  */
 export const getAllVariables = (expression: string): string[] => [...new Set([...expression.matchAll(/\w/g)].flat())];
+
+export const getAllSets = (expression: string): string[] => [...new Set([...expression.matchAll(/\{[0-9,]*\}/g)].flat())];
 
 /**
  * Splits a string up into its parentheses parts. The higher the order in the array the earlier it needs to be
@@ -289,13 +304,69 @@ export const prepareForEvaluation = (expression: string): string => {
   return uppercaseExpression;
 };
 
+function nextChar(c: string) {
+  return String.fromCharCode(c.charCodeAt(0) + 1);
+}
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+const replaceSets = (expression: string) => {
+  let mutableExpression = expression;
+  let replaceChar = 'A';
+  const dictionary = {};
+  const foundSets = expression.match(/{[0-9,]*}/g);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  foundSets.forEach((set) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    dictionary[replaceChar] = set;
+
+    const matchRegex = new RegExp(escapeRegExp(set), 'g');
+    mutableExpression = mutableExpression.replaceAll(matchRegex, replaceChar);
+
+    replaceChar = nextChar(replaceChar);
+  });
+
+  return { mutableExpression, letterDic: dictionary };
+};
+
+const unReplaceSets = (expression: string, dictionary: Record<string, string>) => {
+  let mutableExpression = expression;
+  const keys = Object.keys(dictionary);
+  for (let i = 0; i < keys.length; i += 1) {
+    const matchRegex = new RegExp(escapeRegExp(keys[i]), 'g');
+    mutableExpression = mutableExpression.replaceAll(matchRegex, dictionary[keys[i]]);
+  }
+
+  return mutableExpression;
+};
+
 /**
  * Evaluates the input from a user input field
  * @param expression: string
  * @return object: TruthtableEvaluation
  */
-export const evaluateTruthtable = (expression: string): TruthtableEvaluation => {
+export const evaluateTruthtable = (expression: string): VariableEvaluation | SetEvaluation => {
   let uppercaseExpression = prepareForEvaluation(expression);
+  let dictionary = {};
+
+  // Is a set Operation.
+  if (uppercaseExpression.includes('{')) {
+    const sets = getAllSets(uppercaseExpression);
+    const { mutableExpression, letterDic } = replaceSets(uppercaseExpression);
+    uppercaseExpression = mutableExpression;
+    dictionary = letterDic;
+    uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
+    uppercaseExpression = unReplaceSets(uppercaseExpression, dictionary);
+    const steps = splitByParentheses(uppercaseExpression);
+
+    return {
+      steps, parentheses: uppercaseExpression, sets, type: EvaluationType.SET,
+    };
+  }
+
   uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
@@ -303,6 +374,6 @@ export const evaluateTruthtable = (expression: string): TruthtableEvaluation => 
   const steps = splitByParentheses(uppercaseExpression);
 
   return {
-    variables, steps, binaryOptions, parentheses: uppercaseExpression,
+    variables, steps, binaryOptions, parentheses: uppercaseExpression, type: EvaluationType.VARIABLE,
   };
 };
