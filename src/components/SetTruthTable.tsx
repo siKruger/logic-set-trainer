@@ -10,7 +10,7 @@ import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
 import VenDiagramPage from "./VennDiagram";
 
-export default function VariableTruthTable(props: {
+export default function SetTruthTable(props: {
   evaluatedExpression:
     | { variables: any[]; steps: any[]; binaryOptions: any[]; parentheses: any }
     | undefined;
