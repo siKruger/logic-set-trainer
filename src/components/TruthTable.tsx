@@ -10,7 +10,6 @@ import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
 import VenDiagramPage from "./VennDiagram";
 
-
 export default function TruthTable(props: {
   evaluatedExpression:
     | { variables: any[]; steps: any[]; binaryOptions: any[] }
@@ -115,7 +114,9 @@ export default function TruthTable(props: {
     <>
       <Container id="table_container">
         <div id="table">
-          <div id="table_text"><h6>Truth Table</h6></div>
+          <div id="table_text">
+            <h6>Truth Table</h6>
+          </div>
           <div id="increment_button">
             <Button
               color={autoplay ? "success" : "error"}
@@ -158,54 +159,54 @@ export default function TruthTable(props: {
             <div ref={divRef}>
               <Table striped bordered hover>
                 <thead>
-                <tr>
-                  {props.evaluatedExpression?.variables.map((variable) => (
+                  <tr>
+                    {props.evaluatedExpression?.variables.map((variable) => (
                       <th key={variable}> {variable} </th>
-                  ))}
-                  {props.evaluatedExpression?.steps.map((step) => (
+                    ))}
+                    {props.evaluatedExpression?.steps.map((step) => (
                       // eslint-disable-next-line react/jsx-key
                       <th> {step} </th>
-                  ))}
-                </tr>
+                    ))}
+                  </tr>
                 </thead>
                 <tbody>
-                {props.evaluatedExpression !== undefined &&
-                props.evaluatedExpression?.variables.length === 1
+                  {props.evaluatedExpression !== undefined &&
+                  props.evaluatedExpression?.variables.length === 1
                     ? props.evaluatedExpression?.binaryOptions.map(
                         (binaryValue) => (
-                            // eslint-disable-next-line react/jsx-key
-                            <tr>
-                              {" "}
-                              <td> {binaryValue}</td>
-                              {props.evaluatedExpression?.variables !== undefined
-                                  ? generateRow(
-                                      props.evaluatedExpression?.steps,
-                                      binaryValue,
-                                      props.evaluatedExpression?.variables
-                                  )
-                                  : undefined}
-                            </tr>
+                          // eslint-disable-next-line react/jsx-key
+                          <tr>
+                            {" "}
+                            <td> {binaryValue}</td>
+                            {props.evaluatedExpression?.variables !== undefined
+                              ? generateRow(
+                                  props.evaluatedExpression?.steps,
+                                  binaryValue,
+                                  props.evaluatedExpression?.variables
+                                )
+                              : undefined}
+                          </tr>
                         )
-                    )
+                      )
                     : props.evaluatedExpression?.binaryOptions.map(
                         (binaryRow) => (
-                            // eslint-disable-next-line react/jsx-key
-                            <tr>
-                              {" "}
-                              {binaryRow.map((binaryValue: any) => (
-                                  // eslint-disable-next-line react/jsx-key
-                                  <td> {binaryValue} </td>
-                              ))}
-                              {props.evaluatedExpression?.steps !== undefined
-                                  ? generateRow(
-                                      props.evaluatedExpression?.steps,
-                                      binaryRow,
-                                      props.evaluatedExpression?.variables
-                                  )
-                                  : undefined}
-                            </tr>
+                          // eslint-disable-next-line react/jsx-key
+                          <tr>
+                            {" "}
+                            {binaryRow.map((binaryValue: any) => (
+                              // eslint-disable-next-line react/jsx-key
+                              <td> {binaryValue} </td>
+                            ))}
+                            {props.evaluatedExpression?.steps !== undefined
+                              ? generateRow(
+                                  props.evaluatedExpression?.steps,
+                                  binaryRow,
+                                  props.evaluatedExpression?.variables
+                                )
+                              : undefined}
+                          </tr>
                         )
-                    )}
+                      )}
                 </tbody>
               </Table>
             </div>
@@ -219,34 +220,36 @@ export default function TruthTable(props: {
             Capture table
           </Button>
         </div>
-
       </Container>
 
       {!props.checkedVennDiagramm && (
-          <Container id="venn_container">
-            <div id="venn">
-              <div id="venn_text"><h6>venn-diagram</h6></div>
-              <div ref={divRef2}>
-                <div id="now">{props.evaluatedExpression?.steps[counter - 1]}</div>
-                <div id="venn_content">
-                  <VenDiagramPage
-                      data={props.evaluatedExpression}
-                      step={counter}
-                  />
-                </div>
-              </div>
-
-
-              <Button
-              variant="outlined"
-                id="venn_download_button"
-                onClick={() => exportAsImage(divRef2.current, imageFileName)}
-              >
-                Capture venn-diagram
-              </Button>
+        <Container id="venn_container">
+          <div id="venn">
+            <div id="venn_text">
+              <h6>venn-diagram</h6>
             </div>
-          </Container>
-        )}
+            <div ref={divRef2}>
+              <div id="now">
+                {props.evaluatedExpression?.steps[counter - 1]}
+              </div>
+              <div id="venn_content">
+                <VenDiagramPage
+                  data={props.evaluatedExpression}
+                  step={counter}
+                />
+              </div>
+            </div>
+
+            <Button
+              variant="outlined"
+              id="venn_download_button"
+              onClick={() => exportAsImage(divRef2.current, imageFileName)}
+            >
+              Capture venn-diagram
+            </Button>
+          </div>
+        </Container>
+      )}
     </>
   );
 }
