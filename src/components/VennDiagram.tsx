@@ -7,19 +7,29 @@ import {
   threeSetVenn,
   twoSetVenn,
 } from '../helper/vennDiagrams';
+import {
+  fiveSetVennExp,
+  fourSetVennExp,
+  oneSetVennExp,
+  threeSetVennExp,
+  twoSetVennExp,
+} from '../helper/vennDiagramsExp';
 // import { TruthtableEvaluation } from '../helper/expressionEvaluator';
 import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
 import {evaluateSetExpression, evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 
 type VennProps = {
-  data?: { variables: any[]; steps: any[]; binaryOptions: any[]; } | undefined;
+  data?: {
+    sets: any;
+    type: EvaluationType; variables: any[]; steps: any[]; binaryOptions: any[]; 
+} | undefined;
   step: number
 };
 // let cl = "oneSetVenn";
 
 
-function VenDiagramPage({ data, step }: VennProps) {
+function VennDiagramPage({ data, step }: VennProps) {
   const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
@@ -84,8 +94,61 @@ function VenDiagramPage({ data, step }: VennProps) {
   );
 }
 
-VenDiagramPage.defaultProps = {
+
+function VennDiagramPageSets({ data, step }: VennProps) {
+  const svgRef = React.useRef(null);
+
+  useEffect(() => {
+    const venn = d3.select(svgRef.current);
+
+    // Undefined check
+    if (data === undefined || data.type === EvaluationType.VARIABLE) return;
+
+    const everything = venn.selectAll('*');
+    everything.remove();
+
+    // const lastExpression = data.steps[data.steps.length - 1];
+    let trueSet = [];
+
+    if (data.sets.length === 1 && step === 0) {
+      const evaluated = evaluateSetExpression(data.sets[0], data.sets);
+      const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
+      for (let i = 0; i < numbers.length; i += 1) {
+        trueSet.push(numbers[i]);
+      }
+    } else if (step !== 0) {
+      const evaluated = evaluateSetExpression(data.steps[step - 1], data.sets);
+      const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
+      for (let i = 0; i < numbers.length; i += 1) {
+        trueSet.push(numbers[i]);
+      }
+    }
+
+    trueSet = Array.from(new Set(trueSet));
+
+    switch (data.sets.length) {
+      case 1: oneSetVennExp(venn, trueSet, data.sets); break;
+      case 2: twoSetVennExp(venn, trueSet, data.sets); break;
+      case 3: threeSetVennExp(venn, trueSet, data.sets); break;
+      case 4: fourSetVennExp(venn, trueSet, data.sets); break;
+      case 5: fiveSetVennExp(venn, trueSet, data.sets); break;
+      default:
+    }
+  });
+
+  return (
+    <svg ref={svgRef} width={750} height={750} />
+  );
+}
+
+VennDiagramPage.defaultProps = {
   data: undefined,
 };
 
-export default VenDiagramPage;
+VennDiagramPageSets.defaultProps = {
+  data: undefined,
+};
+
+export { 
+  VennDiagramPage, VennDiagramPageSets
+};

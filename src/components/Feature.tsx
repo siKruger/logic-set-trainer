@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "./feature.css";
-import VenDiagramPage from "./VennDiagram";
+// import VennDiagramPage from "./VennDiagram";
 // import VenDiagramPage from "../venn/index";
 import html2canvas from "html2canvas";
 

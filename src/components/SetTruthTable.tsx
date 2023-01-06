@@ -8,7 +8,7 @@ import {
 } from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
-import VenDiagramPage from "./VennDiagram";
+import { VennDiagramPage, VennDiagramPageSets } from "./VennDiagram";
 import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
 
 type VennProps = {
@@ -77,12 +77,7 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
     // setProgressspinner(0);
   }, 125);
 
-  // const getReplacedValue = (values: number[] | number, index: number) => {
-  //   if (typeof values !== "number") {
-  //     return values[index];
-  //   }
-  //   return Number(values);
-  // };
+ 
 
   const generateCell = (
     singleStep: string,
@@ -125,7 +120,7 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
             <br />
             Variables: {evaluatedExpression?.variables}
             <ul>
-              {evaluatedExpression?.steps.map((val: string, index: number) => (
+              {evaluatedExpression?.steps.map((val: any, index: any) => (
                 <li key={val}>
                   Step {index}: {val}
                 </li>
@@ -182,10 +177,10 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    {evaluatedExpression?.variables.map((variable: string) => (
+                    {evaluatedExpression?.variables.map((variable: any) => (
                       <th key={variable}> {variable} </th>
                     ))}
-                    {evaluatedExpression?.steps.map((step:any[]) => (
+                    {evaluatedExpression?.steps.map((step:any) => (
                       // eslint-disable-next-line react/jsx-key
                       <th> {step} </th>
                     ))}
@@ -255,10 +250,11 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
                 {evaluatedExpression?.steps[counter - 1]}
               </div>
               <div id="venn_content">
-                <VenDiagramPage
+                <VennDiagramPageSets
                   data={evaluatedExpression}
                   step={counter}
                 />
+                {/* <VennDiagramPageSets data={evaluation} step={counter} */}
               </div>
             </div>
 

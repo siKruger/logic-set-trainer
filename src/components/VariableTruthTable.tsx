@@ -8,7 +8,7 @@ import {
 } from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
-import VenDiagramPage from "./VennDiagram";
+import { VennDiagramPage, VennDiagramPageSets } from "./VennDiagram";
 import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
 
 type VennProps = {
@@ -255,7 +255,7 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
                 {evaluatedExpression?.steps[counter - 1]}
               </div>
               <div id="venn_content">
-                <VenDiagramPage
+                <VennDiagramPage
                   data={evaluatedExpression}
                   step={counter}
                 />
