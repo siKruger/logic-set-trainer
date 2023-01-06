@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Alert, AlertTitle, TextField, Button } from "@mui/material";
-import { evaluateTruthtable, TruthtableEvaluation } from "../helper/expressionEvaluator";
+// import { evaluateTruthtable, TruthtableEvaluation } from "../helper/expressionEvaluator";
+import {
+  evaluateTruthtable, VariableEvaluation, SetEvaluation, EvaluationType,
+} from '../helper/expressionEvaluator';
 import { checkCorrectSyntax } from "../helper/expressionValidator";
 import { toast } from "react-toastify";
 import "./main.css";
@@ -19,7 +22,8 @@ const Main = () => {
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState('');
   const [showError, setShowError] = useState(false);
-  const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  // const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+  const [evaluatedExpression, setEvaluatedExpression] = useState<VariableEvaluation | SetEvaluation | any>();
 
 
   //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
@@ -62,7 +66,7 @@ const Main = () => {
       {/* für Error Darstellung oder Property und TruthTable(und VennDiagramm) und Feature(Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         
-        <VariableTruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm}/>
+        <VariableTruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm} data={undefined}/>
         <Feature setEvaluatedExpression={setEvaluatedExpression}
         evaluatedExpression={evaluatedExpression}  expression={expression}
         checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>

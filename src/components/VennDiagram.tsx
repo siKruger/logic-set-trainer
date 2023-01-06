@@ -7,8 +7,9 @@ import {
   threeSetVenn,
   twoSetVenn,
 } from '../helper/vennDiagrams';
-import { TruthtableEvaluation } from '../helper/expressionEvaluator';
-import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+// import { TruthtableEvaluation } from '../helper/expressionEvaluator';
+import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
+import {evaluateSetExpression, evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
 
 
 type VennProps = {

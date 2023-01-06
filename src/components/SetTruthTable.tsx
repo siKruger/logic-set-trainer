@@ -9,18 +9,21 @@ import {
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
 import VenDiagramPage from "./VennDiagram";
+import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
 
-export default function SetTruthTable(props: {
-  evaluatedExpression:
-    | { variables: any[]; steps: any[]; binaryOptions: any[]; parentheses: any }
-    | undefined;
+type VennProps = {
+  evaluatedExpression: any;
   expression: any;
   checkedVennDiagramm: any;
-}) {
+  data: any;
+
+};
+
+export default function SetTruthTable({ evaluatedExpression, expression, checkedVennDiagramm }: VennProps) {
   const divRef = React.useRef<HTMLDivElement>(null);
   const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
-  const imageFileName = props.expression.replaceAll(" ", "");
+  const imageFileName = expression.replaceAll(" ", "");
   const [autoplay, setAutoplay] = useState<boolean>(false);
   const [progressSpinner, setProgressSpinner] = useState<number>(0);
 
@@ -49,8 +52,8 @@ export default function SetTruthTable(props: {
   };
 
   const addColumn = () => {
-    if (props.evaluatedExpression !== undefined) {
-      if (counter < props.evaluatedExpression?.steps.length) {
+    if (evaluatedExpression !== undefined) {
+      if (counter < evaluatedExpression?.steps.length) {
         setCounter(counter + 1);
       }
     }
@@ -63,23 +66,23 @@ export default function SetTruthTable(props: {
   };
 
   useInterval(() => {
-    if (props.evaluatedExpression === undefined || !autoplay) return;
+    if (evaluatedExpression === undefined || !autoplay) return;
     // Increment counter
     setProgressSpinner(progressSpinner + 3.125);
 
     // If counter is at X * 100
     if (progressSpinner % 100 === 0)
-      if (counter >= props.evaluatedExpression?.steps.length) setCounter(0);
+      if (counter >= evaluatedExpression?.steps.length) setCounter(0);
       else addColumn();
     // setProgressspinner(0);
   }, 125);
 
-  const getReplacedValue = (values: number[] | number, index: number) => {
-    if (typeof values !== "number") {
-      return values[index];
-    }
-    return Number(values);
-  };
+  // const getReplacedValue = (values: number[] | number, index: number) => {
+  //   if (typeof values !== "number") {
+  //     return values[index];
+  //   }
+  //   return Number(values);
+  // };
 
   const generateCell = (
     singleStep: string,
@@ -118,11 +121,11 @@ export default function SetTruthTable(props: {
             <h6>property</h6>
           </div>
           <div id="property_content">
-            {props.evaluatedExpression?.parentheses}
+            {evaluatedExpression?.parentheses}
             <br />
-            Variables: {props.evaluatedExpression?.variables}
+            Variables: {evaluatedExpression?.variables}
             <ul>
-              {props.evaluatedExpression?.steps.map((val, index) => (
+              {evaluatedExpression?.steps.map((val: string, index: number) => (
                 <li key={val}>
                   Step {index}: {val}
                 </li>
@@ -179,36 +182,36 @@ export default function SetTruthTable(props: {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    {props.evaluatedExpression?.variables.map((variable) => (
+                    {evaluatedExpression?.variables.map((variable: string) => (
                       <th key={variable}> {variable} </th>
                     ))}
-                    {props.evaluatedExpression?.steps.map((step) => (
+                    {evaluatedExpression?.steps.map((step:any[]) => (
                       // eslint-disable-next-line react/jsx-key
                       <th> {step} </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {props.evaluatedExpression !== undefined &&
-                  props.evaluatedExpression?.variables.length === 1
-                    ? props.evaluatedExpression?.binaryOptions.map(
-                        (binaryValue) => (
+                  {evaluatedExpression !== undefined &&
+                  evaluatedExpression?.variables.length === 1
+                    ? evaluatedExpression?.binaryOptions.map(
+                        (binaryValue:any) => (
                           // eslint-disable-next-line react/jsx-key
                           <tr>
                             {" "}
                             <td> {binaryValue}</td>
-                            {props.evaluatedExpression?.variables !== undefined
+                            {evaluatedExpression?.variables !== undefined
                               ? generateRow(
-                                  props.evaluatedExpression?.steps,
+                                  evaluatedExpression?.steps,
                                   binaryValue,
-                                  props.evaluatedExpression?.variables
+                                  evaluatedExpression?.variables
                                 )
                               : undefined}
                           </tr>
                         )
                       )
-                    : props.evaluatedExpression?.binaryOptions.map(
-                        (binaryRow) => (
+                    : evaluatedExpression?.binaryOptions.map(
+                        (binaryRow:any) => (
                           // eslint-disable-next-line react/jsx-key
                           <tr>
                             {" "}
@@ -216,11 +219,11 @@ export default function SetTruthTable(props: {
                               // eslint-disable-next-line react/jsx-key
                               <td> {binaryValue} </td>
                             ))}
-                            {props.evaluatedExpression?.steps !== undefined
+                            {evaluatedExpression?.steps !== undefined
                               ? generateRow(
-                                  props.evaluatedExpression?.steps,
+                                  evaluatedExpression?.steps,
                                   binaryRow,
-                                  props.evaluatedExpression?.variables
+                                  evaluatedExpression?.variables
                                 )
                               : undefined}
                           </tr>
@@ -241,7 +244,7 @@ export default function SetTruthTable(props: {
         </div>
       </Container>
 
-      {!props.checkedVennDiagramm && (
+      {!checkedVennDiagramm && (
         <Container id="venn_container">
           <div id="venn">
             <div id="venn_text">
@@ -249,11 +252,11 @@ export default function SetTruthTable(props: {
             </div>
             <div ref={divRef2}>
               <div id="now">
-                {props.evaluatedExpression?.steps[counter - 1]}
+                {evaluatedExpression?.steps[counter - 1]}
               </div>
               <div id="venn_content">
                 <VenDiagramPage
-                  data={props.evaluatedExpression}
+                  data={evaluatedExpression}
                   step={counter}
                 />
               </div>
