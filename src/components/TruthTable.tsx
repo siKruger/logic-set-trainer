@@ -12,7 +12,7 @@ import VenDiagramPage from "./VennDiagram";
 
 export default function TruthTable(props: {
   evaluatedExpression:
-    | { variables: any[]; steps: any[]; binaryOptions: any[] }
+    | { variables: any[]; steps: any[]; binaryOptions: any[]; parentheses: any }
     | undefined;
   expression: any;
   checkedVennDiagramm: any;
@@ -112,6 +112,25 @@ export default function TruthTable(props: {
 
   return (
     <>
+      <Container id="property_container">
+        <div id="property">
+          <div id="property_text">
+            <h6>property</h6>
+          </div>
+          <div id="property_content">
+            {props.evaluatedExpression?.parentheses}
+            <br />
+            Variables: {props.evaluatedExpression?.variables}
+            <ul>
+              {props.evaluatedExpression?.steps.map((val, index) => (
+                <li key={val}>
+                  Step {index}: {val}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Container>
       <Container id="table_container">
         <div id="table">
           <div id="table_text">
