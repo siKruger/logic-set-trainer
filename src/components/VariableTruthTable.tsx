@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Table, Button as Button2 } from "react-bootstrap";
-import "./truthTable.css";
+import "./VariableTruthTable.css";
 import useInterval from "use-interval";
 import {
   evaluateWholeExpression,

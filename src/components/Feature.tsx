@@ -43,26 +43,6 @@ export default function Feature(props: {
     setText(e.target.value);
   };
 
-  // const exportAsImage = async (el: any, imageFileName: any) => {
-  //   const canvas = await html2canvas(el);
-  //   const image = canvas.toDataURL("image/png", 1.0);
-  //   downloadImage(image, imageFileName);
-  // };
-
-  // const downloadImage = (blob: any, fileName: string) => {
-  //   const fakeLink = window.document.createElement("a");
-  //   // fakeLink.style = "display:none;";
-  //   fakeLink.download = fileName;
-
-  //   fakeLink.href = blob;
-
-  //   document.body.appendChild(fakeLink);
-  //   fakeLink.click();
-  //   document.body.removeChild(fakeLink);
-
-  //   fakeLink.remove();
-  // };
-
   return (
     <>
       {!props.checkedNote && (

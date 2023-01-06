@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "./main.css";
 import { Container } from "react-bootstrap";
 import Feature from "./Feature";
-import TruthTable from "./TruthTable";
+import VariableTruthTable from "./VariableTruthTable";
 
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
@@ -62,7 +62,7 @@ const Main = () => {
       {/* für Error Darstellung oder Property und TruthTable(und VennDiagramm) und Feature(Note) Felder */}
       {!showError ? (evaluatedExpression && (<div>
         
-        <TruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm}/>
+        <VariableTruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm}/>
         <Feature setEvaluatedExpression={setEvaluatedExpression}
         evaluatedExpression={evaluatedExpression}  expression={expression}
         checkedVennDiagramm={checkedVennDiagramm} checkedNote={checkedNote}/>
