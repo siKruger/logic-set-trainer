@@ -96,6 +96,7 @@ function VennDiagramPage({ data, step }: VennProps) {
 
 
 function VennDiagramPageSets({ data, step }: VennProps) {
+  const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
   useEffect(() => {
@@ -128,16 +129,16 @@ function VennDiagramPageSets({ data, step }: VennProps) {
 
     switch (data.sets.length) {
       case 1: oneSetVennExp(venn, trueSet, data.sets); break;
-      case 2: twoSetVennExp(venn, trueSet, data.sets); break;
-      case 3: threeSetVennExp(venn, trueSet, data.sets); break;
-      case 4: fourSetVennExp(venn, trueSet, data.sets); break;
-      case 5: fiveSetVennExp(venn, trueSet, data.sets); break;
+      case 2: twoSetVennExp(venn, trueSet, data.sets); setCl('twoSetVenn'); break;
+      case 3: threeSetVennExp(venn, trueSet, data.sets); setCl('threeSetVenn'); break;
+      case 4: fourSetVennExp(venn, trueSet, data.sets); setCl('fourSetVenn'); break;
+      case 5: fiveSetVennExp(venn, trueSet, data.sets); setCl('fiveSetVenn'); break;
       default:
     }
   });
 
   return (
-    <svg ref={svgRef} width={750} height={750} />
+    <svg ref={svgRef} className={cl} />
   );
 }
 

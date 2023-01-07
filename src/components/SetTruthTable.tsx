@@ -60,13 +60,12 @@ export default function SetTruthTable({
   };
 
   const addColumn = () => {
-    // if (evaluatedExpression !== undefined) {
-    //   if (counter < evaluatedExpression?.steps.length) {
-    //     setCounter(counter + 1);
-    //   }
-    // }
-    if (evaluatedExpression === undefined || counter >= evaluatedExpression?.steps.length) return;
-    setCounter(counter + 1);
+    if (evaluatedExpression !== undefined) {
+      if (counter < evaluatedExpression?.steps.length) {
+        setCounter(counter + 1);
+      }
+    }
+    
   };
 
   const reduceColumn = () => {
@@ -203,45 +202,7 @@ export default function SetTruthTable({
                     ))}
                   </tr>
                 </thead>
-                {/* <tbody>
-                  {evaluatedExpression !== undefined &&
-                  evaluatedExpression?.sets.length === 1
-                    ? evaluatedExpression?.binaryOptions.map(
-                        (binaryValue:any) => (
-                          // eslint-disable-next-line react/jsx-key
-                          <tr>
-                            {" "}
-                            <td> {binaryValue}</td>
-                            {evaluatedExpression?.sets !== undefined
-                              ? generateRow(
-                                  evaluatedExpression?.steps,
-                                  binaryValue,
-                                  evaluatedExpression?.sets
-                                )
-                              : undefined}
-                          </tr>
-                        )
-                      )
-                    : evaluatedExpression?.binaryOptions.map(
-                        (binaryRow:any) => (
-                          // eslint-disable-next-line react/jsx-key
-                          <tr>
-                            {" "}
-                            {binaryRow.map((binaryValue: any) => (
-                              // eslint-disable-next-line react/jsx-key
-                              <td> {binaryValue} </td>
-                            ))}
-                            {evaluatedExpression?.steps !== undefined
-                              ? generateRow(
-                                  evaluatedExpression?.steps,
-                                  binaryRow,
-                                  evaluatedExpression?.sets
-                                )
-                              : undefined}
-                          </tr>
-                        )
-                      )}
-                </tbody> */}
+                
                 <tbody>
                   <tr>
                     {
