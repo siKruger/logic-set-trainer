@@ -104,7 +104,7 @@ const Main = () => {
         />
       </Container>
 
-      {showError && expression !== "" && <Error />}
+      {showError && expression !== "" && <Error expression={expression}/>}
 
       {!showError && evaluatedExpression?.type === EvaluationType.SET && (
         <div>
