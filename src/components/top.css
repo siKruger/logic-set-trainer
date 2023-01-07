@@ -1,84 +1,77 @@
 #top_container {
-    padding-top: 2vh;
-    /* color: #0099CC; */
-    /* background-color: #F5F5F5; */
+  padding-top: 2vh;
 }
 
 .header {
-    margin: 0 0 2vh 0 !important;
-    /* background-color: #DCD6FF; */
-    padding: 3vh 10vw !important;
-    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
-    border-radius: 2vh;
-    background-color: #F5F5F5;
+  margin: 0 0 2vh 0 !important;
+  padding: 3vh 10vw !important;
+  box-shadow: 0.2vw 0.5vh 0.5vh #ebe4fe;
+  border-radius: 2vh;
+  background-color: #f5f5f5;
 }
 .dark .header {
-    background-color: #1F2937;
-    color: #E5E7EB;
-    box-shadow: none;
+  background-color: #1f2937;
+  color: #e5e7eb;
+  box-shadow: none;
 }
 
 .icon {
-    margin: 0 2vw;
+  margin: 0 2vw;
 }
 
 .logo {
-    /* color: #783EEF; */
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .dark .logo {
-    color: #E5E7EB;
+  color: #e5e7eb;
 }
 
 #github_icon {
-     color: black;
+  color: black;
 }
 .dark #github_icon {
-    color: #E5E7EB;
+  color: #e5e7eb;
 }
 
 #github_icon_button {
-    width: 42px;
-    height: 42px;
+  width: 42px;
+  height: 42px;
 }
 
 #info_button {
-    margin: 0;
-    padding: 0;
-    border: 1px solid transparent;
-    outline: none;
-     background-color: #F5F5F5;
-    /* color: #783EEF; */
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  outline: none;
+  background-color: #f5f5f5;
 }
 .dark #info_button {
-    background-color: #1F2937;
-    color: #E5E7EB;
+  background-color: #1f2937;
+  color: #e5e7eb;
 }
 
 .instructions {
-    margin: 2vh 0 !important;
-    /* background-color: #DCD6FF; */
-    padding: 1vh 10vw !important;
-    box-shadow: 0.5vw 0.5vh 0.5vh #EBE4FE;
-    border-radius: 2vh;
-    background-color: #F5F5F5;
+  margin: 2vh 0 !important;
+  padding: 1vh 10vw !important;
+  box-shadow: 0.5vw 0.5vh 0.5vh #ebe4fe;
+  border-radius: 2vh;
+  background-color: #f5f5f5;
 }
 .dark .instructions {
-    box-shadow: none;
-    background-color: #1F2937;
-    color: #E5E7EB;
+  box-shadow: none;
+  background-color: #1f2937;
+  color: #e5e7eb;
 }
 
 #info-collapse-text {
-    /* background-color: #DCD6FF; */
-    background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 .dark #info-collapse-text {
-    background-color: #1F2937;
-    color: #E5E7EB;
+  background-color: #1f2937;
+  color: #e5e7eb;
 }
 
 #info_icon {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }

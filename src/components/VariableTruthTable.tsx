@@ -8,18 +8,20 @@ import {
 } from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
-import { VennDiagramPage, VennDiagramPageSets } from "./VennDiagram";
-import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
+import { VennDiagramPage } from "./VennDiagram";
 
 type VennProps = {
   evaluatedExpression: any;
   expression: any;
   checkedVennDiagramm: any;
   data: any;
-
 };
 
-export default function VariableTruthTable({ evaluatedExpression, expression, checkedVennDiagramm }: VennProps) {
+export default function VariableTruthTable({
+  evaluatedExpression,
+  expression,
+  checkedVennDiagramm,
+}: VennProps) {
   const divRef = React.useRef<HTMLDivElement>(null);
   const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
@@ -39,7 +41,6 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
 
   const downloadImage = (blob: any, fileName: string) => {
     const fakeLink = window.document.createElement("a");
-    // fakeLink.style = "display:none;";
     fakeLink.download = fileName;
 
     fakeLink.href = blob;
@@ -67,22 +68,12 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
 
   useInterval(() => {
     if (evaluatedExpression === undefined || !autoplay) return;
-    // Increment counter
     setProgressSpinner(progressSpinner + 3.125);
 
-    // If counter is at X * 100
     if (progressSpinner % 100 === 0)
       if (counter >= evaluatedExpression?.steps.length) setCounter(0);
       else addColumn();
-    // setProgressspinner(0);
   }, 125);
-
-  // const getReplacedValue = (values: number[] | number, index: number) => {
-  //   if (typeof values !== "number") {
-  //     return values[index];
-  //   }
-  //   return Number(values);
-  // };
 
   const generateCell = (
     singleStep: string,
@@ -176,7 +167,6 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
             </div>
           </div>
 
-          {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
           <div id="table_content">
             <div ref={divRef}>
               <Table striped bordered hover>
@@ -185,8 +175,7 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
                     {evaluatedExpression?.variables.map((variable: string) => (
                       <th key={variable}> {variable} </th>
                     ))}
-                    {evaluatedExpression?.steps.map((step:any[]) => (
-                      // eslint-disable-next-line react/jsx-key
+                    {evaluatedExpression?.steps.map((step: any[]) => (
                       <th> {step} </th>
                     ))}
                   </tr>
@@ -195,8 +184,7 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
                   {evaluatedExpression !== undefined &&
                   evaluatedExpression?.variables.length === 1
                     ? evaluatedExpression?.binaryOptions.map(
-                        (binaryValue:any) => (
-                          // eslint-disable-next-line react/jsx-key
+                        (binaryValue: any) => (
                           <tr>
                             {" "}
                             <td> {binaryValue}</td>
@@ -211,12 +199,10 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
                         )
                       )
                     : evaluatedExpression?.binaryOptions.map(
-                        (binaryRow:any) => (
-                          // eslint-disable-next-line react/jsx-key
+                        (binaryRow: any) => (
                           <tr>
                             {" "}
                             {binaryRow.map((binaryValue: any) => (
-                              // eslint-disable-next-line react/jsx-key
                               <td> {binaryValue} </td>
                             ))}
                             {evaluatedExpression?.steps !== undefined
@@ -251,14 +237,9 @@ export default function VariableTruthTable({ evaluatedExpression, expression, ch
               <h6>venn-diagram</h6>
             </div>
             <div ref={divRef2}>
-              <div id="now">
-                {evaluatedExpression?.steps[counter - 1]}
-              </div>
+              <div id="now">{evaluatedExpression?.steps[counter - 1]}</div>
               <div id="venn_content">
-                <VennDiagramPage
-                  data={evaluatedExpression}
-                  step={counter}
-                />
+                <VennDiagramPage data={evaluatedExpression} step={counter} />
               </div>
             </div>
 

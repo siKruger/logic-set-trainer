@@ -1,80 +1,58 @@
 #note {
-    margin: 2vh 0 !important;
-    /* background-color: #DCD6FF; */
-    background-color: #F5F5F5;
-    box-shadow: 0.2vw 0.5vh 0.5vh #EBE4FE;
-    border-radius: 2vh;
+  margin: 2vh 0 !important;
+  background-color: #f5f5f5;
+  box-shadow: 0.2vw 0.5vh 0.5vh #ebe4fe;
+  border-radius: 2vh;
 }
 
-#note_container{
-    text-align: center;
+#note_container {
+  text-align: center;
 }
 .dark #note {
-    background-color: #1F2937;
-    box-shadow: none;
+  background-color: #1f2937;
+  box-shadow: none;
 }
 #note_text {
-    /* background-color: #C3B6FE; */
-    padding-left: 10px;
-    padding-bottom: 4px;
-    width: 3.5rem;
-    border-radius: 2vh 0 1vh 0;
-    /* color: #783EEF; */
-    letter-spacing: .03em;
+  padding-left: 10px;
+  padding-bottom: 4px;
+  width: 3.5rem;
+  border-radius: 2vh 0 1vh 0;
+  letter-spacing: 0.03em;
 }
 .dark #note_text {
-    background-color: #121A29;
-    color: #E5E7EB;
+  background-color: #121a29;
+  color: #e5e7eb;
 }
 #note_content {
-    padding: 1vh 4vw;
-    /* color: #783EEF; */
+  padding: 1vh 4vw;
 }
 .dark #note_content {
-    color: #E5E7EB;
+  color: #e5e7eb;
 }
 #note_form {
-    padding: 0 1rem;
-    /* background-color: #DCD6FF; */
-    /* color: black; */
+  padding: 0 1rem;
 }
 .dark #note_form {
-    background-color: #1F2937;
-    color: #E5E7EB;
+  background-color: #1f2937;
+  color: #e5e7eb;
 }
 
-
-#make_a_note {
-    /* color: #783EEF; */
-}
 .dark #make_a_note {
-    color: #E5E7EB;
+  color: #e5e7eb;
 }
-.dark textarea:focus{
-    color: #E5E7EB;
+.dark textarea:focus {
+  color: #e5e7eb;
 }
-
 
 #save_note_button {
-    margin-bottom: 1vh;
-    /* background-color: #D0C6FF; */
-    /* border: none; */
-    /* color: #783EEF; */
-    
-}
-
-#save_note_button:hover {
-    /* background-color: #C8BCFE; */
+  margin-bottom: 1vh;
 }
 
 .dark #save_note_button {
-    background-color: #131A28;
-    color: #E5E7EB;
+  background-color: #131a28;
+  color: #e5e7eb;
 }
 
 .dark #save_note_button:hover {
-    background-color: #48515E;
+  background-color: #48515e;
 }
-
-
-

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Alert, AlertTitle, TextField, Button } from "@mui/material";
-// import { evaluateTruthtable, TruthtableEvaluation } from "../helper/expressionEvaluator";
+import { useState } from "react";
+import { TextField, Button } from "@mui/material";
 import {
   evaluateTruthtable,
   VariableEvaluation,
@@ -8,12 +7,9 @@ import {
   EvaluationType,
 } from "../helper/expressionEvaluator";
 import { checkCorrectSyntax } from "../helper/expressionValidator";
-import { toast } from "react-toastify";
 import "./main.css";
 import { Container } from "react-bootstrap";
 import Feature from "./Feature";
-import VariableTruthTable from "./VariableTruthTable";
-
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
 import SetTruthTable from "./SetTruthTable";
@@ -23,12 +19,11 @@ const Main = () => {
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState("");
   const [showError, setShowError] = useState(false);
-  // const [evaluatedExpression, setEvaluatedExpression] = useState<TruthtableEvaluation>();
+
   const [evaluatedExpression, setEvaluatedExpression] = useState<
     VariableEvaluation | SetEvaluation | any
   >();
 
-  //Die Eingabe wird erst nach Korrektheit kontrolliert, danach wird das Ergebnis angezeigt.
   const getEvaluation = () => {
     if (checkCorrectSyntax(expression)) {
       setShowError(true);
@@ -58,7 +53,6 @@ const Main = () => {
         </div>
       </Container>
 
-      {/* Checkbox Darstellung */}
       <Container>
         <Checkboxes
           checkedVennDiagramm={checkedVennDiagramm}
@@ -68,11 +62,16 @@ const Main = () => {
         />
       </Container>
 
-      {/* für Error Darstellung oder Property und TruthTable(und VennDiagramm) und Feature(Note) Felder */}
-      {!showError ? evaluatedExpression?.type === EvaluationType.SET && (
+      {!showError
+        ? evaluatedExpression?.type === EvaluationType.SET && (
             <div>
               <div>
-              <SetTruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm} data={evaluatedExpression}/>
+                <SetTruthTable
+                  evaluatedExpression={evaluatedExpression}
+                  expression={expression}
+                  checkedVennDiagramm={checkedVennDiagramm}
+                  data={evaluatedExpression}
+                />
               </div>
               <Feature
                 setEvaluatedExpression={setEvaluatedExpression}
@@ -84,9 +83,7 @@ const Main = () => {
             </div>
           )
         : expression !== "" && <Error />}
-        {console.log(evaluatedExpression)}
-        
-      
+      {console.log(evaluatedExpression)}
     </>
   );
 };

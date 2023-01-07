@@ -5,16 +5,11 @@ import useInterval from "use-interval";
 import {
   evaluateWholeExpression,
   replaceExpressionToBoolean,
-  evaluateSetExpression
+  evaluateSetExpression,
 } from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
-import { VennDiagramPage, VennDiagramPageSets } from "./VennDiagram";
-import {
-  VariableEvaluation,
-  SetEvaluation,
-  EvaluationType,
-} from "../helper/expressionEvaluator";
+import { VennDiagramPageSets } from "./VennDiagram";
 
 type VennProps = {
   evaluatedExpression: any;
@@ -65,7 +60,6 @@ export default function SetTruthTable({
         setCounter(counter + 1);
       }
     }
-    
   };
 
   const reduceColumn = () => {
@@ -76,14 +70,12 @@ export default function SetTruthTable({
 
   useInterval(() => {
     if (evaluatedExpression === undefined || !autoplay) return;
-    // Increment counter
+
     setProgressSpinner(progressSpinner + 3.125);
 
-    // If counter is at X * 100
     if (progressSpinner % 100 === 0)
       if (counter >= evaluatedExpression?.steps.length) setCounter(0);
       else addColumn();
-    // setProgressspinner(0);
   }, 125);
 
   const generateCell = (
@@ -178,50 +170,44 @@ export default function SetTruthTable({
             </div>
           </div>
 
-          {/*<TextField style={{ width: '195px', marginLeft: '30px' }} value={`Angezeigte Schritte: ${counter}`} />*/}
           <div id="table_content">
             <div ref={divRef}>
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    {/* {
-                    evaluatedExpression?.sets.map((set: any) => (
-                      <th key={set}> {set} </th>
-                    ))
-                    } */}
                     {evaluatedExpression?.sets.map((set: string) => (
                       <th key={set}> {set} </th>
                     ))}
-                    {/* { 
-                    evaluatedExpression?.steps.map((step:any) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <th> {step} </th>
-                    ))} */}
+
                     {evaluatedExpression?.steps.map((step: string) => (
                       <th key={step}> {step} </th>
                     ))}
                   </tr>
                 </thead>
-                
+
                 <tbody>
                   <tr>
-                    {
-                      evaluatedExpression?.sets.map((set: string) => (
-                        <td key={set}> {set} </td>
+                    {evaluatedExpression?.sets.map((set: string) => (
+                      <td key={set}> {set} </td>
+                    ))}
+
+                    {evaluatedExpression.steps
+                      .slice(0, counter)
+                      .map((step: string) => (
+                        <td key={step}>
+                          {" "}
+                          {evaluateSetExpression(
+                            step,
+                            evaluatedExpression.sets
+                          )}{" "}
+                        </td>
                       ))}
 
-                    {
-                      evaluatedExpression.steps.slice(0, counter).map((step: string) => (
-                          <td key={step}>
-                            {" "}
-                            {evaluateSetExpression(step,evaluatedExpression.sets)}{" "}
-                          </td>
-                        ))}
-
-                    {
-                      evaluatedExpression.steps
-                        .slice(counter, evaluatedExpression.steps.length)
-                        .map((step: string) => <td key={step}> - </td>)}
+                    {evaluatedExpression.steps
+                      .slice(counter, evaluatedExpression.steps.length)
+                      .map((step: string) => (
+                        <td key={step}> - </td>
+                      ))}
                   </tr>
                 </tbody>
               </Table>
@@ -251,7 +237,6 @@ export default function SetTruthTable({
                   data={evaluatedExpression}
                   step={counter}
                 />
-                {/* <VennDiagramPageSets data={evaluation} step={counter} */}
               </div>
             </div>
 
