@@ -5,21 +5,29 @@ import useInterval from "use-interval";
 import {
   evaluateWholeExpression,
   replaceExpressionToBoolean,
+  evaluateSetExpression
 } from "../helper/logicConverter";
 import { Button as Button, CircularProgress } from "@mui/material";
 import html2canvas from "html2canvas";
 import { VennDiagramPage, VennDiagramPageSets } from "./VennDiagram";
-import { VariableEvaluation, SetEvaluation, EvaluationType } from '../helper/expressionEvaluator';
+import {
+  VariableEvaluation,
+  SetEvaluation,
+  EvaluationType,
+} from "../helper/expressionEvaluator";
 
 type VennProps = {
   evaluatedExpression: any;
   expression: any;
   checkedVennDiagramm: any;
   data: any;
-
 };
 
-export default function SetTruthTable({ evaluatedExpression, expression, checkedVennDiagramm }: VennProps) {
+export default function SetTruthTable({
+  evaluatedExpression,
+  expression,
+  checkedVennDiagramm,
+}: VennProps) {
   const divRef = React.useRef<HTMLDivElement>(null);
   const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
@@ -52,11 +60,13 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
   };
 
   const addColumn = () => {
-    if (evaluatedExpression !== undefined) {
-      if (counter < evaluatedExpression?.steps.length) {
-        setCounter(counter + 1);
-      }
-    }
+    // if (evaluatedExpression !== undefined) {
+    //   if (counter < evaluatedExpression?.steps.length) {
+    //     setCounter(counter + 1);
+    //   }
+    // }
+    if (evaluatedExpression === undefined || counter >= evaluatedExpression?.steps.length) return;
+    setCounter(counter + 1);
   };
 
   const reduceColumn = () => {
@@ -76,8 +86,6 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
       else addColumn();
     // setProgressspinner(0);
   }, 125);
-
- 
 
   const generateCell = (
     singleStep: string,
@@ -118,7 +126,7 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
           <div id="property_content">
             {evaluatedExpression?.parentheses}
             <br />
-            Variables: {evaluatedExpression?.variables}
+            Variables: {evaluatedExpression?.sets}
             <ul>
               {evaluatedExpression?.steps.map((val: any, index: any) => (
                 <li key={val}>
@@ -177,29 +185,38 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    {evaluatedExpression?.variables.map((variable: any) => (
-                      <th key={variable}> {variable} </th>
+                    {/* {
+                    evaluatedExpression?.sets.map((set: any) => (
+                      <th key={set}> {set} </th>
+                    ))
+                    } */}
+                    {evaluatedExpression?.sets.map((set: string) => (
+                      <th key={set}> {set} </th>
                     ))}
-                    {evaluatedExpression?.steps.map((step:any) => (
+                    {/* { 
+                    evaluatedExpression?.steps.map((step:any) => (
                       // eslint-disable-next-line react/jsx-key
                       <th> {step} </th>
+                    ))} */}
+                    {evaluatedExpression?.steps.map((step: string) => (
+                      <th key={step}> {step} </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody>
+                {/* <tbody>
                   {evaluatedExpression !== undefined &&
-                  evaluatedExpression?.variables.length === 1
+                  evaluatedExpression?.sets.length === 1
                     ? evaluatedExpression?.binaryOptions.map(
                         (binaryValue:any) => (
                           // eslint-disable-next-line react/jsx-key
                           <tr>
                             {" "}
                             <td> {binaryValue}</td>
-                            {evaluatedExpression?.variables !== undefined
+                            {evaluatedExpression?.sets !== undefined
                               ? generateRow(
                                   evaluatedExpression?.steps,
                                   binaryValue,
-                                  evaluatedExpression?.variables
+                                  evaluatedExpression?.sets
                                 )
                               : undefined}
                           </tr>
@@ -218,12 +235,33 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
                               ? generateRow(
                                   evaluatedExpression?.steps,
                                   binaryRow,
-                                  evaluatedExpression?.variables
+                                  evaluatedExpression?.sets
                                 )
                               : undefined}
                           </tr>
                         )
                       )}
+                </tbody> */}
+                <tbody>
+                  <tr>
+                    {
+                      evaluatedExpression?.sets.map((set: string) => (
+                        <td key={set}> {set} </td>
+                      ))}
+
+                    {
+                      evaluatedExpression.steps.slice(0, counter).map((step: string) => (
+                          <td key={step}>
+                            {" "}
+                            {evaluateSetExpression(step,evaluatedExpression.sets)}{" "}
+                          </td>
+                        ))}
+
+                    {
+                      evaluatedExpression.steps
+                        .slice(counter, evaluatedExpression.steps.length)
+                        .map((step: string) => <td key={step}> - </td>)}
+                  </tr>
                 </tbody>
               </Table>
             </div>
@@ -246,9 +284,7 @@ export default function SetTruthTable({ evaluatedExpression, expression, checked
               <h6>venn-diagram</h6>
             </div>
             <div ref={divRef2}>
-              <div id="now">
-                {evaluatedExpression?.steps[counter - 1]}
-              </div>
+              <div id="now">{evaluatedExpression?.steps[counter - 1]}</div>
               <div id="venn_content">
                 <VennDiagramPageSets
                   data={evaluatedExpression}

@@ -69,15 +69,11 @@ const Main = () => {
       </Container>
 
       {/* für Error Darstellung oder Property und TruthTable(und VennDiagramm) und Feature(Note) Felder */}
-      {!showError
-        ? evaluatedExpression?.type === EvaluationType.VARIABLE && (
+      {!showError ? evaluatedExpression?.type === EvaluationType.SET && (
             <div>
-              <VariableTruthTable
-                evaluatedExpression={evaluatedExpression}
-                expression={expression}
-                checkedVennDiagramm={checkedVennDiagramm}
-                data={evaluatedExpression}
-              />
+              <div>
+              <SetTruthTable evaluatedExpression={evaluatedExpression} expression={expression} checkedVennDiagramm={checkedVennDiagramm} data={evaluatedExpression}/>
+              </div>
               <Feature
                 setEvaluatedExpression={setEvaluatedExpression}
                 evaluatedExpression={evaluatedExpression}
@@ -88,8 +84,8 @@ const Main = () => {
             </div>
           )
         : expression !== "" && <Error />}
+        {console.log(evaluatedExpression)}
         
-
       
     </>
   );
