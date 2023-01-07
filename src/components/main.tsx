@@ -13,6 +13,7 @@ import Feature from "./Feature";
 import Error from "./Error";
 import Checkboxes from "./Checkboxes";
 import SetTruthTable from "./SetTruthTable";
+import VariableTruthTable from "./VariableTruthTable";
 
 const Main = () => {
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
@@ -32,6 +33,47 @@ const Main = () => {
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
+  };
+
+  const setTruth = () => {
+    return (
+      <div>
+        <SetTruthTable
+          evaluatedExpression={evaluatedExpression}
+          expression={expression}
+          checkedVennDiagramm={checkedVennDiagramm}
+          data={evaluatedExpression}
+        />
+
+        <Feature
+          setEvaluatedExpression={setEvaluatedExpression}
+          evaluatedExpression={evaluatedExpression}
+          expression={expression}
+          checkedVennDiagramm={checkedVennDiagramm}
+          checkedNote={checkedNote}
+        />
+      </div>
+    );
+  };
+  const VariableTruth = () => {
+    return (
+      <div>
+        <VariableTruthTable
+          evaluatedExpression={evaluatedExpression}
+          expression={expression}
+          checkedVennDiagramm={checkedVennDiagramm}
+          data={evaluatedExpression}
+        />
+
+        <Feature
+          setEvaluatedExpression={setEvaluatedExpression}
+          evaluatedExpression={evaluatedExpression}
+          expression={expression}
+          checkedVennDiagramm={checkedVennDiagramm}
+          checkedNote={checkedNote}
+        />
+      </div>
+    );
   };
 
   return (
@@ -62,28 +104,44 @@ const Main = () => {
         />
       </Container>
 
-      {!showError
-        ? evaluatedExpression?.type === EvaluationType.SET && (
-            <div>
-              <div>
-                <SetTruthTable
-                  evaluatedExpression={evaluatedExpression}
-                  expression={expression}
-                  checkedVennDiagramm={checkedVennDiagramm}
-                  data={evaluatedExpression}
-                />
-              </div>
-              <Feature
-                setEvaluatedExpression={setEvaluatedExpression}
-                evaluatedExpression={evaluatedExpression}
-                expression={expression}
-                checkedVennDiagramm={checkedVennDiagramm}
-                checkedNote={checkedNote}
-              />
-            </div>
-          )
-        : expression !== "" && <Error />}
-      {console.log(evaluatedExpression)}
+      {showError && expression !== "" && <Error />}
+
+      {!showError && evaluatedExpression?.type === EvaluationType.SET && (
+        <div>
+          <SetTruthTable
+            evaluatedExpression={evaluatedExpression}
+            expression={expression}
+            checkedVennDiagramm={checkedVennDiagramm}
+            data={evaluatedExpression}
+          />
+
+          <Feature
+            setEvaluatedExpression={setEvaluatedExpression}
+            evaluatedExpression={evaluatedExpression}
+            expression={expression}
+            checkedVennDiagramm={checkedVennDiagramm}
+            checkedNote={checkedNote}
+          />
+        </div>
+      )}
+      {!showError && evaluatedExpression?.type === EvaluationType.VARIABLE && (
+        <div>
+          <VariableTruthTable
+            evaluatedExpression={evaluatedExpression}
+            expression={expression}
+            checkedVennDiagramm={checkedVennDiagramm}
+            data={evaluatedExpression}
+          />
+
+          <Feature
+            setEvaluatedExpression={setEvaluatedExpression}
+            evaluatedExpression={evaluatedExpression}
+            expression={expression}
+            checkedVennDiagramm={checkedVennDiagramm}
+            checkedNote={checkedNote}
+          />
+        </div>
+      )}
     </>
   );
 };
