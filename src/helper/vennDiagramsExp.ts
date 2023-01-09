@@ -680,7 +680,8 @@ export const fiveSetVennExp = (venn: d3.Selection<null, unknown, null, undefined
     const alphadelta = 'M526,319 '
       + 'C538,331 544,338 558,356 '
       + 'C554,400 552,425 534,474 '
-      + 'C514,487 497,497 473,502';
+      + 'C514,487 497,497 473,502 '
+      + 'C509,443 527,370 526,319';
 
     venn.append('path')
       .attr('d', alphadelta)
