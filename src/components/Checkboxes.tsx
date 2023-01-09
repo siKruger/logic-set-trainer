@@ -1,5 +1,6 @@
-import { Container } from "react-bootstrap";
-import "./Checkboxes.css";
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import './Checkboxes.css';
 
 export default function Checkboxes(props: {
   checkedVennDiagramm: any;
@@ -7,40 +8,40 @@ export default function Checkboxes(props: {
   checkedNote: any;
   setCheckedNote: (arg0: boolean) => void;
 }) {
+  const checkedVennDiagramm = props.checkedVennDiagramm;
+  const setCheckedVennDiagramm = props.setCheckedVennDiagramm;
+  const checkedNote = props.checkedNote;
+  const setCheckedNote = props.setCheckedNote;
   return (
-    <>
-      <Container id="checkbox-container">
-        <div className="form-check">
+    <Container id="checkbox-container">
+      <div className="form-check">
+        <label
+          className="form-check-label checkbox_label"
+          htmlFor="flexCheckDefault"
+        >
           <input
             className="form-check-input"
             type="checkbox"
-            defaultChecked={!props.checkedVennDiagramm}
-            onChange={() =>
-              props.setCheckedVennDiagramm(!props.checkedVennDiagramm)
-            }
+            defaultChecked={!checkedVennDiagramm}
+            onChange={() => setCheckedVennDiagramm(!checkedVennDiagramm)}
           />
-          <label
-            className="form-check-label checkbox_label"
-            htmlFor="flexCheckDefault"
-          >
-            Venn-Diagramm
-          </label>
-        </div>
-        <div className="form-check">
+          Venn-Diagramm
+        </label>
+      </div>
+      <div className="form-check">
+        <label
+          className="form-check-label checkbox_label"
+          htmlFor="flexCheckChecked"
+        >
           <input
             className="form-check-input"
             type="checkbox"
-            defaultChecked={!props.checkedNote}
-            onChange={() => props.setCheckedNote(!props.checkedNote)}
+            defaultChecked={!checkedNote}
+            onChange={() => setCheckedNote(!checkedNote)}
           />
-          <label
-            className="form-check-label checkbox_label"
-            htmlFor="flexCheckChecked"
-          >
-            Note
-          </label>
-        </div>
-      </Container>
-    </>
+          Note
+        </label>
+      </div>
+    </Container>
   );
 }

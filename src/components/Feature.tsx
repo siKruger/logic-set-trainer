@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
-import "./feature.css";
+import React, { useState } from 'react';
+import { Button, Container, Form } from 'react-bootstrap';
+import './feature.css';
 
 export default function Feature(props: {
-  setEvaluatedExpression: any;
   evaluatedExpression: any;
   expression: any;
-  checkedVennDiagramm: any;
   checkedNote: any;
 }) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
+  const evaluatedExpression = props.evaluatedExpression;
+  const expression = props.expression;
+  const checkedNote = props.checkedNote;
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const element = document.createElement("a");
-    const txt =
-      "" +
-      props.expression +
-      " :\n\n" +
-      "Steps:  " +
-      props.evaluatedExpression.steps +
-      "\n\n" +
-      text;
+    const element = document.createElement('a');
+    const txt = ''
+      + expression
+      + ' :\n\n'
+      + 'Steps:  '
+      + evaluatedExpression.steps
+      + '\n\n'
+      + text;
     const file = new Blob([txt], {
-      type: "text/plain;charset=utf-8",
+      type: 'text/plain;charset=utf-8',
     });
     element.href = URL.createObjectURL(file);
-    element.download = "NewDocument.txt";
+    element.download = 'NewDocument.txt';
     document.body.appendChild(element);
     element.click();
   };
@@ -39,7 +39,7 @@ export default function Feature(props: {
 
   return (
     <>
-      {!props.checkedNote && (
+      {!checkedNote && (
         <Container id="note_container">
           <div id="note">
             <div id="note_text">
@@ -48,7 +48,7 @@ export default function Feature(props: {
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
-                {" "}
+                {' '}
                 <br />
                 <Form.Control
                   onChange={handleChange}
@@ -70,7 +70,8 @@ export default function Feature(props: {
             </Form>
           </div>
         </Container>
-      )}
+      )};
+      <div />
     </>
   );
 }

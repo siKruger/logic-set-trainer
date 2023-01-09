@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from "react";
-import * as d3 from "d3";
+import React, { useEffect, useState } from 'react';
+import * as d3 from 'd3';
 import {
   fiveSetVenn,
   fourSetVenn,
   oneSetVenn,
   threeSetVenn,
   twoSetVenn,
-} from "../helper/vennDiagrams";
+} from '../helper/vennDiagrams';
 import {
   fiveSetVennExp,
   fourSetVennExp,
   oneSetVennExp,
   threeSetVennExp,
   twoSetVennExp,
-} from "../helper/vennDiagramsExp";
-import { EvaluationType } from "../helper/expressionEvaluator";
+} from '../helper/vennDiagramsExp';
+import { EvaluationType } from '../helper/expressionEvaluator';
 import {
   evaluateSetExpression,
   evaluateWholeExpression,
   replaceExpressionToBoolean,
-} from "../helper/logicConverter";
+} from '../helper/logicConverter';
 
 type VennProps = {
   data?:
-    | {
-        sets: any;
-        type: EvaluationType;
-        variables: any[];
-        steps: any[];
-        binaryOptions: any[];
-      }
-    | undefined;
+  | {
+    sets: any;
+    type: EvaluationType;
+    variables: any[];
+    steps: any[];
+    binaryOptions: any[];
+  }
+  | undefined;
   step: number;
 };
 
 function VennDiagramPage({ data, step }: VennProps) {
-  const [cl, setCl] = useState("oneSetVenn");
+  const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function VennDiagramPage({ data, step }: VennProps) {
 
     if (data === undefined) return;
 
-    const everything = venn.selectAll("*");
+    const everything = venn.selectAll('*');
     everything.remove();
 
     const trueEvaluations = [];
@@ -56,14 +56,15 @@ function VennDiagramPage({ data, step }: VennProps) {
           const replacedExpression = replaceExpressionToBoolean(
             lastExpression,
             data.variables,
-            [x]
+            [x],
           );
           const evaluated = evaluateWholeExpression(replacedExpression);
 
-          if (evaluated === "1" && x === 0)
-            trueEvaluations.push([`!${[data.variables[0]]}`]);
-          else if (evaluated === "1" && x === 1)
+          if (evaluated === '1' && x === 0) {
+            trueEvaluations.push([`!${[data.variables[0]]}`]); }
+          else if (evaluated === '1' && x === 1) {
             trueEvaluations.push([data.variables[0]]);
+          }
         }
       } else {
         for (let x = 0; x < data.binaryOptions.length; x += 1) {
@@ -72,11 +73,11 @@ function VennDiagramPage({ data, step }: VennProps) {
           const replacedExpression = replaceExpressionToBoolean(
             lastExpression,
             data.variables,
-            binaryOption
+            binaryOption,
           );
           const evaluated = evaluateWholeExpression(replacedExpression);
 
-          if (evaluated === "1") {
+          if (evaluated === '1') {
             const foo = [];
 
             for (let y = 0; y < data.variables.length; y += 1) {
@@ -96,19 +97,19 @@ function VennDiagramPage({ data, step }: VennProps) {
         break;
       case 2:
         twoSetVenn(venn, trueEvaluations, data.variables);
-        setCl("twoSetVenn");
+        setCl('twoSetVenn');
         break;
       case 3:
         threeSetVenn(venn, trueEvaluations, data.variables);
-        setCl("threeSetVenn");
+        setCl('threeSetVenn');
         break;
       case 4:
         fourSetVenn(venn, trueEvaluations, data.variables);
-        setCl("fourSetVenn");
+        setCl('fourSetVenn');
         break;
       case 5:
         fiveSetVenn(venn, trueEvaluations, data.variables);
-        setCl("fiveSetVenn");
+        setCl('fiveSetVenn');
         break;
       default:
     }
@@ -118,7 +119,7 @@ function VennDiagramPage({ data, step }: VennProps) {
 }
 
 function VennDiagramPageSets({ data, step }: VennProps) {
-  const [cl, setCl] = useState("oneSetVenn");
+  const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
   useEffect(() => {
@@ -126,20 +127,20 @@ function VennDiagramPageSets({ data, step }: VennProps) {
 
     if (data === undefined || data.type === EvaluationType.VARIABLE) return;
 
-    const everything = venn.selectAll("*");
+    const everything = venn.selectAll('*');
     everything.remove();
 
     let trueSet = [];
 
     if (data.sets.length === 1 && step === 0) {
       const evaluated = evaluateSetExpression(data.sets[0], data.sets);
-      const numbers = evaluated.substring(1, evaluated.length - 1).split(",");
+      const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
         trueSet.push(numbers[i]);
       }
     } else if (step !== 0) {
       const evaluated = evaluateSetExpression(data.steps[step - 1], data.sets);
-      const numbers = evaluated.substring(1, evaluated.length - 1).split(",");
+      const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
         trueSet.push(numbers[i]);
       }
@@ -153,19 +154,19 @@ function VennDiagramPageSets({ data, step }: VennProps) {
         break;
       case 2:
         twoSetVennExp(venn, trueSet, data.sets);
-        setCl("twoSetVenn");
+        setCl('twoSetVenn');
         break;
       case 3:
         threeSetVennExp(venn, trueSet, data.sets);
-        setCl("threeSetVenn");
+        setCl('threeSetVenn');
         break;
       case 4:
         fourSetVennExp(venn, trueSet, data.sets);
-        setCl("fourSetVenn");
+        setCl('fourSetVenn');
         break;
       case 5:
         fiveSetVennExp(venn, trueSet, data.sets);
-        setCl("fiveSetVenn");
+        setCl('fiveSetVenn');
         break;
       default:
     }

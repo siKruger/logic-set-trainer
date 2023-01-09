@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { Container, Table, Button as Button2 } from "react-bootstrap";
-import "./VariableTruthTable.css";
-import useInterval from "use-interval";
+import React, { useState } from 'react';
+import { Container, Table } from 'react-bootstrap';
+import './VariableTruthTable.css';
+import useInterval from 'use-interval';
+import html2canvas from 'html2canvas';
+import { Button, CircularProgress } from '@mui/material';
+import { VennDiagramPageSets } from './VennDiagram';
 import {
   evaluateWholeExpression,
   replaceExpressionToBoolean,
   evaluateSetExpression,
-} from "../helper/logicConverter";
-import { Button as Button, CircularProgress } from "@mui/material";
-import html2canvas from "html2canvas";
-import { VennDiagramPageSets } from "./VennDiagram";
+} from '../helper/logicConverter';
 
 type VennProps = {
   evaluatedExpression: any;
   expression: any;
   checkedVennDiagramm: any;
-  data: any;
 };
 
 export default function SetTruthTable({
@@ -26,7 +25,7 @@ export default function SetTruthTable({
   const divRef = React.useRef<HTMLDivElement>(null);
   const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
-  const imageFileName = expression.replaceAll(" ", "");
+  const imageFileName: any = expression.replaceAll(' ', '');
   const [autoplay, setAutoplay] = useState<boolean>(false);
   const [progressSpinner, setProgressSpinner] = useState<number>(0);
 
@@ -34,14 +33,14 @@ export default function SetTruthTable({
     setAutoplay(!autoplay);
   };
 
-  const exportAsImage = async (el: any, imageFileName: any) => {
+  const exportAsImage = async (el: any, imageFileName: string) => {
     const canvas = await html2canvas(el);
-    const image = canvas.toDataURL("image/png", 1.0);
+    const image = canvas.toDataURL('image/png', 1.0);
     downloadImage(image, imageFileName);
   };
 
   const downloadImage = (blob: any, fileName: string) => {
-    const fakeLink = window.document.createElement("a");
+    const fakeLink = window.document.createElement('a');
     // fakeLink.style = "display:none;";
     fakeLink.download = fileName;
 
@@ -74,38 +73,35 @@ export default function SetTruthTable({
     setProgressSpinner(progressSpinner + 3.125);
 
     if (progressSpinner % 100 === 0)
-      if (counter >= evaluatedExpression?.steps.length) setCounter(0);
+      if (counter >= evaluatedExpression?.steps.length) {
+        setCounter(0);
+      }
       else addColumn();
   }, 125);
 
   const generateCell = (
     singleStep: string,
     values: number[],
-    variables: string[]
+    variables: string[],
   ) => {
     let mutableExpression = singleStep;
 
-    if (mutableExpression == "blank") {
-      return <td> {" - "} </td>;
+    if (mutableExpression === 'blank') {
+      return <td>
+        {' - '}
+      </td>;
     }
 
     mutableExpression = replaceExpressionToBoolean(
       mutableExpression,
       variables,
-      values
+      values,
     );
     mutableExpression = evaluateWholeExpression(mutableExpression);
-    return <td> {mutableExpression} </td>;
+    return <td>
+      {mutableExpression}
+    </td>;
   };
-
-  const generateRow = (step: string[], values: number[], variables: string[]) =>
-    step.map((singleStep: string, index) =>
-      index < counter ? (
-        generateCell(singleStep, values, variables)
-      ) : (
-        <td> - </td>
-      )
-    );
 
   return (
     <>
@@ -117,11 +113,15 @@ export default function SetTruthTable({
           <div id="property_content">
             {evaluatedExpression?.parentheses}
             <br />
-            Variables: {evaluatedExpression?.sets}
+            Variables:
+            {evaluatedExpression?.sets}
             <ul>
               {evaluatedExpression?.steps.map((val: any, index: any) => (
                 <li key={val}>
-                  Step {index}: {val}
+                  Step
+                  {index}
+                  :
+                  {val}
                 </li>
               ))}
             </ul>
@@ -135,14 +135,14 @@ export default function SetTruthTable({
           </div>
           <div id="increment_button">
             <Button
-              color={autoplay ? "success" : "error"}
+              color={autoplay ? 'success' : 'error'}
               onClick={() => toggleAutoplay()}
               variant="outlined"
-              style={{ marginLeft: "50px" }}
+              style={{ marginLeft: '50px' }}
             >
               Autoplay
               <CircularProgress
-                style={{ marginLeft: "1em" }}
+                style={{ marginLeft: '1em' }}
                 size={25}
                 variant="determinate"
                 value={progressSpinner}
@@ -153,7 +153,7 @@ export default function SetTruthTable({
                 disabled={autoplay}
                 onClick={() => addColumn()}
                 variant="outlined"
-                style={{ marginLeft: "50px" }}
+                style={{ marginLeft: '50px' }}
               >
                 +1 Schritt
               </Button>
@@ -163,7 +163,7 @@ export default function SetTruthTable({
                 disabled={autoplay}
                 onClick={() => reduceColumn()}
                 variant="outlined"
-                style={{ marginLeft: "30px" }}
+                style={{ marginLeft: '30px' }}
               >
                 -1 Schritt
               </Button>
@@ -176,11 +176,15 @@ export default function SetTruthTable({
                 <thead>
                   <tr>
                     {evaluatedExpression?.sets.map((set: string) => (
-                      <th key={set}> {set} </th>
+                      <th key={set}>
+                        {set}
+                      </th>
                     ))}
 
                     {evaluatedExpression?.steps.map((step: string) => (
-                      <th key={step}> {step} </th>
+                      <th key={step}>
+                        {step}
+                      </th>
                     ))}
                   </tr>
                 </thead>
@@ -188,18 +192,21 @@ export default function SetTruthTable({
                 <tbody>
                   <tr>
                     {evaluatedExpression?.sets.map((set: string) => (
-                      <td key={set}> {set} </td>
+                      <td key={set}>
+                        {set}
+                      </td>
                     ))}
 
                     {evaluatedExpression.steps
                       .slice(0, counter)
                       .map((step: string) => (
                         <td key={step}>
-                          {" "}
+                          {' '}
                           {evaluateSetExpression(
                             step,
-                            evaluatedExpression.sets
-                          )}{" "}
+                            evaluatedExpression.sets,
+                          )}
+                          {' '}
                         </td>
                       ))}
 

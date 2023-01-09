@@ -1,24 +1,22 @@
-import Top from "../components/top";
-import "./common.css";
-import Main from "../components/main";
-import Footer from "../components/footer";
-
-
+import React from 'react';
+import Top from '../components/top';
+import './common.css';
+import Main from '../components/main';
+import Footer from '../components/footer';
 
 function Layout() {
-
   return (
-      <div className="page">
-        <div>
-          {/*top: include instructions for use and task text*/}
-          <Top></Top>
-          {/* main field */}
-          <Main></Main>
-        </div>
-
-        {/* foot */}
-        <Footer></Footer>
+    <div className="page">
+      <div>
+        {/* top: include instructions for use and task text */}
+        <Top />
+        {/* main field */}
+        <Main />
       </div>
+
+      {/* foot */}
+      <Footer />
+    </div>
   );
 }
 

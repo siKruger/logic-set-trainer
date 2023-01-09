@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import React, { useState } from 'react';
+import { TextField } from '@mui/material';
+import { Container } from 'react-bootstrap';
+import { checkCorrectSyntax } from '../helper/expressionValidator';
 import {
   evaluateTruthtable,
   VariableEvaluation,
   SetEvaluation,
   EvaluationType,
-} from "../helper/expressionEvaluator";
-import { checkCorrectSyntax } from "../helper/expressionValidator";
-import "./main.css";
-import { Container } from "react-bootstrap";
-import Feature from "./Feature";
-import Error from "./Error";
-import Checkboxes from "./Checkboxes";
-import SetTruthTable from "./SetTruthTable";
-import VariableTruthTable from "./VariableTruthTable";
+} from '../helper/expressionEvaluator';
+import './main.css';
+import Feature from './Feature';
+import Error from './Error';
+import Checkboxes from './Checkboxes';
+import SetTruthTable from './SetTruthTable';
+import VariableTruthTable from './VariableTruthTable';
 
 const Main = () => {
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
-  const [expression, setExpression] = useState("");
+  const [expression, setExpression] = useState('');
   const [showError, setShowError] = useState(false);
 
   const [evaluatedExpression, setEvaluatedExpression] = useState<
-    VariableEvaluation | SetEvaluation | any
+  VariableEvaluation | SetEvaluation | any
   >();
 
   const getEvaluation = () => {
@@ -33,47 +33,6 @@ const Main = () => {
       const evaluated = evaluateTruthtable(expression);
       setEvaluatedExpression(evaluated);
     }
-  };
-
-  const setTruth = () => {
-    return (
-      <div>
-        <SetTruthTable
-          evaluatedExpression={evaluatedExpression}
-          expression={expression}
-          checkedVennDiagramm={checkedVennDiagramm}
-          data={evaluatedExpression}
-        />
-
-        <Feature
-          setEvaluatedExpression={setEvaluatedExpression}
-          evaluatedExpression={evaluatedExpression}
-          expression={expression}
-          checkedVennDiagramm={checkedVennDiagramm}
-          checkedNote={checkedNote}
-        />
-      </div>
-    );
-  };
-  const VariableTruth = () => {
-    return (
-      <div>
-        <VariableTruthTable
-          evaluatedExpression={evaluatedExpression}
-          expression={expression}
-          checkedVennDiagramm={checkedVennDiagramm}
-          data={evaluatedExpression}
-        />
-
-        <Feature
-          setEvaluatedExpression={setEvaluatedExpression}
-          evaluatedExpression={evaluatedExpression}
-          expression={expression}
-          checkedVennDiagramm={checkedVennDiagramm}
-          checkedNote={checkedNote}
-        />
-      </div>
-    );
   };
 
   return (
@@ -104,7 +63,7 @@ const Main = () => {
         />
       </Container>
 
-      {showError && expression !== "" && <Error expression={expression}/>}
+      {showError && expression !== '' && <Error expression={expression}/> }
 
       {!showError && evaluatedExpression?.type === EvaluationType.SET && (
         <div>
@@ -112,14 +71,11 @@ const Main = () => {
             evaluatedExpression={evaluatedExpression}
             expression={expression}
             checkedVennDiagramm={checkedVennDiagramm}
-            data={evaluatedExpression}
           />
 
           <Feature
-            setEvaluatedExpression={setEvaluatedExpression}
             evaluatedExpression={evaluatedExpression}
             expression={expression}
-            checkedVennDiagramm={checkedVennDiagramm}
             checkedNote={checkedNote}
           />
         </div>
@@ -130,14 +86,11 @@ const Main = () => {
             evaluatedExpression={evaluatedExpression}
             expression={expression}
             checkedVennDiagramm={checkedVennDiagramm}
-            data={evaluatedExpression}
           />
 
           <Feature
-            setEvaluatedExpression={setEvaluatedExpression}
             evaluatedExpression={evaluatedExpression}
             expression={expression}
-            checkedVennDiagramm={checkedVennDiagramm}
             checkedNote={checkedNote}
           />
         </div>

@@ -1,15 +1,16 @@
-import Footer from "../components/footer";
-import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import "./ErrorPage.css";
-import ErrorTop from "../components/errorTop";
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Footer from '../components/footer';
+import './ErrorPage.css';
+import ErrorTop from '../components/errorTop';
 
 function ErrorPage() {
   return (
     <div className="error_page">
       <Container>
-        {/*top: include instructions for use and task text*/}
-        <ErrorTop></ErrorTop>
+        {/* top: include instructions for use and task text */}
+        <ErrorTop />
 
         {/* main field */}
         <Container id="error_page_container">
@@ -22,7 +23,7 @@ function ErrorPage() {
       </Container>
 
       {/* foot */}
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
