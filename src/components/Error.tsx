@@ -21,7 +21,9 @@ export default function Error(props: {
           <br />
           Your input is not valid, you can click
           {' '}
-          <InfoOutlinedIcon id="info_icon" /> to know how to type a valid
+          <InfoOutlinedIcon id="info_icon" />
+          {' '}
+          to know how to type a valid
           input.
         </div>
       </div>

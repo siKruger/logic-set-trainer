@@ -65,7 +65,8 @@ export default function Feature(props: {
             </Form>
           </div>
         </Container>
-      )};
+      )}
+      ;
       <div />
     </>
   );

@@ -7,9 +7,7 @@ import './top.css';
 import {
   Col, Collapse, Container, Row,
 } from 'react-bootstrap';
-import {
-  Alert, AlertTitle, IconButton,
-} from '@mui/material';
+import { Alert, AlertTitle, IconButton } from '@mui/material';
 
 export default function Top() {
   const [open, setOpen] = useState(false);
@@ -72,7 +70,8 @@ export default function Top() {
             <AlertTitle>Info</AlertTitle>
             Please enter your expression. Allowed characters
             are (ordered in their precedence): (), !, &&,
-            {'<=!=>'}, ||,
+            {'<=!=>'}
+            , ||,
             {' '}
             {'=>,<='}
           </Alert>

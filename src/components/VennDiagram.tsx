@@ -14,27 +14,24 @@ import {
   threeSetVennExp,
   twoSetVennExp,
 } from '../helper/vennDiagramsExp';
-import { EvaluationType } from '../helper/expressionEvaluator';
+import { SetEvaluation, VariableEvaluation } from '../helper/expressionEvaluator';
 import {
   evaluateSetExpression,
   evaluateWholeExpression,
   replaceExpressionToBoolean,
 } from '../helper/logicConverter';
 
-type VennProps = {
-  data?:
-  | {
-    sets: any;
-    type: EvaluationType;
-    variables: any[];
-    steps: any[];
-    binaryOptions: any[];
-  }
-  | undefined;
+type VennVarProps = {
+  data?: VariableEvaluation
   step: number;
 };
 
-function VennDiagramPage({ data, step }: VennProps) {
+type VennSetProps = {
+  data?: SetEvaluation
+  step: number;
+};
+
+function VennDiagrammPageVariable({ data, step }: VennVarProps) {
   const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
@@ -118,14 +115,14 @@ function VennDiagramPage({ data, step }: VennProps) {
   return <svg className={cl} ref={svgRef} />;
 }
 
-function VennDiagramPageSets({ data, step }: VennProps) {
+function VennDiagramPageSets({ data, step }: VennSetProps) {
   const [cl, setCl] = useState('oneSetVenn');
   const svgRef = React.useRef(null);
 
   useEffect(() => {
     const venn = d3.select(svgRef.current);
 
-    if (data === undefined || data.type === EvaluationType.VARIABLE) return;
+    if (data === undefined) return;
 
     const everything = venn.selectAll('*');
     everything.remove();
@@ -175,7 +172,7 @@ function VennDiagramPageSets({ data, step }: VennProps) {
   return <svg ref={svgRef} className={cl} />;
 }
 
-VennDiagramPage.defaultProps = {
+VennDiagrammPageVariable.defaultProps = {
   data: undefined,
 };
 
@@ -183,4 +180,4 @@ VennDiagramPageSets.defaultProps = {
   data: undefined,
 };
 
-export { VennDiagramPage, VennDiagramPageSets };
+export { VennDiagrammPageVariable, VennDiagramPageSets };

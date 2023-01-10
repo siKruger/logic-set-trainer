@@ -5,12 +5,11 @@ import useInterval from 'use-interval';
 import html2canvas from 'html2canvas';
 import { Button, CircularProgress } from '@mui/material';
 import { VennDiagramPageSets } from './VennDiagram';
-import {
-  evaluateSetExpression,
-} from '../helper/logicConverter';
+import { evaluateSetExpression } from '../helper/logicConverter';
+import { SetEvaluation } from '../helper/expressionEvaluator';
 
 type VennProps = {
-  evaluatedExpression: any;
+  evaluatedExpression: SetEvaluation
   expression: string;
   checkedVennDiagramm: boolean;
 };
@@ -31,7 +30,7 @@ export default function SetTruthTable({
     setAutoplay(!autoplay);
   };
 
-  const downloadImage = (blob: any, fileName: string) => {
+  const downloadImage = (blob: string, fileName: string) => {
     const fakeLink = window.document.createElement('a');
     // fakeLink.style = "display:none;";
     fakeLink.download = fileName;
@@ -45,7 +44,8 @@ export default function SetTruthTable({
     fakeLink.remove();
   };
 
-  const exportAsImage = async (el: any, imageFileName2: string) => {
+  const exportAsImage = async (el: HTMLElement | null, imageFileName2: string) => {
+    if (el === null) return;
     const canvas = await html2canvas(el);
     const image = canvas.toDataURL('image/png', 1.0);
     downloadImage(image, imageFileName2);
@@ -90,9 +90,9 @@ export default function SetTruthTable({
             Variables:
             {evaluatedExpression?.sets}
             <ul>
-              {evaluatedExpression?.steps.map((val: number, index: number) => (
+              {evaluatedExpression?.steps.map((val, index: number) => (
                 <li key={val}>
-                  Step
+                  Step&nbsp;
                   {index}
                   :
                   {val}

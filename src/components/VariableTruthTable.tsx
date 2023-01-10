@@ -4,14 +4,12 @@ import './VariableTruthTable.css';
 import useInterval from 'use-interval';
 import html2canvas from 'html2canvas';
 import { Button, CircularProgress } from '@mui/material';
-import { VennDiagramPage } from './VennDiagram';
-import {
-  evaluateWholeExpression,
-  replaceExpressionToBoolean,
-} from '../helper/logicConverter';
+import { VennDiagrammPageVariable } from './VennDiagram';
+import { evaluateWholeExpression, replaceExpressionToBoolean } from '../helper/logicConverter';
+import { VariableEvaluation } from '../helper/expressionEvaluator';
 
 type VennProps = {
-  evaluatedExpression: any;
+  evaluatedExpression: VariableEvaluation;
   expression: string;
   checkedVennDiagramm: boolean;
 };
@@ -32,7 +30,7 @@ export default function VariableTruthTable({
     setAutoplay(!autoplay);
   };
 
-  const downloadImage = (blob: any, fileName: string) => {
+  const downloadImage = (blob: string, fileName: string) => {
     const fakeLink = window.document.createElement('a');
     fakeLink.download = fileName;
 
@@ -45,7 +43,8 @@ export default function VariableTruthTable({
     fakeLink.remove();
   };
 
-  const exportAsImage = async (el: any, imageFileName2: string) => {
+  const exportAsImage = async (el: HTMLElement | null, imageFileName2: string) => {
+    if (el === null) return;
     const canvas = await html2canvas(el);
     const image = canvas.toDataURL('image/png', 1.0);
     downloadImage(image, imageFileName2);
@@ -127,7 +126,7 @@ export default function VariableTruthTable({
             <ul>
               {evaluatedExpression?.steps.map((val: string, index: number) => (
                 <li key={val}>
-                  Step
+                  Step&nbsp;
                   {index}
                   :
                   {val}
@@ -189,18 +188,21 @@ export default function VariableTruthTable({
                         {variable}
                       </th>
                     ))}
-                    {evaluatedExpression?.steps.map((step: number[]) => (
-                      <th key={undefined}>
-                        {step}
-                      </th>
-                    ))}
+                    {
+                      evaluatedExpression.steps.map((step) => (
+                        <th key={step}>
+                          {' '}
+                          {step}
+                          {' '}
+                        </th>
+                      ))
+                    }
                   </tr>
                 </thead>
                 <tbody>
-                  {evaluatedExpression !== undefined
-                  && evaluatedExpression?.variables.length === 1
+                  {evaluatedExpression?.variables.length === 1
                     ? evaluatedExpression?.binaryOptions.map(
-                      (binaryValue: any) => (
+                      (binaryValue) => (
                         <tr key={undefined}>
                           {' '}
                           <td>
@@ -217,10 +219,10 @@ export default function VariableTruthTable({
                       ),
                     )
                     : evaluatedExpression?.binaryOptions.map(
-                      (binaryRow: any) => (
+                      (binaryRow) => (
                         <tr key={undefined}>
                           {' '}
-                          {binaryRow.map((binaryValue: any) => (
+                          {binaryRow.map((binaryValue) => (
                             <td key={undefined}>
                               {binaryValue}
                             </td>
@@ -259,7 +261,7 @@ export default function VariableTruthTable({
             <div ref={divRef2}>
               <div id="now">{evaluatedExpression?.steps[counter - 1]}</div>
               <div id="venn_content">
-                <VennDiagramPage data={evaluatedExpression} step={counter} />
+                <VennDiagrammPageVariable data={evaluatedExpression} step={counter} />
               </div>
             </div>
 

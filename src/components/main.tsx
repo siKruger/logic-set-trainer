@@ -4,9 +4,9 @@ import { Container } from 'react-bootstrap';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import {
   evaluateTruthtable,
-  VariableEvaluation,
-  SetEvaluation,
   EvaluationType,
+  SetEvaluation,
+  VariableEvaluation,
 } from '../helper/expressionEvaluator';
 import './main.css';
 import Feature from './Feature';
@@ -22,7 +22,7 @@ export default function Main() {
   const [showError, setShowError] = useState(false);
 
   const [evaluatedExpression, setEvaluatedExpression] = useState<
-  VariableEvaluation | SetEvaluation | any
+  VariableEvaluation | SetEvaluation
   >();
 
   const getEvaluation = () => {
