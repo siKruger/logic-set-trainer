@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/logic-set-trainer/static/css/main.5e5da365.css",
-    "main.js": "/logic-set-trainer/static/js/main.ef63848a.js",
+    "main.js": "/logic-set-trainer/static/js/main.0ca90599.js",
     "index.html": "/logic-set-trainer/index.html",
     "main.5e5da365.css.map": "/logic-set-trainer/static/css/main.5e5da365.css.map",
-    "main.ef63848a.js.map": "/logic-set-trainer/static/js/main.ef63848a.js.map"
+    "main.0ca90599.js.map": "/logic-set-trainer/static/js/main.0ca90599.js.map"
   },
   "entrypoints": [
     "static/css/main.5e5da365.css",
-    "static/js/main.ef63848a.js"
+    "static/js/main.0ca90599.js"
   ]
 }
