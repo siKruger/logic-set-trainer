@@ -15,7 +15,7 @@ export const checkCorrectSymbols = (expression: string): string => {
   for (let x = 0; x < expression2.length; x += 1) {
     if (expression2.charAt(x).match(validCharacters) == null) {
       if ((expression2.charAt(x) + expression2.charAt(x + 1)).match(validCharacters) == null) {
-        return `Ungültiges Symbol an Stelle: ${x}`;
+        return `Invalid Symbol in place of : ${x + 1}`;
       }
       x += 1;
     }
@@ -46,11 +46,14 @@ export const checkCorrectParenthesesAmount = (expression: string): string => {
     }
 
     if (openBrackets < 0) {
-      return `A bracket was not opened! In place of: ${x}`;
+      return `A bracket was not opened! In place of: ${x + 1}`;
     }
   }
-  if (openBrackets > 0) {
-    return `A bracket was not closed! In place of: ${brackets.pop()}`;
+  if (openBrackets > 0 && brackets.length > 0) {
+    const x = brackets.pop();
+    if (x !== undefined) {
+      return `A bracket was not closed! In place of: ${x + 1}`;
+    }
   }
   return '';
 };
