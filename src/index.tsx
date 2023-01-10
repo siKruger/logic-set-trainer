@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import Truthtable from './truthtable';
 import Layout from './webapp/Layout';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from './webapp/ErrorPage';
+import Main from './components/main';
 
 const router = createHashRouter([
   {
@@ -15,14 +13,10 @@ const router = createHashRouter([
     children: [
       {
         path: '/',
-        element: <Truthtable />,
+        element: <Main />,
         errorElement: <ErrorPage />,
       },
     ],
-  },
-  {
-    path: '/error_page',
-    element: <ErrorPage />,
   },
 ]);
 
@@ -32,6 +26,5 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <ToastContainer />
   </React.StrictMode>,
 );

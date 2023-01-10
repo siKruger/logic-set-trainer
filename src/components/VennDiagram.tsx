@@ -47,6 +47,7 @@ function VennDiagrammPageVariable({ data, step }: VennVarProps) {
 
     if (step !== 0) {
       const lastExpression = data.steps[step - 1];
+      if (lastExpression === undefined) return;
 
       if (data.variables.length === 1) {
         for (let x = 0; x < 2; x += 1) {
@@ -136,7 +137,9 @@ function VennDiagramPageSets({ data, step }: VennSetProps) {
         trueSet.push(numbers[i]);
       }
     } else if (step !== 0) {
-      const evaluated = evaluateSetExpression(data.steps[step - 1], data.sets);
+      const lastExpression = data.steps[step - 1];
+      if (lastExpression === undefined) return;
+      const evaluated = evaluateSetExpression(lastExpression, data.sets);
       const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
         trueSet.push(numbers[i]);

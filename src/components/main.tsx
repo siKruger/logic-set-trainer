@@ -4,7 +4,6 @@ import { Container } from 'react-bootstrap';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 import {
   evaluateTruthtable,
-  EvaluationType,
   SetEvaluation,
   VariableEvaluation,
 } from '../helper/expressionEvaluator';
@@ -12,8 +11,7 @@ import './main.css';
 import Feature from './Feature';
 import Error from './Error';
 import Checkboxes from './Checkboxes';
-import SetTruthTable from './SetTruthTable';
-import VariableTruthTable from './VariableTruthTable';
+import TruthTable from './TruthTable';
 
 export default function Main() {
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
@@ -61,24 +59,9 @@ export default function Main() {
 
       {showError && expression !== '' && <Error expression={expression} /> }
 
-      {!showError && evaluatedExpression?.type === EvaluationType.SET && (
+      {!showError && evaluatedExpression !== undefined && (
         <div>
-          <SetTruthTable
-            evaluatedExpression={evaluatedExpression}
-            expression={expression}
-            checkedVennDiagramm={checkedVennDiagramm}
-          />
-
-          <Feature
-            evaluatedExpression={evaluatedExpression}
-            expression={expression}
-            checkedNote={checkedNote}
-          />
-        </div>
-      )}
-      {!showError && evaluatedExpression?.type === EvaluationType.VARIABLE && (
-        <div>
-          <VariableTruthTable
+          <TruthTable
             evaluatedExpression={evaluatedExpression}
             expression={expression}
             checkedVennDiagramm={checkedVennDiagramm}
