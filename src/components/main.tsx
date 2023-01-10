@@ -15,7 +15,7 @@ import Checkboxes from './Checkboxes';
 import SetTruthTable from './SetTruthTable';
 import VariableTruthTable from './VariableTruthTable';
 
-const Main = () => {
+export default function Main() {
   const [checkedVennDiagramm, setCheckedVennDiagramm] = useState(true);
   const [checkedNote, setCheckedNote] = useState(true);
   const [expression, setExpression] = useState('');
@@ -44,12 +44,8 @@ const Main = () => {
             fullWidth
             autoComplete="off"
             placeholder="Enter the logical expression to be computed"
-            onChange={(e) => {
-              return setExpression(e.target.value);
-            }}
-            onKeyUp={() => {
-              return getEvaluation();
-            }}
+            onChange={(e) => setExpression(e.target.value)}
+            onKeyUp={() => getEvaluation()}
           />
         </div>
       </Container>
@@ -63,7 +59,7 @@ const Main = () => {
         />
       </Container>
 
-      {showError && expression !== '' && <Error expression={expression}/> }
+      {showError && expression !== '' && <Error expression={expression} /> }
 
       {!showError && evaluatedExpression?.type === EvaluationType.SET && (
         <div>
@@ -97,5 +93,4 @@ const Main = () => {
       )}
     </>
   );
-};
-export default Main;
+}

@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import './feature.css';
+import { SetEvaluation, VariableEvaluation } from '../helper/expressionEvaluator';
 
 export default function Feature(props: {
-  evaluatedExpression: any;
-  expression: any;
-  checkedNote: any;
+  evaluatedExpression: VariableEvaluation | SetEvaluation;
+  expression: string;
+  checkedNote: boolean;
 }) {
   const [text, setText] = useState('');
-  const evaluatedExpression = props.evaluatedExpression;
-  const expression = props.expression;
-  const checkedNote = props.checkedNote;
+  const {
+    evaluatedExpression, expression, checkedNote,
+  } = props;
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     const element = document.createElement('a');
-    const txt = ''
-      + expression
-      + ' :\n\n'
-      + 'Steps:  '
-      + evaluatedExpression.steps
-      + '\n\n'
-      + text;
+    const txt = `${expression} :\n\nSteps:  ${evaluatedExpression.steps}\n\n${text}`;
     const file = new Blob([txt], {
       type: 'text/plain;charset=utf-8',
     });

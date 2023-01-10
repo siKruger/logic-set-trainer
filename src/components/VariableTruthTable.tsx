@@ -12,8 +12,8 @@ import {
 
 type VennProps = {
   evaluatedExpression: any;
-  expression: any;
-  checkedVennDiagramm: any;
+  expression: string;
+  checkedVennDiagramm: boolean;
 };
 
 export default function VariableTruthTable({
@@ -32,12 +32,6 @@ export default function VariableTruthTable({
     setAutoplay(!autoplay);
   };
 
-  const exportAsImage = async (el: any, imageFileName: any) => {
-    const canvas = await html2canvas(el);
-    const image = canvas.toDataURL('image/png', 1.0);
-    downloadImage(image, imageFileName);
-  };
-
   const downloadImage = (blob: any, fileName: string) => {
     const fakeLink = window.document.createElement('a');
     fakeLink.download = fileName;
@@ -49,6 +43,12 @@ export default function VariableTruthTable({
     document.body.removeChild(fakeLink);
 
     fakeLink.remove();
+  };
+
+  const exportAsImage = async (el: any, imageFileName2: string) => {
+    const canvas = await html2canvas(el);
+    const image = canvas.toDataURL('image/png', 1.0);
+    downloadImage(image, imageFileName2);
   };
 
   const addColumn = () => {
@@ -69,10 +69,11 @@ export default function VariableTruthTable({
     if (evaluatedExpression === undefined || !autoplay) return;
     setProgressSpinner(progressSpinner + 3.125);
 
-    if (progressSpinner % 100 === 0)
+    if (progressSpinner % 100 === 0) {
       if (counter >= evaluatedExpression?.steps.length) {
         setCounter(0);
       } else addColumn();
+    }
   }, 125);
 
   const generateCell = (
@@ -83,9 +84,11 @@ export default function VariableTruthTable({
     let mutableExpression = singleStep;
 
     if (mutableExpression === 'blank') {
-      return <td>
-        {' - '}
-      </td>;
+      return (
+        <td>
+          {' - '}
+        </td>
+      );
     }
 
     mutableExpression = replaceExpressionToBoolean(
@@ -94,18 +97,20 @@ export default function VariableTruthTable({
       values,
     );
     mutableExpression = evaluateWholeExpression(mutableExpression);
-    return <td>
-      {mutableExpression}
-    </td>;
+    return (
+      <td>
+        {mutableExpression}
+      </td>
+    );
   };
 
-  const generateRow = (step: string[], values: number[], variables: string[]) =>
-    step.map((singleStep: string, index) => index < counter ? (
-        generateCell(singleStep, values, variables)
-      ) : ( <td>
-          -
-        </td>
-      ));
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? (
+    generateCell(singleStep, values, variables)
+  ) : (
+    <td key={undefined}>
+      -
+    </td>
+  )));
 
   return (
     <>
@@ -184,8 +189,8 @@ export default function VariableTruthTable({
                         {variable}
                       </th>
                     ))}
-                    {evaluatedExpression?.steps.map((step: any[]) => (
-                      <th>
+                    {evaluatedExpression?.steps.map((step: number[]) => (
+                      <th key={undefined}>
                         {step}
                       </th>
                     ))}
@@ -196,7 +201,7 @@ export default function VariableTruthTable({
                   && evaluatedExpression?.variables.length === 1
                     ? evaluatedExpression?.binaryOptions.map(
                       (binaryValue: any) => (
-                        <tr>
+                        <tr key={undefined}>
                           {' '}
                           <td>
                             {binaryValue}
@@ -213,10 +218,10 @@ export default function VariableTruthTable({
                     )
                     : evaluatedExpression?.binaryOptions.map(
                       (binaryRow: any) => (
-                        <tr>
+                        <tr key={undefined}>
                           {' '}
                           {binaryRow.map((binaryValue: any) => (
-                            <td>
+                            <td key={undefined}>
                               {binaryValue}
                             </td>
                           ))}

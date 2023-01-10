@@ -4,12 +4,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import './top.css';
 import {
-  Col, Collapse, Container, Row
+  Col, Collapse, Container, Row,
 } from 'react-bootstrap';
 import { Alert, AlertTitle, IconButton } from '@mui/material';
 
-const Top = () => {
-  const [open, setOpen] = useState(false);
+export default function Top() {
+  const [open] = useState(false);
   const [darkMode, setDarkMode] = React.useState(false);
   React.useEffect(() => {
     if (darkMode) {
@@ -37,6 +37,7 @@ const Top = () => {
             </IconButton>
           </a>
           <button
+            type="button"
             onClick={() => setDarkMode(!darkMode)}
             aria-controls="info-collapse-text"
             aria-expanded={open}
@@ -64,5 +65,4 @@ const Top = () => {
       </Collapse>
     </Container>
   );
-};
-export default Top;
+}

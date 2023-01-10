@@ -5,13 +5,13 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import './top.css';
 import {
-  Col, Collapse, Container, Row
+  Col, Collapse, Container, Row,
 } from 'react-bootstrap';
 import {
-  Alert, AlertTitle, IconButton
+  Alert, AlertTitle, IconButton,
 } from '@mui/material';
 
-const Top = () => {
+export default function Top() {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = React.useState(false);
   React.useEffect(() => {
@@ -30,6 +30,7 @@ const Top = () => {
         </Col>
         <Col className="toolbar">
           <button
+            type="button"
             onClick={() => setOpen(!open)}
             aria-controls="info-collapse-text"
             aria-expanded={open}
@@ -51,6 +52,7 @@ const Top = () => {
             </IconButton>
           </a>
           <button
+            type="button"
             onClick={() => setDarkMode(!darkMode)}
             aria-controls="info-collapse-text"
             aria-expanded={open}
@@ -68,7 +70,7 @@ const Top = () => {
         <div className="instructions">
           <Alert id="info-collapse-text" severity="info">
             <AlertTitle>Info</AlertTitle>
-            Please enter your expression and press evaluate. Allowed characters
+            Please enter your expression. Allowed characters
             are (ordered in their precedence): (), !, &&,
             {'<=!=>'}, ||,
             {' '}
@@ -78,5 +80,4 @@ const Top = () => {
       </Collapse>
     </Container>
   );
-};
-export default Top;
+}

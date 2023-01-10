@@ -5,9 +5,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { checkCorrectSyntax } from '../helper/expressionValidator';
 
 export default function Error(props: {
-  expression: any;
+  expression: string;
 }) {
-  const expression = props.expression;
+  const { expression } = props;
   const check = checkCorrectSyntax(expression);
   return (
     <Container id="error_container">

@@ -3,15 +3,14 @@ import { Container } from 'react-bootstrap';
 import './Checkboxes.css';
 
 export default function Checkboxes(props: {
-  checkedVennDiagramm: any;
+  checkedVennDiagramm: boolean;
   setCheckedVennDiagramm: (arg0: boolean) => void;
-  checkedNote: any;
+  checkedNote: boolean;
   setCheckedNote: (arg0: boolean) => void;
 }) {
-  const checkedVennDiagramm = props.checkedVennDiagramm;
-  const setCheckedVennDiagramm = props.setCheckedVennDiagramm;
-  const checkedNote = props.checkedNote;
-  const setCheckedNote = props.setCheckedNote;
+  const {
+    checkedVennDiagramm, setCheckedVennDiagramm, checkedNote, setCheckedNote,
+  } = props;
   return (
     <Container id="checkbox-container">
       <div className="form-check">

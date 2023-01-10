@@ -61,8 +61,8 @@ function VennDiagramPage({ data, step }: VennProps) {
           const evaluated = evaluateWholeExpression(replacedExpression);
 
           if (evaluated === '1' && x === 0) {
-            trueEvaluations.push([`!${[data.variables[0]]}`]); }
-          else if (evaluated === '1' && x === 1) {
+            trueEvaluations.push([`!${[data.variables[0]]}`]);
+          } else if (evaluated === '1' && x === 1) {
             trueEvaluations.push([data.variables[0]]);
           }
         }

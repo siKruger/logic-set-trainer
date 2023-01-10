@@ -89,7 +89,7 @@ function Truthtable() {
     );
   };
 
-  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td> - </td>));
+  const generateRow = (step: string[], values: number[], variables: string[]) => step.map((singleStep: string, index) => (index < counter ? generateCell(singleStep, values, variables) : <td key={undefined}> - </td>));
 
   function createVariableTable(evaluation: VariableEvaluation) {
     return (

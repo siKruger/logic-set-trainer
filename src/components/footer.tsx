@@ -3,7 +3,7 @@ import './footer.css';
 import { Container } from 'react-bootstrap';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const Footer = () => {
+export default function Footer() {
   return (
     <Container id="footer_container">
       <div id="footer_text">
@@ -16,5 +16,4 @@ const Footer = () => {
       </div>
     </Container>
   );
-};
-export default Footer;
+}

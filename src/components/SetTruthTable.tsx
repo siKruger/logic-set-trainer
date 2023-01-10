@@ -6,15 +6,13 @@ import html2canvas from 'html2canvas';
 import { Button, CircularProgress } from '@mui/material';
 import { VennDiagramPageSets } from './VennDiagram';
 import {
-  evaluateWholeExpression,
-  replaceExpressionToBoolean,
   evaluateSetExpression,
 } from '../helper/logicConverter';
 
 type VennProps = {
   evaluatedExpression: any;
-  expression: any;
-  checkedVennDiagramm: any;
+  expression: string;
+  checkedVennDiagramm: boolean;
 };
 
 export default function SetTruthTable({
@@ -25,18 +23,12 @@ export default function SetTruthTable({
   const divRef = React.useRef<HTMLDivElement>(null);
   const divRef2 = React.useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(0);
-  const imageFileName: any = expression.replaceAll(' ', '');
+  const imageFileName = expression.replaceAll(' ', '');
   const [autoplay, setAutoplay] = useState<boolean>(false);
   const [progressSpinner, setProgressSpinner] = useState<number>(0);
 
   const toggleAutoplay = () => {
     setAutoplay(!autoplay);
-  };
-
-  const exportAsImage = async (el: any, imageFileName: string) => {
-    const canvas = await html2canvas(el);
-    const image = canvas.toDataURL('image/png', 1.0);
-    downloadImage(image, imageFileName);
   };
 
   const downloadImage = (blob: any, fileName: string) => {
@@ -51,6 +43,12 @@ export default function SetTruthTable({
     document.body.removeChild(fakeLink);
 
     fakeLink.remove();
+  };
+
+  const exportAsImage = async (el: any, imageFileName2: string) => {
+    const canvas = await html2canvas(el);
+    const image = canvas.toDataURL('image/png', 1.0);
+    downloadImage(image, imageFileName2);
   };
 
   const addColumn = () => {
@@ -72,36 +70,12 @@ export default function SetTruthTable({
 
     setProgressSpinner(progressSpinner + 3.125);
 
-    if (progressSpinner % 100 === 0)
+    if (progressSpinner % 100 === 0) {
       if (counter >= evaluatedExpression?.steps.length) {
         setCounter(0);
-      }
-      else addColumn();
-  }, 125);
-
-  const generateCell = (
-    singleStep: string,
-    values: number[],
-    variables: string[],
-  ) => {
-    let mutableExpression = singleStep;
-
-    if (mutableExpression === 'blank') {
-      return <td>
-        {' - '}
-      </td>;
+      } else addColumn();
     }
-
-    mutableExpression = replaceExpressionToBoolean(
-      mutableExpression,
-      variables,
-      values,
-    );
-    mutableExpression = evaluateWholeExpression(mutableExpression);
-    return <td>
-      {mutableExpression}
-    </td>;
-  };
+  }, 125);
 
   return (
     <>
@@ -116,7 +90,7 @@ export default function SetTruthTable({
             Variables:
             {evaluatedExpression?.sets}
             <ul>
-              {evaluatedExpression?.steps.map((val: any, index: any) => (
+              {evaluatedExpression?.steps.map((val: number, index: number) => (
                 <li key={val}>
                   Step
                   {index}
