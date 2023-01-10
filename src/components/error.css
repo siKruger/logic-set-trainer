@@ -1,0 +1,30 @@
+#error {
+  margin: 2vh 0 !important;
+  background-color: #f9caca;
+  box-shadow: 0.2vw 0.5vh 0.5vh #ebe4fe;
+  border-radius: 2vh;
+}
+.dark #error {
+  background-color: #292524;
+  box-shadow: none;
+}
+#error_text {
+  background-color: #f5a5a5;
+  padding: 0 14px;
+  /*height: 5vh;*/
+  width: 5rem;
+  border-radius: 2vh 0 1vh 0;
+  color: #d22524;
+  letter-spacing: 0.03em;
+}
+.dark #error_text {
+  background-color: #121a29;
+  color: #e5e7eb;
+}
+#error_content {
+  padding: 1vh 10vw;
+  color: #d22524;
+}
+.dark #error_content {
+  color: #e5e7eb;
+}

@@ -353,7 +353,7 @@ export const evaluateTruthtable = (expression: string): VariableEvaluation | Set
   let dictionary = {};
 
   // Is a set Operation.
-  if (uppercaseExpression.includes('{')) {
+  if (uppercaseExpression.includes('{') && uppercaseExpression.match(/[0-9]/)) {
     const sets = getAllSets(uppercaseExpression);
     const { mutableExpression, letterDic } = replaceSets(uppercaseExpression);
     uppercaseExpression = mutableExpression;

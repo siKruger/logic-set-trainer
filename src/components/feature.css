@@ -1,0 +1,58 @@
+#note {
+  margin: 2vh 0 !important;
+  background-color: #f5f5f5;
+  box-shadow: 0.2vw 0.5vh 0.5vh #ebe4fe;
+  border-radius: 2vh;
+}
+
+#note_container {
+  text-align: center;
+}
+.dark #note {
+  background-color: #1f2937;
+  box-shadow: none;
+}
+#note_text {
+  padding-left: 10px;
+  padding-bottom: 4px;
+  width: 3.5rem;
+  border-radius: 2vh 0 1vh 0;
+  letter-spacing: 0.03em;
+}
+.dark #note_text {
+  background-color: #121a29;
+  color: #e5e7eb;
+}
+#note_content {
+  padding: 1vh 4vw;
+}
+.dark #note_content {
+  color: #e5e7eb;
+}
+#note_form {
+  padding: 0 1rem;
+}
+.dark #note_form {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+.dark #make_a_note {
+  color: #e5e7eb;
+}
+.dark textarea:focus {
+  color: #e5e7eb;
+}
+
+#save_note_button {
+  margin-bottom: 1vh;
+}
+
+.dark #save_note_button {
+  background-color: #131a28;
+  color: #e5e7eb;
+}
+
+.dark #save_note_button:hover {
+  background-color: #48515e;
+}
