@@ -6,13 +6,16 @@ import { prepareForEvaluation } from './expressionEvaluator';
  * @return string
  */
 export const checkCorrectSymbols = (expression: string): string => {
-  const validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|\(|\)|[A-Z]|\s)+$/g;
+  let validCharacters = /^(<=!=>|&&|\|\||!|<==>|=>|<=|\(|\)|[A-Z]|\s)+$/g;
+  if (expression.match(/{/) && expression.match(/[0-9]/)) {
+    validCharacters = /^(&&|\|\||!|=>|{|}|,|\(|\)|[0-9]|\s)+$/g;
+  }
   const expression2 = expression.toUpperCase();
 
   for (let x = 0; x < expression2.length; x += 1) {
     if (expression2.charAt(x).match(validCharacters) == null) {
       if ((expression2.charAt(x) + expression2.charAt(x + 1)).match(validCharacters) == null) {
-        return `Ungültiges Symbol an Stelle: ${x}`;
+        return `Invalid Symbol in place of : ${x + 1}`;
       }
       x += 1;
     }
@@ -43,11 +46,14 @@ export const checkCorrectParenthesesAmount = (expression: string): string => {
     }
 
     if (openBrackets < 0) {
-      return `Eine Klammer wurde nicht geöffnet! An Stelle: ${x}`;
+      return `A bracket was not opened! In place of: ${x + 1}`;
     }
   }
-  if (openBrackets > 0) {
-    return `Eine Klammer wurde nicht geschlossen! An Stelle: ${brackets.pop()}`;
+  if (openBrackets > 0 && brackets.length > 0) {
+    const x = brackets.pop();
+    if (x !== undefined) {
+      return `A bracket was not closed! In place of: ${x + 1}`;
+    }
   }
   return '';
 };
@@ -57,7 +63,7 @@ export const checkCorrectParenthesesAmount = (expression: string): string => {
  * @param expression: string
  * @return boolean
  */
-export const checkCorrectSubexpressions = (expression: string): boolean => {
+export const checkCorrectSubexpressions = (expression: string): string => {
   const mutableExpression = prepareForEvaluation(expression);
 
   const letter = /[A-Z]/;
@@ -65,46 +71,94 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
   const negation = /¬/;
   const parenthesesOpen = /\(/;
   const parenthesesClose = /\)/;
-  for (let x = 0; x < mutableExpression.length; x += 1) {
-    const char = mutableExpression.charAt(x);
+  const number = /[0-9]/;
+  const curlyBracketOpen = /{/;
+  const curlyBracketClose = /}/;
+  const comma = /,/;
 
-    // a operator needs [A-Z] or a (
-    if (char.match(operators)) {
-      if (!(mutableExpression.charAt(x + 1)
-        .match(letter) || mutableExpression.charAt(x + 1)
-        .match(parenthesesOpen) || mutableExpression.charAt(x + 1).match(negation))) {
-        return false;
+  if (expression.match(/{/) && expression.match(/[0-9]/)) {
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const char = mutableExpression.charAt(x);
+      const nextChar = mutableExpression.charAt(x + 1);
+
+      // an operator needs a ( or a { or a !
+      if (char.match(operators)) {
+        if (!(nextChar.match(curlyBracketOpen) || nextChar.match(parenthesesOpen) || nextChar.match(negation))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      // ( needs a ! or a { or a ( following
+      if (char.match(parenthesesOpen)) {
+        if (!(nextChar.match(negation) || nextChar.match(parenthesesOpen)
+          || nextChar.match(curlyBracketOpen))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      // [0-9] needs a } or another number or a comma following
+      if (char.match(number)) {
+        if (!((nextChar.match(number) || nextChar.match(parenthesesClose) || nextChar.match(comma)) || nextChar.match(curlyBracketClose))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      // ! needs a { or ( or another ! following.
+      if (char.match(negation)) {
+        if (x === mutableExpression.length - 1 || !(nextChar.match(curlyBracketOpen) || nextChar.match(parenthesesOpen) || nextChar.match(negation))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      // { needs a number following
+      if (char.match(curlyBracketOpen)) {
+        if (!(nextChar.match(number))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      // comma needs a number following
+      if (char.match(comma)) {
+        if (!(nextChar.match(number))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
       }
     }
+  } else {
+    for (let x = 0; x < mutableExpression.length; x += 1) {
+      const char = mutableExpression.charAt(x);
+      const nextChar = mutableExpression.charAt(x + 1);
 
-    // ( needs a ! or a [A-Z] following
-    if (char.match(parenthesesOpen)) {
-      if (!(mutableExpression.charAt(x + 1)
-        .match(negation) || mutableExpression.charAt(x + 1)
-        .match(letter))) {
-        return false;
+      // a operator needs [A-Z] or a (
+      if (char.match(operators)) {
+        if (!(nextChar.match(letter) || nextChar.match(parenthesesOpen) || nextChar.match(negation))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
       }
-    }
 
-    // [A-Z] needs a operator following or empty
-    if (char.match(letter)) {
-      if (!(mutableExpression.charAt(x + 1)
-        .match(operators) || mutableExpression.charAt(x + 1) === '' || mutableExpression.charAt(x + 1)
-        .match(parenthesesClose))) {
-        return false;
+      // ( needs a ! or a [A-Z] or a ( following
+      if (char.match(parenthesesOpen)) {
+        if (!(nextChar.match(negation) || nextChar.match(parenthesesOpen) || nextChar.match(letter))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
       }
-    }
 
-    //! needs a [A-Z] and ( OR operator following.
-    if (char.match(negation)) {
-      if (!(mutableExpression.charAt(x + 1)
-        .match(letter) || mutableExpression.match(negation) || mutableExpression.charAt(x + 1)
-        .match(parenthesesOpen))) {
-        return false;
+      // [A-Z] needs a operator following or empty
+      if (char.match(letter)) {
+        if (!(nextChar.match(operators) || nextChar === '' || nextChar.match(parenthesesClose))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
+      }
+
+      //! needs a [A-Z] and ( OR operator following.
+      if (char.match(negation)) {
+        if (x === mutableExpression.length - 1 || !(nextChar.match(letter) || mutableExpression.match(negation) || nextChar.match(parenthesesOpen))) {
+          return `Invalid syntax! At: ${nextChar}`;
+        }
       }
     }
   }
-  return true;
+  return '';
 };
 
 /** Checks if an expression follows the rules to be a valid one. Returns an error message if it doesn't
@@ -114,6 +168,7 @@ export const checkCorrectSubexpressions = (expression: string): boolean => {
 export const checkCorrectSyntax = (expression: string): string => {
   const sym = checkCorrectSymbols(expression);
   const par = checkCorrectParenthesesAmount(expression);
+  const sub = checkCorrectSubexpressions(expression);
 
   if (sym !== '') {
     return sym;
@@ -121,9 +176,8 @@ export const checkCorrectSyntax = (expression: string): string => {
   if (par !== '') {
     return par;
   }
-  if (!checkCorrectSubexpressions(expression)) {
-    return 'Ungültige Syntax!';
+  if (sub !== '') {
+    return sub;
   }
-
   return '';
 };
