@@ -367,6 +367,7 @@ export const evaluateTruthtable = (expression: string): VariableEvaluation | Set
     };
   }
 
+  // Is a Variable Expression
   uppercaseExpression = setOptionalParenthesis(uppercaseExpression);
   const variables = getAllVariables(uppercaseExpression);
   const binaries = variables.map(() => [0, 1]);
@@ -374,6 +375,6 @@ export const evaluateTruthtable = (expression: string): VariableEvaluation | Set
   const steps = splitByParentheses(uppercaseExpression);
 
   return {
-    variables, steps, binaryOptions, parentheses: uppercaseExpression, type: EvaluationType.VARIABLE,
+    variables, steps: steps[0].includes('(') ? steps : [], binaryOptions, parentheses: uppercaseExpression, type: EvaluationType.VARIABLE,
   };
 };

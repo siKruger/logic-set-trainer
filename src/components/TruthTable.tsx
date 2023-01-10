@@ -89,6 +89,7 @@ export default function TruthTable({
     <div id="increment_button">
       <Button
         color={autoplay ? 'success' : 'error'}
+        disabled={evaluatedExpression.steps.length === 0}
         onClick={() => toggleAutoplay()}
         variant="outlined"
         style={{ marginLeft: '50px' }}
@@ -103,7 +104,7 @@ export default function TruthTable({
       </Button>
       <div id="button_of_add">
         <Button
-          disabled={autoplay}
+          disabled={autoplay || evaluatedExpression.steps.length === 0}
           onClick={() => addColumn()}
           variant="outlined"
           style={{ marginLeft: '50px' }}
@@ -113,7 +114,7 @@ export default function TruthTable({
       </div>
       <div id="button_of_reduce">
         <Button
-          disabled={autoplay}
+          disabled={autoplay || evaluatedExpression.steps.length === 0}
           onClick={() => reduceColumn()}
           variant="outlined"
           style={{ marginLeft: '30px' }}
@@ -163,6 +164,7 @@ export default function TruthTable({
             </div>
 
             <Button
+              disabled={(evaluatedExpression.type === EvaluationType.SET && evaluatedExpression.sets.length > 5) || (evaluatedExpression.type === EvaluationType.VARIABLE && evaluatedExpression.variables.length > 5)}
               variant="outlined"
               id="venn_download_button"
               onClick={() => exportAsImage(divRef2.current, imageFileName)}

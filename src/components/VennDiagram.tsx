@@ -87,6 +87,8 @@ function VennDiagrammPageVariable({ data, step }: VennVarProps) {
           }
         }
       }
+    } else if (data.variables.length === 1 && data.steps.length === 0) {
+      trueEvaluations.push([data.variables[0]]);
     }
 
     switch (data.variables.length) {
@@ -113,6 +115,8 @@ function VennDiagrammPageVariable({ data, step }: VennVarProps) {
     }
   });
 
+  if (data !== undefined && data?.variables.length > 5) return <> Venn Diagrams are only supported for up to 5 Variables </>;
+
   return <svg className={cl} ref={svgRef} />;
 }
 
@@ -130,7 +134,7 @@ function VennDiagramPageSets({ data, step }: VennSetProps) {
 
     let trueSet = [];
 
-    if (data.sets.length === 1 && step === 0) {
+    if (data.sets.length === 1 && step === 0 && data.steps.length !== 1) {
       const evaluated = evaluateSetExpression(data.sets[0], data.sets);
       const numbers = evaluated.substring(1, evaluated.length - 1).split(',');
       for (let i = 0; i < numbers.length; i += 1) {
@@ -171,6 +175,8 @@ function VennDiagramPageSets({ data, step }: VennSetProps) {
       default:
     }
   });
+
+  if (data !== undefined && data?.sets.length > 5) return <> Venn Diagrams are only supported for up to 5 Sets! </>;
 
   return <svg ref={svgRef} className={cl} />;
 }
